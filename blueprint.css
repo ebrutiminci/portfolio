@@ -216,6 +216,7 @@ figcaption b { color: var(--text); font-weight: 500; }
 .quotes p { margin: 0; font-style: italic; }
 .quotes cite { font: 400 0.75rem var(--mono); font-style: normal; color: var(--text-soft); }
 .proposal { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 28px; align-items: start; }
+.proposal.solo { grid-template-columns: minmax(0, 1fr); max-width: 760px; }
 .prop-list { display: grid; gap: 10px; }
 .phone { border: 1.5px solid var(--line); border-radius: 30px; padding: 16px 14px 14px; display: grid; gap: 10px; background: var(--ground-deep); font-size: 0.82rem; position: relative; }
 .phone::before { content: ""; width: 70px; height: 6px; border: 1px solid var(--line-soft); border-radius: 4px; justify-self: center; margin-bottom: 2px; }
