@@ -573,3 +573,4 @@ html.rb-closed.has-ribbon body { padding-top: 0; }
 .northarrow.mark { width: 72px; height: auto; }
 .cover .northarrow.mark { width: 62px; height: auto; }
 @media (max-width: 780px) { .northarrow.mark, .cover .northarrow.mark { width: 40px; height: auto; } }
+.cover > .bp-skin, .sheet > .bp-skin { max-width: none !important; width: auto; inset: 0; }
