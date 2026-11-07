@@ -65,11 +65,11 @@
   document.body.appendChild(reopen);
   function closed(v) {
     html.classList.toggle('rb-closed', v);
-    store('ebru-ribbon-closed', v ? '1' : null);
+    store('ebru-ribbon-open', v ? null : '1');
   }
   rb.querySelector('.rb-x').addEventListener('click', function () { closed(true); });
   reopen.addEventListener('click', function () { closed(false); });
-  if (load('ebru-ribbon-closed')) html.classList.add('rb-closed');
+  if (!load('ebru-ribbon-open')) html.classList.add('rb-closed');   // starts closed; Tools opens it
   var prompt = rb.querySelector('.rb-prompt'), menu = rb.querySelector('.rb-lmenu'), help = rb.querySelector('.rb-help'), lname = rb.querySelector('.rb-lname');
   function say(t, hot) { prompt.textContent = t; prompt.classList.toggle('hot', !!hot); }
   function run(c) { if (window.BP) window.BP.run(c); }
