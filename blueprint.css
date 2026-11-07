@@ -168,6 +168,9 @@ figcaption b { color: var(--text); font-weight: 500; }
 .xhair .box { position: absolute; width: 14px; height: 14px; border: 1px solid #fff; transform: translate(-50%, -50%); }
 .xhair.on { display: block; }
 .has-xhair, .has-xhair a, .has-xhair button { cursor: none; }
+.has-xhair .ribbon, .has-xhair .rb-open, .has-xhair .statusbar { cursor: default; }
+.has-xhair .ribbon button, .has-xhair .rb-open, .has-xhair .statusbar button, .has-xhair .statusbar a, .has-xhair .statusbar li { cursor: pointer; }
+.has-xhair .ribbon input, .has-xhair .statusbar input { cursor: text; }
 .vp { overflow: hidden; }
 .vp img { transition: transform .5s cubic-bezier(.2,.7,.2,1); }
 .vp:hover img { transform: scale(1.04); }

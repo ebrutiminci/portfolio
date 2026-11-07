@@ -49,7 +49,9 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
       b.style.left = px + 'px'; b.style.top = py + 'px';
     }
     window.addEventListener('pointermove', function (e) {
-      px = e.clientX; py = e.clientY; x.classList.add('on');
+      px = e.clientX; py = e.clientY;
+      var ui = e.target && e.target.closest && e.target.closest('.ribbon, .rb-open, .statusbar');
+      x.classList.toggle('on', !ui);
       if (!raf) raf = requestAnimationFrame(draw);
     }, { passive: true });
     document.addEventListener('pointerleave', function () { x.classList.remove('on'); });
