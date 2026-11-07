@@ -9,7 +9,7 @@
   var board = !!wrap && !html.classList.contains('is-layout');
   var sheets = board ? Array.prototype.slice.call(wrap.querySelectorAll(':scope > .cover, :scope > .sheet')) : [];
   if (!sheets.length) board = false;
-  var KEY = 'ebru-board-v1', TIP = 'ebru-board-tip';
+  var KEY = 'ebru-board-v2', TIP = 'ebru-board-tip';
   function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
   function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 
@@ -132,7 +132,13 @@
       s.parentNode.insertBefore(h, s); holders.push(h);
       var o = { x: r.left - wr.left, y: r.top - wr.top, w: r.width, r: 0, f: false };
       o.home = { x: o.x, y: o.y, w: o.w };
-      if (saved && saved.s[i]) { var v = saved.s[i]; o.x = v[0]; o.y = v[1]; o.w = v[2]; o.r = v[3]; o.f = !!v[4]; }
+      if (saved && saved.s[i]) {
+        var v = saved.s[i], vw = document.documentElement.clientWidth;
+        o.w = Math.max(320, Math.min(1500, v[2])); o.r = v[3]; o.f = !!v[4];
+        // keep every sheet reachable, even if the window is smaller than last time
+        o.x = Math.max(-wr.left - o.w + 120, Math.min(vw - wr.left - 120, v[0]));
+        o.y = Math.max(0, v[1]);
+      }
       st.set(s, o);
       apply(s);
     });
@@ -297,6 +303,8 @@
   // Bring back last visit's arrangement
   var saved = null;
   try { saved = JSON.parse(load(KEY) || 'null'); } catch (e) { saved = null; }
+  try { localStorage.removeItem('ebru-board-v1'); } catch (e) {}
+  if (saved && saved.s && saved.s.length !== sheets.length) { saved = null; store(KEY, null); }
   if (saved && saved.s && wide.matches) {
     var go = function () { enter(saved); pick('select', true); say('Welcome back: your sheets are where you left them. RESTORE puts everything back.', true); };
     if (document.readyState === 'complete') go(); else window.addEventListener('load', go);
