@@ -95,7 +95,15 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     ZOOM: ['Enlarge the drawing nearest the centre', 'zoom'],
     HELP: ['List every command', 'help']
   };
-  var MENU = ['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'BUS', 'LAYISO', 'LAYUNISO', 'ZOOM', 'HELP', 'MODEL', 'LINKEDIN', 'GITHUB', 'X'];
+  if (space === 'model') {
+    CMDS.MODIFY = ['Open the Modify toolbar: move, stretch, rotate, mirror', 'tool:modify'];
+    CMDS.MOVE = ['Move a sheet', 'tool:move']; CMDS.M = CMDS.MOVE;
+    CMDS.STRETCH = ['Stretch a sheet, it reflows like a phone', 'tool:stretch']; CMDS.S = CMDS.STRETCH;
+    CMDS.ROTATE = ['Rotate a sheet', 'tool:rotate']; CMDS.RO = CMDS.ROTATE;
+    CMDS.MIRROR = ['Mirror a sheet', 'tool:mirror']; CMDS.MI = CMDS.MIRROR;
+    CMDS.RESTORE = ['Put every sheet back', 'tool:restore'];
+  }
+  var MENU = (space === 'model' ? ['MODIFY'] : []).concat(['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'BUS', 'LAYISO', 'LAYUNISO', 'ZOOM', 'HELP', 'MODEL', 'LINKEDIN', 'GITHUB', 'X']);
 
   var bar = document.createElement('nav');
   bar.className = 'statusbar'; bar.setAttribute('aria-label', 'Pages');
@@ -105,7 +113,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
   bar.innerHTML =
     '<span class="sb-menu" aria-hidden="true"><i></i><i></i><i></i></span>' +
     tab('model', 'Model', 'index.html') + tab('layout1', 'Revolut', 'casestudy.html') +
-    tab('app', 'Research<span class="sb-long"> App</span>', 'app.html') + tab('bus', 'Bus<span class="sb-long"> Widget</span>', home + '#s3') +
+    tab('app', 'Research<span class="sb-long">&nbsp;App</span>', 'app.html') + tab('bus', 'Bus<span class="sb-long">&nbsp;Widget</span>', home + '#s3') +
     tab('layout2', 'Thesis', 'thesis.html') +
     '<span class="sb-iso" hidden></span>' +
     '<span class="sb-mode">' + (space === 'model' ? 'MODEL' : 'PAPER') + '</span>' +
@@ -239,6 +247,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     } else if (act === 'layer') { input.value = 'LAYISO '; render('LAYISO '); cmd.classList.add('open'); input.focus();
     } else if (act === 'zoom') { zoom(nearestImage());
     } else if (act === 'help') { input.value = ''; render(''); cmd.classList.add('open'); input.focus();
+    } else if (act.indexOf('tool:') === 0) { if (window.BPTools) say(window.BPTools.cmd(act.slice(5)), 4000);
     } else if (/^https?:|\.pdf$/.test(act)) { var w = window.open(act, '_blank'); if (w) { try { w.opener = null; } catch (e) {} say('Opened ' + CMDS[name][0] + ' in a new tab'); } else { location.href = act; }
     } else { location.href = act; }
   }
