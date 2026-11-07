@@ -57,8 +57,19 @@
       '<span class="rb-row">' + btn('layiso', 'Layiso', '') + btn('layuniso', 'Layuniso', '') + '</span>', 'rb-lay') +
     panel('View', btn('zoom', 'Zoom', 'Z', '', true) + btn('grid', 'Grid', '', ' on', true)) +
     panel('Help', '<span class="rb-drop">' + btn('help', 'Help', 'F1', '', true) + HELP + '</span>') +
-    panel('Command', '<p class="rb-prompt" aria-live="polite"></p>', 'rb-cmdp');
+    panel('Command', '<p class="rb-prompt" aria-live="polite"></p>', 'rb-cmdp') +
+    '<button type="button" class="rb-x" title="Close the toolbar" aria-label="Close the toolbar">×</button>';
   document.body.appendChild(rb);
+  var reopen = document.createElement('button');
+  reopen.type = 'button'; reopen.className = 'rb-open'; reopen.textContent = 'Tools ▾'; reopen.title = 'Show the toolbar';
+  document.body.appendChild(reopen);
+  function closed(v) {
+    html.classList.toggle('rb-closed', v);
+    store('ebru-ribbon-closed', v ? '1' : null);
+  }
+  rb.querySelector('.rb-x').addEventListener('click', function () { closed(true); });
+  reopen.addEventListener('click', function () { closed(false); });
+  if (load('ebru-ribbon-closed')) html.classList.add('rb-closed');
   var prompt = rb.querySelector('.rb-prompt'), menu = rb.querySelector('.rb-lmenu'), help = rb.querySelector('.rb-help'), lname = rb.querySelector('.rb-lname');
   function say(t, hot) { prompt.textContent = t; prompt.classList.toggle('hot', !!hot); }
   function run(c) { if (window.BP) window.BP.run(c); }

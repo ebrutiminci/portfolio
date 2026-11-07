@@ -563,3 +563,10 @@ html.has-ribbon body { padding-top: 92px; }
 .bp-axis .ext { stroke: #ffc94a; stroke-width: 1; stroke-dasharray: 12 4 2 4; opacity: .7; }
 .bp-axis .seg { stroke: #ffc94a; stroke-width: 2; }
 .bp-axis circle { fill: #e5484d; stroke: #fff; stroke-width: 1; }
+.rb-x { align-self: flex-start; width: 26px; height: 26px; margin-left: 2px; border: 1px solid transparent; background: transparent; color: #c9cfd8; font: 400 1.2rem/1 var(--body); cursor: pointer; border-radius: 2px; }
+.rb-x:hover { background: #c4373c; border-color: #e5484d; color: #fff; }
+.rb-open { display: none; position: fixed; top: 0; right: 24px; z-index: 62; padding: 5px 12px 6px; background: #3b4453; border: 1px solid #222832; border-top: 0; color: #e6e9ee; font: 400 0.78rem var(--body); cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,.3); }
+.rb-open:hover { background: #4a5466; }
+html.rb-closed .ribbon { display: none; }
+html.rb-closed.has-ribbon .rb-open { display: block; }
+html.rb-closed.has-ribbon body { padding-top: 0; }
