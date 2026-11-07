@@ -165,7 +165,7 @@ figcaption b { color: var(--text); font-weight: 500; }
 .xhair .h, .xhair .v { position: absolute; background: rgba(255,255,255,0.55); }
 .xhair .h { left: 0; right: 0; height: 1px; }
 .xhair .v { top: 0; bottom: 0; width: 1px; }
-.xhair .box { position: absolute; width: 20px; height: 20px; border: 1px solid #fff; transform: translate(-50%, -50%); }
+.xhair .box { position: absolute; width: 14px; height: 14px; border: 1px solid #fff; transform: translate(-50%, -50%); }
 .xhair.on { display: block; }
 .has-xhair, .has-xhair a, .has-xhair button { cursor: none; }
 .vp { overflow: hidden; }
@@ -259,7 +259,7 @@ figcaption b { color: var(--text); font-weight: 500; }
 
 /* Calmer crosshair: grey box, faint full-length lines */
 .xhair .h, .xhair .v { background: rgba(255,255,255,0.16); }
-.xhair .box { border-color: rgba(201,216,240,0.85); }
+.xhair .box { border: 1.5px solid #fff; }
 
 /* Cover: same frame, more negative space on the right */
 @media (min-width: 760px) {
