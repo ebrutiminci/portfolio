@@ -258,7 +258,7 @@ figcaption b { color: var(--text); font-weight: 500; }
 }
 
 /* Calmer crosshair: grey box, faint full-length lines */
-.xhair .h, .xhair .v { background: rgba(255,255,255,0.16); }
+.xhair .h, .xhair .v { background: rgba(255,255,255,0.21); }
 .xhair .box { border: 1.5px solid #fff; }
 
 /* Cover: same frame, more negative space on the right */
