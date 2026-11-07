@@ -1,0 +1,223 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Feeling at Home in the City</title>
+<meta name="space" content="layout2">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="blueprint.css">
+<style>html,body{margin:0}*{box-sizing:border-box}img{max-width:100%}</style>
+</head>
+<body>
+<main class="wrap">
+  <nav class="crumb" aria-label="Back"><a href="index.html">← Drawing set</a><span class="ann">/ Sheet 04, detail</span></nav>
+
+  <header class="cover hero">
+    <svg class="northarrow" viewBox="0 0 54 70" aria-hidden="true"><path d="M13 58 L27 22 L41 58" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="miter"/><text x="27" y="10" fill="#fff" font-family="IBM Plex Mono, monospace" font-size="10" text-anchor="middle">N</text></svg>
+    <p class="ann">Sheet 04 · Master's thesis · Politecnico di Milano · 2025</p>
+    <div class="cover-main">
+      <h1>Feeling at Home in the City<small>An emotional map of Ljubljana's streets</small></h1>
+      <p class="lede">What makes a city feel like home? I built a research app that asked people how they felt, in the moment, in Ljubljana's streets.</p>
+      <p class="motto"><b>"Public space is not a static backdrop."</b> From my thesis</p>
+      <div class="legend"><span class="tag on">Plan</span><span class="tag on">Research</span><span class="tag on">Synthesize</span><span class="tag on">Design</span><span class="tag">Build</span></div>
+    </div>
+  </header>
+
+  <article class="sheet" aria-labelledby="d1">
+    <div class="sheet-body">
+      <p class="ann">Plan</p>
+      <h2 id="d1">Why an app, for an architecture thesis</h2>
+      <p>A typical thesis would have designed a building or a square. I wanted to know how people already experience the city before proposing anything, and a one-time survey can't catch how a feeling changes from day to day. So I used the Experience Sampling Method (ESM): short, repeated check-ins in people's own surroundings, tagged with their location.</p>
+      <ol class="steps">
+        <li><b>Tell us about you:</b> a one-time survey on age, gender, occupation and how long people have lived in Ljubljana.</li>
+        <li><b>Tell us about Ljubljana:</b> a one-time survey rating belonging, identity, comfort, safety and whether the city feels like home.</li>
+        <li><b>Repeated check-ins:</b> pick an emotion from Plutchik's wheel ("no emotion" is a valid answer), then answer three safety questions: how safe do you feel here, have you experienced or witnessed safety concerns here, and might people of a different gender feel differently?</li>
+      </ol>
+      <p class="sub">To keep people coming back, the app keeps a streak, and an illustrated city grows each time someone takes part.</p>
+      <figure>
+        <div class="vp"><img src="img/ljubljana-app.jpg" alt="Two phone screens: a welcome screen with an illustrated map of Ljubljana, and a feeling check with an emotion wheel" width="1100" height="684" loading="lazy"></div>
+        <figcaption><b>Viewport A.</b> The welcome screen with the growing city, and the daily feeling check.</figcaption>
+      </figure>
+    </div>
+    <aside class="titleblock" aria-label="Study details">
+      <div class="no"><span class="bubble"><span class="t">04</span><span class="b">D1</span></span><span class="ann">Detail 1<br>Method</span></div>
+      <div><span class="ann">Method</span><b>Experience sampling (ESM), 2 surveys + located check-ins</b></div>
+      <div><span class="ann">Site</span><b>Ljubljana, Slovenia</b></div>
+      <div><span class="ann">Grade</span><b>110/110</b></div>
+    </aside>
+  </article>
+
+  <article class="sheet" aria-labelledby="d2">
+    <div class="sheet-body">
+      <p class="ann">Research</p>
+      <h2 id="d2">Who took part</h2>
+      <p>31 people took part and gave 98 responses with location data. Most were university students, from 11 different backgrounds: 20 women, 10 men and 1 who preferred not to say. 21 live in Ljubljana full time and 10 were there temporarily. On average they were 25 years old and had lived in the city for almost 8 years.</p>
+      <div class="plates">
+        <figure>
+          <div class="vp"><img src="img/thesis-residents.jpg" alt="Charts of participants' age against years of residence, gender split and full-time versus temporary residents, with average stay 7.92 years and average age 25.10" width="1164" height="1734" loading="lazy"></div>
+          <figcaption><b>Viewport B.</b> Age, years in the city, gender, and full-time or temporary.</figcaption>
+        </figure>
+        <figure>
+          <div class="vp"><img src="img/thesis-participants.jpg" alt="Bubble chart of participants grouped by occupation, with education level and ethnicity inside each group" width="1164" height="1734" loading="lazy"></div>
+          <figcaption><b>Viewport C.</b> Occupation, education and background. 19 of 31 were students.</figcaption>
+        </figure>
+      </div>
+      <p class="note">Limit, in my thesis's words: the sample does not represent a broader demographic. It is young and mostly students, so these are counts, not proof.</p>
+    </div>
+    <aside class="titleblock" aria-label="Sample details">
+      <div class="no"><span class="bubble"><span class="t">04</span><span class="b">D2</span></span><span class="ann">Detail 2<br>Sample</span></div>
+      <div><span class="ann">People</span><b>31, giving 98 responses</b></div>
+      <div><span class="ann">Average age</span><b>25.1 years</b></div>
+      <div><span class="ann">Average stay</span><b>7.9 years</b></div>
+    </aside>
+  </article>
+
+  <article class="sheet featured" aria-labelledby="d3">
+    <div class="sheet-body">
+      <p class="ann">Synthesize</p>
+      <h2 id="d3">What people felt</h2>
+      <ul class="findings" aria-label="Key numbers">
+        <li><strong>71 of 98</strong><span>daily check-ins named a positive emotion. 23 were negative and 4 were "no emotion".</span></li>
+        <li><strong>Joy</strong><span>was picked most (17 times), then optimism (16) and serenity (11).</span></li>
+        <li><strong>0.18</strong><span>the link between feeling safe and feeling at home, the weakest in the study.</span></li>
+      </ul>
+      <p>The clearest finding was a surprise. Feeling safe went together with feeling familiar and comfortable (0.62), but it barely connected to whether the city feels like home (0.18). What did connect to home was belonging and emotional connection. For design, that means a safe street isn't automatically a street people feel attached to. City identity scored lowest of all (mean 2.13) and varied the most between people.</p>
+      <figure>
+        <div class="vp"><img src="img/thesis-correlation.jpg" alt="Correlation table between emotional connection, sense of belonging, missing the city, feels like home, city identity, familiarity and comfort, and safety and security" width="1664" height="634" loading="lazy"></div>
+        <figcaption><b>Viewport D.</b> How each feeling about the city moves with the others (1.00 = always together).</figcaption>
+      </figure>
+      <div class="plates">
+        <figure>
+          <div class="vp"><img src="img/thesis-emotions.jpg" alt="Bubble chart of emotions chosen on Plutchik's wheel, led by joy, optimism and serenity, with counts for each emotion" width="1164" height="1734" loading="lazy"></div>
+          <figcaption><b>Viewport E.</b> Emotions on Plutchik's wheel, from 98 check-ins.</figcaption>
+        </figure>
+        <figure>
+          <div class="vp"><img src="img/thesis-safety.jpg" alt="Flow diagram linking how safe people feel in their location to whether they have experienced safety concerns there" width="1464" height="1008" loading="lazy"></div>
+          <figcaption><b>Viewport F.</b> How safe people feel, against whether they've lived through a safety concern there.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <aside class="titleblock" aria-label="Findings details">
+      <div class="no"><span class="bubble"><span class="t">04</span><span class="b">D3</span></span><span class="ann">Detail 3<br>Findings</span></div>
+      <div><span class="ann">Check-ins</span><b>98 emotions</b></div>
+      <div><span class="ann">Analysis</span><b>Counts, correlation, flow diagrams</b></div>
+      <div><span class="ann">Tools</span><b>Figma, data visualisation</b></div>
+    </aside>
+  </article>
+
+  <article class="sheet" aria-labelledby="d4">
+    <div class="sheet-body">
+      <p class="ann">Synthesize</p>
+      <h2 id="d4">Who feels safe, and who feels at home</h2>
+      <ul class="findings" aria-label="Safety and residence findings">
+        <li><strong>23 of 32</strong><span>responses from men said "very safe". Women chose "neutral" or "unsafe" more often.</span></li>
+        <li><strong>6 of 6</strong><span>"unsafe" responses came from full-time residents. No temporary resident felt unsafe.</span></li>
+        <li><strong>4</strong><span>emotions covered all 35 answers from full-time residents: optimism, joy, boredom and annoyance.</span></li>
+      </ul>
+      <p>Temporary residents felt a much wider range of emotions, and every "anticipation" came from them. People who live in the city for good know it better, and feel it more narrowly. Safety also turned out to be a perception: some people felt safe despite past concerns, and some felt unsafe without any.</p>
+      <div class="plates">
+        <figure>
+          <div class="vp"><img src="img/thesis-gender.jpg" alt="Tables of safety answers split by gender: whether gender affects safety, whether people experienced safety concerns, and how safe they feel" width="1564" height="1007" loading="lazy"></div>
+          <figcaption><b>Viewport G.</b> Safety by gender.</figcaption>
+        </figure>
+        <figure>
+          <div class="vp"><img src="img/thesis-residence.jpg" alt="Tables of emotions and safety by residence type, full-time versus temporary" width="1064" height="1453" loading="lazy"></div>
+          <figcaption><b>Viewport H.</b> Emotions and safety by residence type.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <aside class="titleblock" aria-label="Findings details">
+      <div class="no"><span class="bubble"><span class="t">04</span><span class="b">D4</span></span><span class="ann">Detail 4<br>Groups</span></div>
+      <div><span class="ann">Split by</span><b>Gender, residence type</b></div>
+      <div><span class="ann">Unsafe</span><b>6 of 98 responses, none "very unsafe"</b></div>
+    </aside>
+  </article>
+
+  <article class="sheet featured" aria-labelledby="d5">
+    <div class="sheet-body">
+      <p class="ann">Synthesize · spatial</p>
+      <h2 id="d5">Mapping feelings onto the city</h2>
+      <p>Every check-in carried a location, so I could put feelings on a map. Between 18 and 26 March 2025, 26 of the 31 participants sent 98 check-ins. I took the data from my own app to finished maps in four steps:</p>
+      <ol class="pipeline" aria-label="Data pipeline">
+        <li><span class="k">01 · App</span><b>Collect</b><span>Check-ins with emotion, safety answers and location</span></li>
+        <li><span class="k">02 · Excel</span><b>Clean</b><span>Rearranged and recoded with formulas; each emotion given an intensity value</span></li>
+        <li><span class="k">03 · QGIS</span><b>Map</b><span>Imported as points, colour-coded, turned into Voronoi polygons by frequency</span></li>
+        <li><span class="k">04 · Adobe</span><b>Refine</b><span>Final styling so the maps read at a glance</span></li>
+      </ol>
+      <div class="plates three">
+        <figure>
+          <div class="vp"><img src="img/map-emotions.jpg" alt="Map of Ljubljana coloured by the emotions people reported in each area" width="1400" height="990" loading="lazy"></div>
+          <figcaption><b>Viewport D.</b> By emotion. More negative emotions were recorded in the south.</figcaption>
+        </figure>
+        <figure>
+          <div class="vp"><img src="img/map-intensity.jpg" alt="Map of Ljubljana coloured by the intensity of reported emotions, with blended emotions shown separately" width="1400" height="990" loading="lazy"></div>
+          <figcaption><b>Viewport E.</b> By intensity. Blended emotions cluster in the northeast and southwest.</figcaption>
+        </figure>
+        <figure>
+          <div class="vp"><img src="img/map-safety.jpg" alt="Map of Ljubljana shaded by how safe people felt, darker where more safety concerns were reported" width="1400" height="990" loading="lazy"></div>
+          <figcaption><b>Viewport F.</b> By safety. More safety concerns came from the north.</figcaption>
+        </figure>
+      </div>
+      <p>Emotion and safety overlapped most in the city centre. Part of that is simply more check-ins there, and part is the density of the centre itself. The maps then helped me choose the pilot site for the design.</p>
+      <p class="note">What I learned the hard way: my first pass read the safety answers the wrong way round, because I didn't yet know how to read the raw export. Once I learned to check the data against the questions, I recoded it, and every number on this page comes from the corrected file. Also, IDW interpolation, thin plate spline and contour tools all failed in QGIS, so I switched to Voronoi polygons. The raw data stays private, because it holds participants' locations.</p>
+    </div>
+    <aside class="titleblock" aria-label="Mapping details">
+      <div class="no"><span class="bubble"><span class="t">04</span><span class="b">D5</span></span><span class="ann">Detail 5<br>Maps</span></div>
+      <div><span class="ann">Fieldwork</span><b>18–26 Mar 2025, 9 days</b></div>
+      <div><span class="ann">Layers</span><b>Emotion, intensity, safety</b></div>
+      <div><span class="ann">Tools</span><b>Excel, QGIS, Adobe</b></div>
+    </aside>
+  </article>
+
+  <article class="sheet" aria-labelledby="d6">
+    <div class="sheet-body">
+      <p class="ann">Design</p>
+      <h2 id="d6">From research to a design toolbox</h2>
+      <p>The findings shaped a pilot design for Krakovo, one of Ljubljana's oldest neighbourhoods. Known as the city's garden on maps from the 16th century, it has been neglected recently. Instead of a fixed design, I proposed a toolbox of five steps, each turning something I found into something to design:</p>
+      <ol class="steps">
+        <li>Existing rhythm → movement</li>
+        <li>Boundaries → informal space</li>
+        <li>Local knowledge → surprise</li>
+        <li>Research → process design</li>
+        <li>Genius loci → context-specific design</li>
+      </ol>
+      <p class="sub">The idea is a circular, participatory process: from object to process, from product to participation. That's the same loop I now use for digital products.</p>
+    </div>
+    <aside class="titleblock" aria-label="Design details">
+      <div class="no"><span class="bubble"><span class="t">04</span><span class="b">D6</span></span><span class="ann">Detail 6<br>Design</span></div>
+      <div><span class="ann">Pilot site</span><b>Krakovo, Ljubljana</b></div>
+      <div><span class="ann">Output</span><b>5-step design toolbox</b></div>
+    </aside>
+  </article>
+
+  <section class="about" aria-labelledby="learn">
+    <div style="display:grid;gap:14px">
+      <p class="ann">General notes</p>
+      <h2 id="learn">What it taught me</h2>
+      <p class="motto">"Public space is not a static backdrop but a dynamic arena shaped by memory, rhythm, interaction, and design intent." <b>From my thesis</b></p>
+      <p>This project is where architecture turned into product design for me. I had to plan a study, design an app people would open every day, keep them coming back, and then turn their answers into something a designer can act on. I'd do one thing differently now: recruit beyond my own circle, so the sample isn't mostly students.</p>
+    </div>
+    <div style="display:grid;gap:12px;align-content:start">
+      <a class="cta" href="https://www.politesi.polimi.it/handle/10589/240073">Read the full thesis →</a>
+      <a class="cta ghost" href="index.html">← Back to all sheets</a>
+    </div>
+  </section>
+</main>
+<footer class="cmd" aria-label="Contact">
+  <div class="cmd-in">
+    <span class="prev">Command: OPEN Sheet_04_detail</span>
+    <div class="now"><span class="prompt">Command:</span>
+      <button type="button" class="cmdbtn" data-copy="ebru.timinci@gmail.com">COPY_EMAIL</button>
+      <a class="cmdbtn" href="https://claude.ai/artifact/Ffg8t7yfNtaQm1NFbazDuo">OPEN_CV</a>
+      <a class="cmdbtn" href="https://www.linkedin.com/in/ebru-timinci/">LINKEDIN</a>
+      <a class="cmdbtn" href="https://github.com/ebrutiminci">GITHUB</a>
+      <a class="cmdbtn" href="https://x.com/ebrutiminci">X</a><span class="caret" aria-hidden="true"></span>
+    </div>
+    <span class="out" aria-live="polite">ebru.timinci@gmail.com · London or remote from İzmir, Turkey</span>
+  </div>
+</footer>
+<script src="blueprint.js"></script>
+</body>
+</html>

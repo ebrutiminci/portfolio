@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>When the Bank Goes Quiet</title>
+<meta name="space" content="layout1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="blueprint.css">
+<style>html,body{margin:0}*{box-sizing:border-box}img{max-width:100%}</style>
+</head>
+<body>
+<main class="wrap">
+  <nav class="crumb" aria-label="Back"><a href="index.html">← Drawing set</a><span class="ann">/ Sheet 01, detail</span></nav>
+
+  <header class="cover hero">
+    <svg class="northarrow" viewBox="0 0 54 70" aria-hidden="true"><path d="M13 58 L27 22 L41 58" fill="none" stroke="#fff" stroke-width="2" stroke-linejoin="miter"/><text x="27" y="10" fill="#fff" font-family="IBM Plex Mono, monospace" font-size="10" text-anchor="middle">N</text></svg>
+    <p class="ann">Sheet 01 · Product case study · Personal concept · 2026</p>
+    <div class="cover-main">
+      <h1>When the bank goes quiet<small>A Revolut outage case study</small></h1>
+      <p class="lede">On 20 October 2026 Revolut went down for most of a working day. The outage wasn't their fault. The silence inside the app was a design choice.</p>
+      <p class="motto"><b>The proposal: an outage mode.</b> The app says what's broken, what still works, and that your money is safe.</p>
+      <div class="legend"><span class="tag on">Plan</span><span class="tag on">Research</span><span class="tag on">Synthesize</span><span class="tag on">Design</span><span class="tag">Build</span></div>
+    </div>
+  </header>
+
+  <section class="glance" aria-labelledby="glance-h">
+    <div class="glance-head">
+      <p class="ann">The solution at a glance</p>
+      <h2 id="glance-h">Outage mode, in three screens</h2>
+      <p class="sub">Home, lock screen and support chat. The full story, from what I saw to my sketches to the hi-fi screens, is further down.</p>
+      <a class="cta ghost" href="#screens">Jump to the screens ↓</a>
+    </div>
+    <div class="glance-row">
+      <a href="#scr-home"><img src="img/hifi-home.png" alt="Hi-fi home screen with the outage banner and sync line" width="600" height="1298"><span>Home</span></a>
+      <a href="#scr-lock"><img src="img/hifi-lock.png" alt="Hi-fi lock screen with the push: This one's on us" width="600" height="1298"><span>Lock screen</span></a>
+      <a href="#scr-chat"><img src="img/hifi-chat.png" alt="Hi-fi support chat saying chat is affected and the message is saved" width="600" height="1298"><span>Support chat</span></a>
+    </div>
+  </section>
+
+  <article class="sheet" aria-labelledby="c1">
+    <div class="sheet-body">
+      <p class="ann">Research · my own account</p>
+      <h2 id="c1">My 20 October</h2>
+      <div class="intro-plate">
+        <div style="display:grid;gap:12px;align-content:start">
+          <p>Revolut has been my bank since 2022. When I moved from Italy to Slovenia I couldn't keep my account, so I chose to open a new one. I started on Premium, then moved up to Metal.</p>
+          <p>So on 20 October I wasn't a casual user. I lost a lunch break, and a little of my trust, because nothing in the app told me what was happening.</p>
+        </div>
+        <figure>
+          <div class="vp"><img src="img/revolut-cards.jpg" alt="Ebru's hand holding two Revolut Visa cards, a sage green one and a dark purple one, over a wooden desk" width="900" height="1195" loading="lazy"></div>
+          <figcaption><b>Viewport 0.</b> My own cards. Customer since 2022.</figcaption>
+        </figure>
+      </div>
+      <ol class="timeline">
+        <li><span class="k">01</span><b>The till</b><span>I tried to pay about €2 at the supermarket. Declined, then declined again. No warning in the app.</span></li>
+        <li><span class="k">02</span><b>The ATM</b><span>I thought cash might work. That failed too, and again there was no notification.</span></li>
+        <li><span class="k">03</span><b>The favour</b><span>I went back to work and borrowed money from a colleague, which I'd rather not have done.</span></li>
+        <li><span class="k">04</span><b>The search</b><span>At my computer I found out what was going on from Reddit, not from Revolut.</span></li>
+        <li><span class="k">05</span><b>The help chat</b><span>It looked like it was trying to help, but it was down too, and the app didn't say so.</span></li>
+        <li><span class="k">06</span><b>The email</b><span>An explanation finally came by email, later. In an app where everything happens in the app, I expected to hear it there.</span></li>
+      </ol>
+      <p class="sub">On Reddit I read about people on holiday with no backup at all. I know it wasn't Revolut's fault, but a bank isn't a chocolate company. When you trust them with your money, the silence is what hurts.</p>
+    </div>
+    <aside class="titleblock" aria-label="Sheet details"><div class="no"><span class="bubble"><span class="t">01</span><span class="b">C1</span></span><span class="ann">Detail 1<br>Journey</span></div><div><span class="ann">Method</span><b>Own account, journey map</b></div><div><span class="ann">Moments</span><b>6, over one lunch break</b></div><div><span class="ann">Date</span><b>Tue 20 Oct 2026</b></div></aside>
+  </article>
+
+  <article class="sheet" aria-labelledby="c2">
+    <div class="sheet-body">
+      <p class="ann">Research · public record</p>
+      <h2 id="c2">What happened</h2>
+      <p>A Google Cloud failure in the London region (europe-west2) hit Revolut from about 07:00 UTC. Revolut announced services were restored in an update reported at 17:52 UTC, so the outage lasted up to roughly 10 to 11 hours.</p>
+      <div class="sched-wrap"><table class="sched">
+        <thead><tr><th scope="col">What</th><th scope="col">Detail</th><th scope="col">Source</th></tr></thead>
+        <tbody>
+          <tr><td>Features down</td><td>Login, card payments (physical cards in shops too), transfers, cash withdrawals, exchange, trading, live chat</td><td><a href="https://www.financemagnates.com/fintech/multiple-features-down-revoluts-app-and-cards-stall-on-a-tuesday-morning/">Finance Magnates</a>, <a href="https://www.itv.com/news/2026-10-20/revolut-services-down-as-google-cloud-apologises-for-outage">ITV</a>, <a href="https://bleepingcomputer.com/news/security/revolut-outage-disrupts-online-banking-operations-worldwide">BleepingComputer</a></td></tr>
+          <tr><td>Scale</td><td>28 services listed as partially unavailable; 1,500+ Downdetector reports</td><td>BleepingComputer, ITV</td></tr>
+          <tr><td>Regions</td><td>UK, Ireland, France, Spain, Romania, Greece</td><td>Finance Magnates, <a href="https://greekcitytimes.com/2026/10/20/revolut-outage-greece-europe/">Greek City Times</a></td></tr>
+          <tr><td>In the app</td><td>A generic "Something went wrong" message</td><td>Greek City Times, Finance Magnates</td></tr>
+          <tr><td>Where Revolut spoke</td><td>X: "all our customers' money and data are safe"; no fix timeframe given</td><td>All four</td></tr>
+          <tr><td>Status page</td><td>Showed disruption in some reports, still "operational" in one</td><td>BleepingComputer vs Greek City Times</td></tr>
+          <tr><td>Compensation</td><td>None reported</td><td>All four</td></tr>
+        </tbody>
+      </table></div>
+      <p class="callout">The cause was outside Revolut. The experience of the cause was not.</p>
+    </div>
+    <aside class="titleblock" aria-label="Sheet details"><div class="no"><span class="bubble"><span class="t">01</span><span class="b">C2</span></span><span class="ann">Detail 2<br>Context</span></div><div><span class="ann">Cause</span><b>Google Cloud, europe-west2</b></div><div><span class="ann">Duration</span><b>About 10 to 11 hours</b></div><div><span class="ann">Sources</span><b>4 news reports</b></div></aside>
+  </article>
+
+  <article class="sheet" aria-labelledby="c3">
+    <div class="sheet-body">
+      <p class="ann">Synthesize</p>
+      <h2 id="c3">Where the experience broke</h2>
+      <p>Five silent moments turned a technical failure into a trust failure.</p>
+      <div class="sched-wrap"><table class="sched">
+        <thead><tr><th scope="col">Rank</th><th scope="col">Moment</th><th scope="col">What I got</th><th scope="col">What I needed</th></tr></thead>
+        <tbody>
+          <tr><td class="k">P0</td><td>Card declined at the till</td><td>No push, no reason</td><td>"Revolut is having problems. It's not your card or your balance."</td></tr>
+          <tr><td class="k">P0</td><td>ATM refused</td><td>Silence again</td><td>To know that cash was down too, before I walked there</td></tr>
+          <tr><td class="k">P0</td><td>Opening the app</td><td>"Something went wrong"</td><td>What is down, what still works, and that my money is safe</td></tr>
+          <tr><td class="k">P1</td><td>Asking for help</td><td>A chat that seemed to work but didn't</td><td>An honest "Support is affected too. Here's what we know."</td></tr>
+          <tr><td class="k">P1</td><td>The explanation</td><td>An email, hours later</td><td>The same message in the app, where everything else happens</td></tr>
+        </tbody>
+      </table></div>
+      <p class="callout"><b>Problem statement.</b> Revolut customers rely on the app for everyday money, often with no second bank card. When a service fails, they can't tell what is broken, whether their money is safe, or what to do next. So they retry, walk to ATMs, contact support that can't answer, and leave with less trust.</p>
+    </div>
+    <aside class="titleblock" aria-label="Sheet details"><div class="no"><span class="bubble"><span class="t">01</span><span class="b">C3</span></span><span class="ann">Detail 3<br>Problem</span></div><div><span class="ann">Ranking</span><b>P0 blocks, P1 friction</b></div><div><span class="ann">Silent moments</span><b>5</b></div><div><span class="ann">Truth found on</span><b>X, Reddit, email</b></div></aside>
+  </article>
+
+  <article class="sheet featured" aria-labelledby="c4">
+    <div class="sheet-body">
+      <p class="ann">Research · 22 public accounts</p>
+      <h2 id="c4">It wasn't just me</h2>
+      <div class="dim">
+        <svg viewBox="0 0 600 18" preserveAspectRatio="none" aria-hidden="true"><g stroke="#ffc94a" stroke-width="1" fill="none"><path d="M1 2 V16 M599 2 V16 M1 9 H599"/><path d="M1 9 l8 -4 v8 z M599 9 l-8 -4 v8 z" fill="#ffc94a"/></g></svg>
+        <div class="stat"><strong>19 of 22</strong><span>public accounts from 20 October describe a card failing at a till: a coffee, a bus ticket, a butcher, a taxi to the airport, petrol.</span></div>
+      </div>
+      <p>The feeling that came up most was embarrassment, not inconvenience. People had no backup, or their backup was a second Revolut card.</p>
+      <ul class="tally" aria-label="Accounts by moment, out of 22">
+        <li><span>Card failed at a till or checkout</span><i style="--n:19"></i><b>19</b></li>
+        <li><span>App wouldn't open or work</span><i style="--n:6"></i><b>6</b></li>
+        <li><span>Learned what was happening outside the app, or not at all</span><i style="--n:5"></i><b>5</b></li>
+        <li><span>Stuck while travelling</span><i style="--n:5"></i><b>5</b></li>
+        <li><span>Couldn't reach support</span><i style="--n:2"></i><b>2</b></li>
+        <li><span>Tried an ATM, and it failed</span><i style="--n:1"></i><b>1</b></li>
+        <li><span>Says they lost trust or wants compensation</span><i style="--n:2"></i><b>2</b></li>
+      </ul>
+      <div class="quotes">
+        <blockquote><p>"My card got declined this morning when I tried to pay for my coffee. The app was down… this wasn't reflected on their website's status page. No support lines available and zero announcements."</p><cite><a href="https://x.com/KristiKumrija/status/2112445866401304826">Kristi Kumrija on X</a></cite></blockquote>
+        <blockquote><p>"The funds were in my account, I felt embarrassed and frustrated."</p><cite>Kathleen Slattery, <a href="https://limerickvoice.com/news/revolut-issues-affect-millions-of-irish-users/">Limerick Voice</a></cite></blockquote>
+        <blockquote><p>"I'm at a petrol station in Australia. Can't pay for the fuel I just put in my car… Won't trust Revolut again."</p><cite>via <a href="https://cybernews.com/tech/google-cloud-outage-revolut-hsbc-lloyds/">Cybernews</a></cite></blockquote>
+      </div>
+      <p class="note">Checked by hand: I opened 6 of the sources myself and re-tagged each one (<a href="https://www.dapperandgroomed.com/blog/revolut-is-down-and-i-cant-even-send-my-kids-money-for-lunch">a parent's blog</a>, <a href="https://x.com/KristiKumrija/status/2112445866401304826">Kristi Kumrija</a>, <a href="https://limerickvoice.com/news/revolut-issues-affect-millions-of-irish-users/">Limerick Voice</a>, <a href="https://cybernews.com/tech/google-cloud-outage-revolut-hsbc-lloyds/">Cybernews</a>, <a href="https://www.elgrupoinformatico.com/apps/revolut-caida-nivel-mundial/">El Grupo Informático</a>, <a href="https://www.clubic.com/actualite-635017-revolut-en-panne-l-application-pose-probleme-le-support-reconnait-un-incident.html">Clubic</a>). Only one public account mentions an ATM, so the ATM moment rests mostly on my own day.</p>
+      <p class="note">Limits: about 10 of the 22 are verbatim first-person posts; the rest are journalists' paraphrases, who favour vivid till moments. Reddit and Downdetector couldn't be read, so support and app complaints are probably undercounted. One report says no push or in-app banner was sent to all customers (<a href="https://www.le-vpn.com/revolut-outage-october-2026/">Le VPN</a>).</p>
+    </div>
+    <aside class="titleblock" aria-label="Sheet details"><div class="no"><span class="bubble"><span class="t">01</span><span class="b">C4</span></span><span class="ann">Detail 4<br>Featured</span></div><div><span class="ann">Method</span><b>Affinity tagging of 22 accounts</b></div><div><span class="ann">Sources</span><b>X posts, news quotes</b></div><div><span class="ann">Top feeling</span><b>Embarrassment</b></div></aside>
+  </article>
+
+  <article class="sheet" aria-labelledby="c5">
+    <div class="sheet-body">
+      <p class="ann">Design</p>
+      <h2 id="c5">Outage mode</h2>
+      <p>One idea runs through every proposal: when Revolut is broken, the app says so first, in the app, in plain words.</p>
+      <div class="proposal">
+        <div class="phone" role="img" aria-label="Concept wireframe of the home screen with an outage banner: cards, transfers, ATM and chat are affected, your money is safe, next update by 10:30, and the balance is marked last updated 07:42">
+          <div class="ph-top"><span>09:58</span><span>●●●</span></div>
+          <div class="ph-banner">
+            <b>We're having problems</b>
+            <span>Cards, transfers, ATM and chat are affected. Your money is safe.</span>
+            <span class="ph-up">Next update by 10:30 →</span>
+          </div>
+          <div class="ph-bal"><small>Main · EUR</small><strong>€ 412.60</strong><small>Last updated 07:42</small></div>
+          <div class="ph-sync"><span>Last synced 07:42</span><small>Anything you tried after this may not have gone through. It will show here when we're back.</small></div>
+          <div class="ph-row"><span>Coffee</span><span>−€3.40 · 07:31</span></div>
+          <div class="ph-row dim2"><span>Salary</span><span>+€1,450.00</span></div>
+          <p class="ph-cap">Concept wireframe · Screen 1 of 4</p>
+        </div>
+        <div class="prop-list">
+          <p class="ann">During</p>
+          <ol class="steps">
+            <li><b>An honest banner on the home screen.</b> It replaces "Something went wrong" with what is down, what still works, "Your money is safe" and "Next update by 10:30". Tapping it opens a live incident page.</li>
+            <li><b>Last known balance and a sync line.</b> During an outage the app can't know about a payment that just failed, so it doesn't pretend to. It shows the cached balance and transactions up to the last sync, then draws a line: "Last synced 07:42. Anything you tried after this may not have gone through."</li>
+            <li><b>A push at the moment of decline.</b> "This one's on us. Cards are affected right now. Try another card or cash; ATMs are affected too."</li>
+            <li><b>Honest support.</b> When chat is affected, the help screen says so and shows the incident page. Requests are queued: "We'll reply when chat is back."</li>
+          </ol>
+          <p class="ann">After</p>
+          <ol class="steps" start="5"><li><b>A personal summary in the app</b>, not only by email: "During the outage, 2 card payments were declined and 1 transfer was delayed. Here is the status of each."</li></ol>
+          <p class="ann">Before</p>
+          <ol class="steps" start="6"><li><b>A light backup nudge.</b> A one-time tip: "Add a backup card to your wallet for days when any bank has problems." It matters most for customers abroad.</li></ol>
+        </div>
+      </div>
+      <div class="storyboard" id="screens">
+        <p class="ann">From what I saw, to my sketch, to hi-fi</p>
+        <p class="st-credit">Sketches and ideas by me, drawn in Procreate over my own screenshots. Hi-fi screens built in Figma by Claude from my sketches.</p>
+      <div class="st-row" id="scr-home">
+        <h3>1 · Home screen</h3>
+        <div class="st-grid">
+        <figure class="st-cell was"><div class="vp bare"><img src="img/sk-home-before.jpg" alt="My real home screen, balance hidden." width="675" height="1500" loading="lazy"></div><figcaption><b>How it was.</b> My real home screen, balance hidden.</figcaption></figure>
+        <figure class="st-cell sketch"><div class="vp bare"><img src="img/sk-home-sketch.jpg" alt="Banner on top, sync line above the transactions." width="615" height="1500" loading="lazy"></div><figcaption><b>My sketch.</b> Banner on top, sync line above the transactions.</figcaption></figure>
+        <figure class="st-cell hifi"><div class="vp bare"><img src="img/hifi-home.png" alt="Built in Figma by Claude." width="600" height="1298" loading="lazy"></div><figcaption><b>Hi-fi.</b> Built in Figma by Claude.</figcaption></figure>
+        </div>
+      </div>
+      <div class="st-row" id="scr-lock">
+        <h3>2 · Lock screen at the till</h3>
+        <div class="st-grid">
+        <figure class="st-cell was"><div class="vp bare"><img src="img/sk-lock-before.jpg" alt="No notification at all." width="675" height="1500" loading="lazy"></div><figcaption><b>How it was.</b> No notification at all.</figcaption></figure>
+        <figure class="st-cell sketch"><div class="vp bare"><img src="img/sk-lock-sketch.jpg" alt=""This one is on us", then what to do." width="675" height="1500" loading="lazy"></div><figcaption><b>My sketch.</b> "This one is on us", then what to do.</figcaption></figure>
+        <figure class="st-cell hifi"><div class="vp bare"><img src="img/hifi-lock.png" alt="Built in Figma by Claude." width="600" height="1298" loading="lazy"></div><figcaption><b>Hi-fi.</b> Built in Figma by Claude.</figcaption></figure>
+        </div>
+      </div>
+      <div class="st-row" id="scr-chat">
+        <h3>3 · Support chat</h3>
+        <div class="st-grid">
+        <figure class="st-cell was"><div class="vp bare"><img src="img/hifi-chatb.png" alt="Redrawn, because the app blocks screenshots of chat." width="600" height="1298" loading="lazy"></div><figcaption><b>How it was.</b> Redrawn, because the app blocks screenshots of chat.</figcaption></figure>
+        <figure class="st-cell sketch"><div class="vp bare"><img src="img/sk-chat-sketch.jpg" alt="Chat says it is affected; the message is saved." width="675" height="1500" loading="lazy"></div><figcaption><b>My sketch.</b> Chat says it is affected; the message is saved.</figcaption></figure>
+        <figure class="st-cell hifi"><div class="vp bare"><img src="img/hifi-chat.png" alt="Built in Figma by Claude." width="600" height="1298" loading="lazy"></div><figcaption><b>Hi-fi.</b> Built in Figma by Claude.</figcaption></figure>
+        </div>
+      </div>
+      <p class="note">And after the outage: besides the apology email, I'd show a short personal summary in the app, listing what happened to each payment that failed.</p>
+      </div>
+      <div class="check">
+        <p class="ann">Technical notes</p>
+        <ul class="steps">
+          <li>The banner can't depend on the systems that are down. It needs a light status feed, hosted apart from the core banking stack, that the app checks on launch.</li>
+          <li>A cached balance needs a clear timestamp and must never look live.</li>
+          <li>The decline push needs payments to tell an outage decline apart from a balance or fraud decline. If that signal is down too, the push comes from the status feed.</li>
+        </ul>
+      </div>
+    </div>
+    <aside class="titleblock" aria-label="Sheet details"><div class="no"><span class="bubble"><span class="t">01</span><span class="b">C5</span></span><span class="ann">Detail 5<br>Proposal</span></div><div><span class="ann">Proposals</span><b>6, before, during and after</b></div><div><span class="ann">Screens</span><b>4, 3 sketched so far</b></div><div><span class="ann">Size</span><b>iPhone, 390 × 844</b></div></aside>
+  </article>
+
+  <article class="sheet" aria-labelledby="c6">
+    <div class="sheet-body">
+      <p class="ann">Plan · measure</p>
+      <h2 id="c6">How we'd know it worked</h2>
+      <p>The north star is trust after the incident: affected customers stay, and still use Revolut as their main card.</p>
+      <div class="sched-wrap"><table class="sched">
+        <thead><tr><th scope="col">Metric</th><th scope="col">Why it matters</th><th scope="col">Direction</th></tr></thead>
+        <tbody>
+          <tr><td>Repeat attempts after an outage decline</td><td>Retries mean people don't know why it failed</td><td class="k">↓ Down</td></tr>
+          <tr><td>Support contacts during an incident</td><td>An honest banner answers the question before chat</td><td class="k">↓ Down</td></tr>
+          <tr><td>Customers who open the banner or incident page</td><td>Shows the message reached people in the app</td><td class="k">↑ Up</td></tr>
+          <tr><td>App store rating and review sentiment in the week after</td><td>The public trust signal</td><td class="k">→ Steady</td></tr>
+          <tr><td>30-day churn and card spend of affected customers</td><td>The real cost of lost trust</td><td class="k">= Unaffected</td></tr>
+        </tbody>
+      </table></div>
+      <p class="sub">Since outages are rare, I'd test it first in planned maintenance windows and smaller partial incidents.</p>
+    </div>
+    <aside class="titleblock" aria-label="Sheet details"><div class="no"><span class="bubble"><span class="t">01</span><span class="b">C6</span></span><span class="ann">Detail 6<br>Metrics</span></div><div><span class="ann">North star</span><b>Trust after the incident</b></div><div><span class="ann">Test in</span><b>Maintenance windows, partial incidents</b></div></aside>
+  </article>
+
+  <section class="about" aria-labelledby="src">
+    <div style="display:grid;gap:14px">
+      <p class="ann">General notes</p>
+      <h2 id="src">Sources and limits</h2>
+      <p>My own story is one data point, so I checked it against 22 public accounts before designing. The four screens are being drawn in Figma now, each next to its "before". This is a personal concept, not affiliated with Revolut.</p>
+    </div>
+    <ul aria-label="Sources">
+      <li><span class="ann">News</span><span><a href="https://www.financemagnates.com/fintech/multiple-features-down-revoluts-app-and-cards-stall-on-a-tuesday-morning/">Finance Magnates</a>, <a href="https://www.itv.com/news/2026-10-20/revolut-services-down-as-google-cloud-apologises-for-outage">ITV</a>, <a href="https://bleepingcomputer.com/news/security/revolut-outage-disrupts-online-banking-operations-worldwide">BleepingComputer</a>, <a href="https://greekcitytimes.com/2026/10/20/revolut-outage-greece-europe/">Greek City Times</a></span></li>
+      <li><span class="ann">Accounts</span><span>22 posts and quotes from X and news coverage, tagged by moment</span></li>
+      <li><span class="ann">Back</span><span><a href="index.html">← All sheets</a></span></li>
+    </ul>
+  </section>
+</main>
+
+<footer class="cmd" aria-label="Contact">
+  <div class="cmd-in">
+    <span class="prev">Command: OPEN Sheet_01_detail</span>
+    <div class="now"><span class="prompt">Command:</span>
+      <button type="button" class="cmdbtn" data-copy="ebru.timinci@gmail.com">COPY_EMAIL</button>
+      <a class="cmdbtn" href="https://claude.ai/artifact/Ffg8t7yfNtaQm1NFbazDuo">OPEN_CV</a>
+      <a class="cmdbtn" href="https://www.linkedin.com/in/ebru-timinci/">LINKEDIN</a>
+      <a class="cmdbtn" href="https://github.com/ebrutiminci">GITHUB</a>
+      <a class="cmdbtn" href="https://x.com/ebrutiminci">X</a><span class="caret" aria-hidden="true"></span>
+    </div>
+    <span class="out" aria-live="polite">ebru.timinci@gmail.com · London or remote from İzmir, Turkey</span>
+  </div>
+</footer>
+<script src="blueprint.js"></script>
+</body>
+</html>
