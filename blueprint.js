@@ -105,7 +105,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
   bar.innerHTML =
     '<span class="sb-menu" aria-hidden="true"><i></i><i></i><i></i></span>' +
     tab('model', 'Model', 'index.html') + tab('layout1', 'Revolut', 'casestudy.html') +
-    tab('app', 'Research App', 'app.html') + tab('bus', 'Bus Widget', home + '#s3') +
+    tab('app', 'Research<span class="sb-long"> App</span>', 'app.html') + tab('bus', 'Bus<span class="sb-long"> Widget</span>', home + '#s3') +
     tab('layout2', 'Thesis', 'thesis.html') +
     '<span class="sb-iso" hidden></span>' +
     '<span class="sb-mode">' + (space === 'model' ? 'MODEL' : 'PAPER') + '</span>' +
@@ -279,3 +279,9 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
 
 // External links open in a new tab, so the viewer never blocks them
 document.querySelectorAll('a[href^="http"]').forEach(function (a) { a.target = '_blank'; a.rel = 'noopener'; });
+document.querySelectorAll('table.sched').forEach(function (t) {
+  var heads = Array.prototype.map.call(t.querySelectorAll('thead th'), function (th) { return th.textContent.trim(); });
+  t.querySelectorAll('tbody tr').forEach(function (tr) {
+    Array.prototype.forEach.call(tr.children, function (td, i) { if (heads[i]) td.setAttribute('data-label', heads[i]); });
+  });
+});

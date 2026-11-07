@@ -443,3 +443,23 @@ html.zoomed { overflow: hidden; }
 .st-cell.hifi figcaption b { color: var(--line); }
 .st-note { aspect-ratio: 9 / 19.5; max-width: 220px; width: 100%; margin: 0 auto; border: 1.5px dashed var(--line-faint); border-radius: 22px; display: grid; place-items: center; padding: 20px; text-align: center; font: 400 0.85rem/1.5 var(--body); color: var(--text-soft); }
 @media (max-width: 560px) { .st-grid { gap: 10px; } .st-cell figcaption { font-size: 0.66rem; } }
+
+/* v3: phone fixes. Bigger bottom bar above the gesture area; tables stack as cards */
+@media (max-width: 759px) {
+  .statusbar { height: calc(54px + env(safe-area-inset-bottom, 0px)); padding-bottom: env(safe-area-inset-bottom, 0px); font-size: 1rem; overflow-x: auto; scrollbar-width: none; }
+  .statusbar::-webkit-scrollbar { display: none; }
+  .sb-tab { flex: 0 0 auto; padding: 0 14px; font-size: 1rem; }
+  .sb-grid { width: 54px; flex: 0 0 auto; position: sticky; right: 0; }
+  .sched-wrap { overflow: visible; border: 0; }
+  .sched, .sched tbody, .sched tr, .sched td { display: block; width: 100%; }
+  .sched thead { display: none; }
+  .sched tr { border: 1px solid var(--line-soft); margin-bottom: 10px; padding: 12px 14px; }
+  .sched td { padding: 4px 0; border: 0 !important; }
+  .sched td:first-child { font-weight: 600; font-size: 1rem; padding-bottom: 6px; }
+  .sched td.k:first-child { font: 500 0.85rem var(--mono); }
+  .sched td[data-label]:not(:first-child)::before { content: attr(data-label); display: block; font: 500 0.68rem var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-soft); margin-bottom: 2px; }
+}
+@media (max-width: 759px) {
+  .sb-long { display: none; }
+  .sb-tab { flex: 1 1 auto; padding: 0 10px; }
+}
