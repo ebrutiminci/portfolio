@@ -284,6 +284,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
   });
   var g = bar.querySelector('.sb-grid');
   g.addEventListener('click', function () { var off = document.documentElement.classList.toggle('no-grid'); g.classList.toggle('on', !off); g.setAttribute('aria-pressed', String(!off)); });
+  window.BP = { run: execute, say: say, layers: LAYERS, grid: function () { g.click(); return !document.documentElement.classList.contains('no-grid'); } };
 })();
 
 // External links open in a new tab, so the viewer never blocks them

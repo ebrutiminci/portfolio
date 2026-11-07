@@ -1,52 +1,89 @@
-/* MODIFY: a tiny AutoCAD-style toolbar for the sheets on the home board (desktop only).
-   MOVE, STRETCH (resize the width, the sheet reflows like on a phone), ROTATE, MIRROR, RESTORE. */
+/* Top ribbon (desktop): MODIFY tools for the home board sheets, and VIEW tools on every page.
+   MOVE, STRETCH (the sheet reflows like a phone screen), ROTATE, MIRROR, RESTORE.
+   AutoCAD hot grips: click a corner grip, Enter cycles Stretch > Move > Rotate > Mirror, click to place, Esc cancels.
+   The arrangement is saved in this browser and comes back on the next visit. */
 (function () {
-  var wrap = document.querySelector('main.wrap');
-  if (!wrap || document.documentElement.classList.contains('is-layout')) return;
-  var sheets = Array.prototype.slice.call(wrap.querySelectorAll(':scope > .sheet'));
-  if (!sheets.length) return;
   var wide = window.matchMedia('(min-width: 1024px)');
+  var html = document.documentElement;
+  var wrap = document.querySelector('main.wrap');
+  var board = !!wrap && !html.classList.contains('is-layout');
+  var sheets = board ? Array.prototype.slice.call(wrap.querySelectorAll(':scope > .sheet')) : [];
+  if (!sheets.length) board = false;
+  var KEY = 'ebru-board-v1', TIP = 'ebru-board-tip';
+  function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
+  function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 
   var ICON = {
+    select: '<path d="M5 3l10 6.5-4.2 1.1L13.5 16l-2 1-2.7-5.4L5.5 14.5z"/>',
     move: '<path d="M10 2v16M2 10h16M10 2 7.5 4.5M10 2l2.5 2.5M10 18l-2.5-2.5M10 18l2.5-2.5M2 10l2.5-2.5M2 10l2.5 2.5M18 10l-2.5-2.5M18 10l-2.5 2.5"/>',
     stretch: '<path d="M2.5 5h8v10h-8z" stroke-dasharray="2 1.6"/><path d="M10.5 10h7M15 7.5l2.5 2.5-2.5 2.5"/>',
     rotate: '<path d="M16 10a6 6 0 1 1-1.8-4.3"/><path d="M15.5 2.5v3.6h-3.6"/><path d="M7 13l3-6 3 6z"/>',
     mirror: '<path d="M10 2v16" stroke-dasharray="2 1.6"/><path d="M7.5 5 2.5 15h5z"/><path d="M12.5 5l5 10h-5z"/>',
     restore: '<path d="M4 7h8a4.5 4.5 0 0 1 0 9H7"/><path d="M4 7l3-3M4 7l3 3"/>',
-    close: '<path d="M5 5l10 10M15 5 5 15"/>'
+    zoom: '<circle cx="8.5" cy="8.5" r="5.5"/><path d="M12.5 12.5 18 18M8.5 6v5M6 8.5h5"/>',
+    layiso: '<path d="M10 3 2 7l8 4 8-4z"/><path d="M2 10.5l8 4 8-4" stroke-dasharray="2 1.6"/><path d="M2 14l8 4 8-4" stroke-dasharray="2 1.6"/>',
+    layuniso: '<path d="M10 3 2 7l8 4 8-4z"/><path d="M2 10.5l8 4 8-4M2 14l8 4 8-4"/>',
+    grid: '<path d="M2 2h16v16H2zM2 7.3h16M2 12.7h16M7.3 2v16M12.7 2v16"/>'
   };
-  var TOOLS = [
-    ['move', 'Move', 'M', 'Drag a sheet to move it. Sheets can overlap; the one you pick comes to the front.'],
-    ['stretch', 'Stretch', 'S', 'Drag a corner grip. The sheet reflows like a phone or a tablet screen.'],
-    ['rotate', 'Rotate', 'RO', 'Drag around a sheet to rotate it. Snaps every 15°, hold Shift for free.'],
-    ['mirror', 'Mirror', 'MI', 'Click a sheet to mirror it. Click again to flip it back.']
+  var MOD = [
+    ['select', 'Select', 'Esc', 'SELECT  Sheets work as normal: open links, read, scroll.'],
+    ['move', 'Move', 'M', 'MOVE  Drag a sheet. Sheets can overlap; the one you pick comes to the front.'],
+    ['stretch', 'Stretch', 'S', 'STRETCH  Drag a corner grip. The sheet reflows like a phone or a tablet screen.'],
+    ['rotate', 'Rotate', 'RO', 'ROTATE  Drag around a sheet. Snaps every 15°, hold Shift for free.'],
+    ['mirror', 'Mirror', 'MI', 'MIRROR  Click a sheet to mirror it. Click again to flip it back.']
   ];
   function svg(k) { return '<svg viewBox="0 0 20 20" aria-hidden="true">' + ICON[k] + '</svg>'; }
+  function btn(k, label, key, extra) {
+    return '<button type="button" class="rb-btn' + (extra || '') + '" data-k="' + k + '" title="' + label + (key ? ' (' + key + ')' : '') + '">' + svg(k) + '<span>' + label + '</span></button>';
+  }
 
-  var pal = document.createElement('div');
-  pal.className = 'bp-tools'; pal.hidden = true; pal.setAttribute('role', 'toolbar'); pal.setAttribute('aria-label', 'Modify the sheets');
-  pal.innerHTML = '<p class="bp-title">Modify</p>' +
-    TOOLS.map(function (t) {
-      return '<button type="button" class="bp-btn" data-tool="' + t[0] + '" title="' + t[1] + ' (' + t[2] + ')">' + svg(t[0]) + '<span>' + t[1] + '</span><kbd>' + t[2] + '</kbd></button>';
-    }).join('') +
-    '<hr><button type="button" class="bp-btn bp-restore" title="Put every sheet back">' + svg('restore') + '<span>Restore</span></button>' +
-    '<button type="button" class="bp-btn bp-close" title="Restore and close the toolbar">' + svg('close') + '<span>Close</span></button>' +
-    '<p class="bp-prompt" aria-live="polite"></p>';
-  document.body.appendChild(pal);
-  var prompt = pal.querySelector('.bp-prompt');
+  // ---------- Ribbon ----------
+  var rb = document.createElement('div');
+  rb.className = 'ribbon'; rb.setAttribute('role', 'toolbar'); rb.setAttribute('aria-label', 'Drawing tools');
+  rb.innerHTML =
+    (board ? '<div class="rb-group"><span class="rb-label">Modify</span>' +
+      MOD.map(function (t) { return btn(t[0], t[1], t[2]); }).join('') +
+      btn('restore', 'Restore', '', ' rb-restore') + '</div>' : '') +
+    '<div class="rb-group"><span class="rb-label">View</span>' + btn('zoom', 'Zoom', 'Z') +
+    '<span class="rb-drop">' + btn('layiso', 'Layiso ▾', '') + '<span class="rb-menu" hidden></span></span>' +
+    btn('layuniso', 'Layuniso', '') + btn('grid', 'Grid', '', ' on') + '</div>' +
+    '<p class="rb-prompt" aria-live="polite"></p>';
+  document.body.appendChild(rb);
+  var prompt = rb.querySelector('.rb-prompt'), menu = rb.querySelector('.rb-menu');
+  function say(t, hot) { prompt.textContent = t; prompt.classList.toggle('hot', !!hot); }
+  function run(c) { if (window.BP) window.BP.run(c); }
 
-  var toggle = document.createElement('button');
-  toggle.type = 'button'; toggle.className = 'sb-modify'; toggle.textContent = 'MODIFY'; toggle.title = 'Move, stretch, rotate and mirror the sheets';
-  var bar = document.querySelector('.statusbar');
-  if (bar) bar.insertBefore(toggle, bar.querySelector('.sb-mode'));
+  function fill() {
+    var L = (window.BP && window.BP.layers) || [];
+    menu.innerHTML = L.map(function (l) { return '<button type="button" data-l="' + l + '">' + l + '</button>'; }).join('');
+  }
+  rb.addEventListener('click', function (e) {
+    var l = e.target.closest('[data-l]');
+    if (l) { run('LAYISO ' + l.dataset.l); menu.hidden = true; return; }
+    var b = e.target.closest('.rb-btn'); if (!b) return;
+    var k = b.dataset.k;
+    if (k === 'zoom') run('ZOOM');
+    else if (k === 'layiso') { fill(); menu.hidden = !menu.hidden; }
+    else if (k === 'layuniso') run('LAYUNISO');
+    else if (k === 'grid') { var g = window.BP && window.BP.grid(); b.classList.toggle('on', !!g); }
+    else if (k === 'restore') restore();
+    else pick(k);
+  });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.rb-drop')) menu.hidden = true; });
 
-  var legend = wrap.querySelector(':scope > .legend');
-  var tryBtn = document.createElement('button');
-  tryBtn.type = 'button'; tryBtn.className = 'bp-try';
-  tryBtn.innerHTML = svg('stretch') + '<span>Try MODIFY: move, stretch, rotate the sheets</span>';
-  if (legend) legend.appendChild(tryBtn);
+  function sync() {
+    rb.hidden = !wide.matches;
+    html.classList.toggle('has-ribbon', wide.matches);
+    if (!wide.matches && on) leave();
+  }
+  if (wide.addEventListener) wide.addEventListener('change', sync);
+  sync();
+  say(board ? 'Pick a Modify tool to rearrange the sheets, or type M, S, RO, MI.' : 'Zoom into a drawing, or isolate one layer of the method.');
 
-  var on = false, tool = 'move', order = sheets.slice(), st = new Map(), holders = [];
+  if (!board) { window.BPTools = { cmd: function () { return 'Modify works on the home board.'; } }; return; }
+
+  // ---------- Board editing ----------
+  var on = false, tool = 'select', order = sheets.slice(), st = new Map(), holders = [], used = 0;
 
   function apply(s) {
     var o = st.get(s);
@@ -57,19 +94,27 @@
   }
   function stack() { order.forEach(function (s, i) { s.style.zIndex = 10 + i; }); }
   function front(s) { order.splice(order.indexOf(s), 1); order.push(s); stack(); }
+  function save() {
+    used++;
+    store(KEY, JSON.stringify({
+      s: sheets.map(function (s) { var o = st.get(s); return [Math.round(o.x), Math.round(o.y), Math.round(o.w), Math.round(o.r * 10) / 10, o.f ? 1 : 0]; }),
+      z: order.map(function (s) { return sheets.indexOf(s); })
+    }));
+  }
 
-  function enter() {
+  function enter(saved) {
     if (on || !wide.matches) return;
     on = true;
     var wr = wrap.getBoundingClientRect();
     var rects = sheets.map(function (s) { return s.getBoundingClientRect(); });
-    document.documentElement.classList.add('bp-edit');
+    html.classList.add('bp-edit');
     sheets.forEach(function (s, i) {
       var r = rects[i];
       var h = document.createElement('div'); h.className = 'bp-holder'; h.style.height = r.height + 'px';
       s.parentNode.insertBefore(h, s); holders.push(h);
       var o = { x: r.left - wr.left, y: r.top - wr.top, w: r.width, r: 0, f: false };
       o.home = { x: o.x, y: o.y, w: o.w };
+      if (saved && saved.s[i]) { var v = saved.s[i]; o.x = v[0]; o.y = v[1]; o.w = v[2]; o.r = v[3]; o.f = !!v[4]; }
       st.set(s, o);
       var skin = document.createElement('div'); skin.className = 'bp-skin';
       skin.innerHTML = '<i class="bp-g" data-c="nw"></i><i class="bp-g" data-c="ne"></i><i class="bp-g" data-c="sw"></i><i class="bp-g" data-c="se"></i><b class="bp-ang"></b>';
@@ -77,111 +122,168 @@
       skin.addEventListener('pointerdown', down);
       apply(s);
     });
+    if (saved && saved.z && saved.z.length === sheets.length) order = saved.z.map(function (i) { return sheets[i]; });
     stack();
-    pal.hidden = false; toggle.classList.add('on'); toggle.setAttribute('aria-pressed', 'true');
-    pick(tool);
   }
   function leave() {
     if (!on) return;
-    on = false;
+    on = false; hot && cancelHot();
     sheets.forEach(function (s) {
       var k = s.querySelector('.bp-skin'); if (k) k.remove();
       ['left', 'top', 'width', 'transform', 'zIndex'].forEach(function (p) { s.style[p] = ''; });
       s.classList.remove('bp-narrow', 'bp-tiny', 'bp-anim');
     });
     holders.forEach(function (h) { h.remove(); }); holders = [];
-    document.documentElement.classList.remove('bp-edit');
-    pal.hidden = true; toggle.classList.remove('on'); toggle.setAttribute('aria-pressed', 'false');
+    html.classList.remove('bp-edit');
+    order = sheets.slice();
   }
-  function restore(then) {
-    if (!on) return;
+  function restore() {
+    store(KEY, null);
+    if (!on) { say('Everything is already in its place.'); return; }
+    if (hot) cancelHot();
     sheets.forEach(function (s) {
-      var o = st.get(s);
-      s.classList.add('bp-anim');
-      o.x = o.home.x; o.y = o.home.y; o.w = o.home.w; o.r = 0; o.f = false;
-      apply(s);
+      var o = st.get(s); s.classList.add('bp-anim');
+      o.x = o.home.x; o.y = o.home.y; o.w = o.home.w; o.r = 0; o.f = false; apply(s);
     });
     order = sheets.slice(); stack();
     say('Restored. Every sheet is back in its place.');
-    setTimeout(function () { sheets.forEach(function (s) { s.classList.remove('bp-anim'); }); if (then) then(); }, 520);
+    setTimeout(function () { leave(); pick('select', true); }, 520);
   }
-  function pick(t) {
+  function pick(t, quiet) {
     tool = t;
-    document.documentElement.setAttribute('data-bp-tool', t);
-    pal.querySelectorAll('[data-tool]').forEach(function (b) { b.setAttribute('aria-pressed', b.dataset.tool === t ? 'true' : 'false'); });
-    var d = TOOLS.filter(function (x) { return x[0] === t; })[0];
-    say(d[1].toUpperCase() + '  ' + d[3]);
+    if (t !== 'select') enter();
+    html.setAttribute('data-bp-tool', t);
+    rb.querySelectorAll('.rb-group:first-child [data-k]').forEach(function (b) {
+      if (b.dataset.k !== 'restore') b.setAttribute('aria-pressed', b.dataset.k === t ? 'true' : 'false');
+    });
+    if (!quiet) say(MOD.filter(function (x) { return x[0] === t; })[0][3]);
   }
-  function say(t) { prompt.textContent = t; }
 
+  // ---------- Dragging ----------
   var drag = null;
   function down(e) {
-    if (e.button !== 0) return;
-    var s = e.currentTarget.parentNode, o = st.get(s);
+    if (e.button !== 0 || tool === 'select' || hot) return;
+    var skin = e.currentTarget, s = skin.parentNode, o = st.get(s);
     e.preventDefault();
     front(s);
-    if (tool === 'mirror') { s.classList.add('bp-anim'); o.f = !o.f; apply(s); setTimeout(function () { s.classList.remove('bp-anim'); }, 420); return; }
     var c = e.target.dataset && e.target.dataset.c;
-    if (tool === 'stretch' && !c) { say('STRETCH  Grab one of the blue corner grips.'); return; }
+    if (!c && tool === 'mirror') { s.classList.add('bp-anim'); o.f = !o.f; apply(s); setTimeout(function () { s.classList.remove('bp-anim'); }, 420); save(); return; }
+    if (!c && tool === 'stretch') { say('STRETCH  Grab one of the blue corner grips.'); return; }
     var r = s.getBoundingClientRect();
-    var cx = r.left + r.width / 2, cy = r.top + r.height / 2;
-    drag = { s: s, o: o, c: c, x0: e.clientX, y0: e.clientY, ox: o.x, oy: o.y, ow: o.w, or: o.r,
-      a0: Math.atan2(e.clientY - cy, e.clientX - cx), cx: cx, cy: cy };
-    e.currentTarget.setPointerCapture(e.pointerId);
-    e.currentTarget.addEventListener('pointermove', move);
-    e.currentTarget.addEventListener('pointerup', up);
-    e.currentTarget.addEventListener('pointercancel', up);
+    drag = { s: s, o: o, c: c, mode: c ? 'stretch' : tool, x0: e.clientX, y0: e.clientY, ox: o.x, oy: o.y, ow: o.w, or: o.r,
+      cx: r.left + r.width / 2, cy: r.top + r.height / 2, moved: false };
+    drag.a0 = Math.atan2(e.clientY - drag.cy, e.clientX - drag.cx);
+    skin.setPointerCapture(e.pointerId);
+    skin.addEventListener('pointermove', move);
+    skin.addEventListener('pointerup', up);
+    skin.addEventListener('pointercancel', up);
     s.classList.add('bp-active');
   }
-  function move(e) {
-    if (!drag) return;
-    var d = drag, o = d.o, dx = e.clientX - d.x0, dy = e.clientY - d.y0;
-    if (tool === 'move') { o.x = d.ox + dx; o.y = d.oy + dy; }
-    else if (tool === 'stretch') {
+  function shape(d, mode, x, y, shift) {
+    var o = d.o, dx = x - d.x0, dy = y - d.y0;
+    if (mode === 'move') { o.x = d.ox + dx; o.y = d.oy + dy; o.w = d.ow; o.r = d.or; }
+    else if (mode === 'stretch') {
       var rad = d.or * Math.PI / 180, lx = dx * Math.cos(rad) + dy * Math.sin(rad);
       if (o.f) lx = -lx;
       var west = d.c === 'nw' || d.c === 'sw';
       var w = Math.max(320, Math.min(1500, d.ow + (west ? -lx : lx)));
-      o.w = w;
-      // keep the opposite edge where it was (for an unrotated sheet)
-      o.x = west ? d.ox + (d.ow - w) : d.ox;
+      o.w = w; o.x = west ? d.ox + (d.ow - w) : d.ox; o.y = d.oy; o.r = d.or;
       d.s.querySelector('.bp-ang').textContent = Math.round(w) + ' px';
     }
-    else if (tool === 'rotate') {
-      var a = Math.atan2(e.clientY - d.cy, e.clientX - d.cx), deg = d.or + (a - d.a0) * 180 / Math.PI;
-      if (!e.shiftKey) deg = Math.round(deg / 15) * 15;
+    else if (mode === 'rotate') {
+      var a = Math.atan2(y - d.cy, x - d.cx), deg = d.or + (a - d.a0) * 180 / Math.PI;
+      if (!shift) deg = Math.round(deg / 15) * 15;
       deg = ((deg % 360) + 540) % 360 - 180;
-      o.r = deg;
+      o.r = deg; o.x = d.ox; o.y = d.oy; o.w = d.ow;
       d.s.querySelector('.bp-ang').textContent = Math.round(deg) + '°';
     }
     apply(d.s);
   }
+  function move(e) {
+    if (!drag) return;
+    if (!drag.moved && Math.abs(e.clientX - drag.x0) + Math.abs(e.clientY - drag.y0) < 4) return;
+    drag.moved = true;
+    shape(drag, drag.mode, e.clientX, e.clientY, e.shiftKey);
+  }
   function up(e) {
     if (!drag) return;
-    var k = e.currentTarget;
+    var k = e.currentTarget, d = drag;
     k.removeEventListener('pointermove', move); k.removeEventListener('pointerup', up); k.removeEventListener('pointercancel', up);
-    drag.s.classList.remove('bp-active');
+    d.s.classList.remove('bp-active');
     drag = null;
+    if (d.moved) save();
+    else if (d.c) startHot(d, e);   // a click on a grip, without dragging: the grip turns hot
   }
 
-  pal.addEventListener('click', function (e) {
-    var b = e.target.closest('button'); if (!b) return;
-    if (b.dataset.tool) pick(b.dataset.tool);
-    else if (b.classList.contains('bp-restore')) restore();
-    else if (b.classList.contains('bp-close')) restore(leave);
+  // ---------- Hot grips (AutoCAD multifunction grips) ----------
+  var HOT = ['stretch', 'move', 'rotate', 'mirror'], hot = null;
+  function startHot(d, e) {
+    var g = d.s.querySelector('.bp-g[data-c="' + d.c + '"]'), gr = g.getBoundingClientRect();
+    hot = d; hot.i = 0; hot.g = g; hot.x0 = gr.left + gr.width / 2; hot.y0 = gr.top + gr.height / 2;
+    hot.a0 = Math.atan2(hot.y0 - d.cy, hot.x0 - d.cx); hot.f0 = d.o.f; hot.px = e.clientX; hot.py = e.clientY;
+    g.classList.add('hot'); d.s.classList.add('bp-active');
+    hotPrompt();
+    document.addEventListener('pointermove', hotMove);
+    document.addEventListener('pointerdown', hotDown, true);
+  }
+  function hotPrompt() { say('** ' + HOT[hot.i].toUpperCase() + ' **  Move the mouse, click to place. Enter: next mode. Esc: cancel.', true); }
+  function hotShow(shift) {
+    var m = HOT[hot.i], o = hot.o;
+    if (m === 'mirror') { o.x = hot.ox; o.y = hot.oy; o.w = hot.ow; o.r = hot.or; o.f = !hot.f0; apply(hot.s); }
+    else { o.f = hot.f0; shape(hot, m, hot.px, hot.py, shift); }
+  }
+  function hotMove(e) { hot.px = e.clientX; hot.py = e.clientY; hotShow(e.shiftKey); }
+  function hotDown(e) {
+    if (e.target.closest('.ribbon')) return;
+    e.preventDefault(); e.stopPropagation();
+    endHot(); save();
+  }
+  function endHot() {
+    document.removeEventListener('pointermove', hotMove);
+    document.removeEventListener('pointerdown', hotDown, true);
+    hot.g.classList.remove('hot'); hot.s.classList.remove('bp-active');
+    hot = null; pick(tool);
+  }
+  function cancelHot() {
+    var o = hot.o; o.x = hot.ox; o.y = hot.oy; o.w = hot.ow; o.r = hot.or; o.f = hot.f0; apply(hot.s);
+    endHot();
+  }
+  document.addEventListener('keydown', function (e) {
+    var typing = /INPUT|TEXTAREA/.test((document.activeElement || {}).tagName || '');
+    if (hot && (e.key === 'Enter' || e.key === ' ') && !typing) { e.preventDefault(); hot.i = (hot.i + 1) % HOT.length; hotShow(e.shiftKey); hotPrompt(); }
+    else if (e.key === 'Escape') { if (hot) cancelHot(); else if (on && tool !== 'select') pick('select'); }
   });
-  toggle.addEventListener('click', function () { if (on) restore(leave); else enter(); });
-  tryBtn.addEventListener('click', function () { enter(); pal.querySelector('[data-tool="move"]').focus(); });
-  window.addEventListener('resize', function () { if (on) leave(); });
-  function sync() { toggle.hidden = !wide.matches; tryBtn.hidden = !wide.matches; if (!wide.matches) leave(); }
-  if (wide.addEventListener) wide.addEventListener('change', sync); sync();
+
+  // ---------- The two-minute tip ----------
+  var t0 = Date.now();
+  var tipTimer = setInterval(function () {
+    if (load(TIP)) { clearInterval(tipTimer); return; }
+    if (Date.now() - t0 < 120000 || !used || !wide.matches) return;
+    clearInterval(tipTimer); store(TIP, '1');
+    var tip = document.createElement('div'); tip.className = 'rb-tip'; tip.setAttribute('role', 'status');
+    tip.innerHTML = '<b>Tip, straight from AutoCAD</b><span>Click a corner grip once so it turns red. Press <kbd>Enter</kbd> to switch between Stretch, Move, Rotate and Mirror, click to place it, <kbd>Esc</kbd> to cancel.</span><button type="button" aria-label="Close tip">×</button>';
+    document.body.appendChild(tip);
+    if (tool === 'select') pick('move');
+    tip.querySelector('button').addEventListener('click', function () { tip.remove(); });
+    setTimeout(function () { tip.remove(); }, 20000);
+  }, 5000);
+
+  window.addEventListener('resize', function () { if (on && !wide.matches) leave(); });
 
   window.BPTools = {
     cmd: function (t) {
       if (!wide.matches) return 'MODIFY works on a wider screen.';
-      if (t === 'modify') { if (on) restore(leave); else enter(); return on ? 'MODIFY on. Pick a tool on the left.' : 'MODIFY closed.'; }
       if (t === 'restore') { restore(); return 'Restored.'; }
-      enter(); pick(t); return t.toUpperCase() + ': ' + TOOLS.filter(function (x) { return x[0] === t; })[0][3];
+      if (t === 'modify') t = 'move';
+      pick(t); return MOD.filter(function (x) { return x[0] === t; })[0][3];
     }
   };
+
+  // Bring back last visit's arrangement
+  var saved = null;
+  try { saved = JSON.parse(load(KEY) || 'null'); } catch (e) { saved = null; }
+  if (saved && saved.s && wide.matches) {
+    var go = function () { enter(saved); pick('select', true); say('Welcome back: your sheets are where you left them. RESTORE puts everything back.', true); };
+    if (document.readyState === 'complete') go(); else window.addEventListener('load', go);
+  } else pick('select', true);
 })();
