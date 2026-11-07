@@ -570,3 +570,6 @@ html.has-ribbon body { padding-top: 92px; }
 html.rb-closed .ribbon { display: none; }
 html.rb-closed.has-ribbon .rb-open { display: block; }
 html.rb-closed.has-ribbon body { padding-top: 0; }
+.northarrow.mark { width: 64px; height: 57px; }
+.cover .northarrow.mark { width: 52px; height: auto; }
+@media (max-width: 780px) { .northarrow.mark, .cover .northarrow.mark { width: 40px; height: auto; } }
