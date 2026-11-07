@@ -558,3 +558,8 @@ html.has-ribbon body { padding-top: 92px; }
 .rb-help p { margin: 0; }
 .rb-help b { display: block; font: 600 0.66rem var(--mono); letter-spacing: .12em; text-transform: uppercase; color: #ffc94a; }
 .rb-help kbd { font: 500 0.72rem var(--mono); border: 1px solid #5a6475; padding: 0 4px; }
+.bp-axis { position: fixed; inset: 0; width: 100vw; height: 100vh; z-index: 61; pointer-events: none; display: none; overflow: visible; }
+.bp-axis.on { display: block; }
+.bp-axis .ext { stroke: #ffc94a; stroke-width: 1; stroke-dasharray: 12 4 2 4; opacity: .7; }
+.bp-axis .seg { stroke: #ffc94a; stroke-width: 2; }
+.bp-axis circle { fill: #e5484d; stroke: #fff; stroke-width: 1; }

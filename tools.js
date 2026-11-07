@@ -30,7 +30,7 @@
     ['move', 'Move', 'M', 'MOVE  Drag a sheet. Sheets can overlap; the one you pick comes to the front.'],
     ['stretch', 'Stretch', 'S', 'STRETCH  Drag a corner grip. The sheet reflows like a phone or a tablet screen.'],
     ['rotate', 'Rotate', 'RO', 'ROTATE  Drag around a sheet. Snaps every 15°, hold Shift for free.'],
-    ['mirror', 'Mirror', 'MI', 'MIRROR  Click a sheet to mirror it. Click again to flip it back.']
+    ['mirror', 'Mirror', 'MI', 'MIRROR  Select a sheet, then pick two points for the mirror line. Enter flips it in place.']
   ];
   function svg(k) { return '<svg viewBox="0 0 20 20" aria-hidden="true">' + ICON[k] + '</svg>'; }
   function btn(k, label, key, extra, big) {
@@ -40,7 +40,7 @@
   ICON.bulb = '<path d="M7 13.5a5 5 0 1 1 6 0V15H7z"/><path d="M7.5 17h5"/>';
   function panel(label, body, cls) { return '<section class="rb-panel' + (cls ? ' ' + cls : '') + '"><div class="rb-body">' + body + '</div><h6>' + label + '</h6></section>'; }
   var HELP = '<span class="rb-menu rb-help" hidden>' +
-      (board ? '<p><b>Grips</b> Hover a sheet: blue squares sit on its corners. Drag one to stretch. Click one so it turns red, then <kbd>Enter</kbd> cycles Stretch, Move, Rotate, Mirror. Click to place, <kbd>Esc</kbd> to cancel.</p>' +
+      (board ? '<p><b>Grips</b> Hover a sheet: blue squares sit on its corners. Drag one to stretch. Click one so it turns red, then <kbd>Enter</kbd> cycles Stretch, Move, Rotate, Mirror. Click to place, <kbd>Esc</kbd> to cancel.</p><p><b>Mirror</b> Select a sheet, then click two points for the mirror line (15° snaps, <kbd>Shift</kbd> for free). <kbd>Enter</kbd> flips it in place.</p>' +
       '<p><b>Modify</b> Move <kbd>M</kbd>, Stretch <kbd>S</kbd>, Rotate <kbd>RO</kbd>, Mirror <kbd>MI</kbd>. Restore puts every sheet back. Your layout is saved in this browser.</p>' : '') +
       '<p><b>Layers</b> Each sheet is drawn on the steps of my method. Pick one to isolate it; Layuniso shows all again.</p>' +
       '<p><b>View</b> Zoom enlarges the drawing nearest the centre. Grid turns the blueprint grid on and off.</p>' +
@@ -147,7 +147,7 @@
   }
   function leave() {
     if (!on) return;
-    on = false; hot && cancelHot();
+    on = false; hot && cancelHot(); mir && cancelMir();
     sheets.forEach(function (s) {
       ['left', 'top', 'width', 'transform', 'zIndex'].forEach(function (p) { s.style[p] = ''; });
       s.classList.remove('bp-narrow', 'bp-tiny', 'bp-anim');
@@ -160,6 +160,7 @@
     store(KEY, null);
     if (!on) { say('Everything is already in its place.'); return; }
     if (hot) cancelHot();
+    if (mir) cancelMir();
     sheets.forEach(function (s) {
       var o = st.get(s); s.classList.add('bp-anim');
       o.x = o.home.x; o.y = o.home.y; o.w = o.home.w; o.r = 0; o.f = false; apply(s);
@@ -181,14 +182,14 @@
   // ---------- Dragging ----------
   var drag = null;
   function down(e) {
-    if (e.button !== 0 || hot) return;
+    if (e.button !== 0 || hot || mir) return;
     var c = e.target.dataset && e.target.dataset.c;
     if (tool === 'select' && !c) return;
     e.preventDefault();
     enter();   // grips work from Select too: the board switches to free layout on first touch
     var skin = e.currentTarget, s = skin.parentNode, o = st.get(s);
     front(s);
-    if (!c && tool === 'mirror') { s.classList.add('bp-anim'); o.f = !o.f; apply(s); setTimeout(function () { s.classList.remove('bp-anim'); }, 420); save(); return; }
+    if (!c && tool === 'mirror') { startMir(s); return; }
     if (!c && tool === 'stretch') { say('STRETCH  Grab one of the blue corner grips.'); return; }
     var r = s.getBoundingClientRect();
     drag = { s: s, o: o, c: c, mode: c ? 'stretch' : tool, x0: e.clientX, y0: e.clientY, ox: o.x, oy: o.y, ow: o.w, or: o.r,
@@ -247,11 +248,15 @@
     document.addEventListener('pointermove', hotMove);
     document.addEventListener('pointerdown', hotDown, true);
   }
-  function hotPrompt() { say('** ' + HOT[hot.i].toUpperCase() + ' **  Move the mouse, click to place. Enter: next mode. Esc: cancel.', true); }
+  function hotPrompt() { say('** ' + HOT[hot.i].toUpperCase() + ' **  ' + (HOT[hot.i] === 'mirror' ? 'The mirror line runs from the red grip to your mouse. Click to place.' : 'Move the mouse, click to place.') + ' Enter: next mode. Esc: cancel.', true); }
   function hotShow(shift) {
     var m = HOT[hot.i], o = hot.o;
-    if (m === 'mirror') { o.x = hot.ox; o.y = hot.oy; o.w = hot.ow; o.r = hot.or; o.f = !hot.f0; apply(hot.s); }
-    else { o.f = hot.f0; shape(hot, m, hot.px, hot.py, shift); }
+    if (m === 'mirror') {
+      var o0 = { x: hot.ox, y: hot.oy, w: hot.ow, r: hot.or, f: hot.f0 }, p2 = snap(hot.x0, hot.y0, hot.px, hot.py, shift);
+      if (Math.hypot(p2[0] - hot.x0, p2[1] - hot.y0) < 8) { axis(null); Object.assign(o, o0); apply(hot.s); }
+      else { axis(hot.x0, hot.y0, p2[0], p2[1]); mirrorAcross(hot.s, o0, hot.x0, hot.y0, p2[0], p2[1]); }
+    }
+    else { axis(null); o.f = hot.f0; shape(hot, m, hot.px, hot.py, shift); }
   }
   function hotMove(e) { hot.px = e.clientX; hot.py = e.clientY; hotShow(e.shiftKey); }
   function hotDown(e) {
@@ -263,13 +268,83 @@
     document.removeEventListener('pointermove', hotMove);
     document.removeEventListener('pointerdown', hotDown, true);
     hot.g.classList.remove('hot'); hot.s.classList.remove('bp-active');
-    hot = null; pick(tool);
+    hot = null; axis(null); pick(tool);
   }
   function cancelHot() {
     var o = hot.o; o.x = hot.ox; o.y = hot.oy; o.w = hot.ow; o.r = hot.or; o.f = hot.f0; apply(hot.s);
     endHot();
   }
+  // ---------- Mirror with a mirror line (pick two points, like AutoCAD) ----------
+  var ax = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+  ax.setAttribute('class', 'bp-axis');
+  ax.innerHTML = '<line class="ext"/><line class="seg"/><circle r="4"/>';
+  document.body.appendChild(ax);
+  function axis(x1, y1, x2, y2) {
+    if (x1 === null) { ax.classList.remove('on'); return; }
+    var a = Math.atan2(y2 - y1, x2 - x1), L = 4000, c = Math.cos(a), sn = Math.sin(a), ls = ax.querySelectorAll('line');
+    ls[0].setAttribute('x1', x1 - c * L); ls[0].setAttribute('y1', y1 - sn * L); ls[0].setAttribute('x2', x1 + c * L); ls[0].setAttribute('y2', y1 + sn * L);
+    ls[1].setAttribute('x1', x1); ls[1].setAttribute('y1', y1); ls[1].setAttribute('x2', x2); ls[1].setAttribute('y2', y2);
+    var ci = ax.querySelector('circle'); ci.setAttribute('cx', x1); ci.setAttribute('cy', y1);
+    ax.classList.add('on');
+  }
+  function snap(x1, y1, x, y, free) {
+    var a = Math.atan2(y - y1, x - x1), l = Math.hypot(x - x1, y - y1);
+    if (!free) a = Math.round(a / (Math.PI / 12)) * (Math.PI / 12);   // 15° steps, Shift for free
+    return [x1 + Math.cos(a) * l, y1 + Math.sin(a) * l];
+  }
+  function mirrorAcross(s, o0, x1, y1, x2, y2) {
+    var wr = wrap.getBoundingClientRect(), o = st.get(s), h = s.offsetHeight;
+    var px = x1 - wr.left, py = y1 - wr.top, th = Math.atan2(y2 - y1, x2 - x1), dx = Math.cos(th), dy = Math.sin(th);
+    var cx = o0.x + o0.w / 2, cy = o0.y + h / 2, vx = cx - px, vy = cy - py, k = vx * dx + vy * dy;
+    var nx = px + 2 * k * dx - vx, ny = py + 2 * k * dy - vy;
+    o.w = o0.w; o.x = nx - o0.w / 2; o.y = ny - h / 2; o.f = !o0.f;
+    var r = 2 * th * 180 / Math.PI - o0.r + 180;
+    o.r = Math.round((((r % 360) + 540) % 360 - 180) * 10) / 10;
+    apply(s);
+  }
+  var mir = null;
+  function startMir(s) {
+    var o = st.get(s);
+    mir = { s: s, o0: { x: o.x, y: o.y, w: o.w, r: o.r, f: o.f }, step: 1 };
+    s.classList.add('bp-active');
+    say('MIRROR  Specify first point of mirror line. (Enter: flip in place, Esc: cancel)', true);
+    document.addEventListener('pointerdown', mirDown, true);
+    document.addEventListener('pointermove', mirMove);
+  }
+  function mirMove(e) {
+    if (!mir || mir.step !== 2) return;
+    var p = snap(mir.x1, mir.y1, e.clientX, e.clientY, e.shiftKey);
+    axis(mir.x1, mir.y1, p[0], p[1]);
+    if (Math.hypot(p[0] - mir.x1, p[1] - mir.y1) > 8) mirrorAcross(mir.s, mir.o0, mir.x1, mir.y1, p[0], p[1]);
+  }
+  function mirDown(e) {
+    if (e.target.closest('.ribbon')) return;
+    e.preventDefault(); e.stopPropagation();
+    if (mir.step === 1) { mir.x1 = e.clientX; mir.y1 = e.clientY; mir.step = 2; axis(mir.x1, mir.y1, mir.x1 + 1, mir.y1); say('MIRROR  Specify second point of mirror line. Snaps every 15°, Shift for free.', true); return; }
+    var p = snap(mir.x1, mir.y1, e.clientX, e.clientY, e.shiftKey);
+    if (Math.hypot(p[0] - mir.x1, p[1] - mir.y1) < 8) return;
+    mirrorAcross(mir.s, mir.o0, mir.x1, mir.y1, p[0], p[1]);
+    endMir(); save(); say('MIRROR  Done. Click another sheet to mirror it.');
+  }
+  function endMir() {
+    document.removeEventListener('pointerdown', mirDown, true);
+    document.removeEventListener('pointermove', mirMove);
+    mir.s.classList.remove('bp-active'); mir = null; axis(null);
+  }
+  function quickFlip() {
+    var s = mir.s, o = st.get(s);
+    Object.assign(o, mir.o0); o.f = !o.f; s.classList.add('bp-anim'); apply(s);
+    setTimeout(function () { s.classList.remove('bp-anim'); }, 420);
+    endMir(); save(); say('MIRROR  Flipped in place. Click another sheet to mirror it.');
+  }
+  function cancelMir() { Object.assign(st.get(mir.s), mir.o0); apply(mir.s); endMir(); pick(tool); }
+
   document.addEventListener('keydown', function (e) {
+    var typing0 = /INPUT|TEXTAREA/.test((document.activeElement || {}).tagName || '');
+    if (mir && !typing0) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); quickFlip(); return; }
+      if (e.key === 'Escape') { cancelMir(); return; }
+    }
     var typing = /INPUT|TEXTAREA/.test((document.activeElement || {}).tagName || '');
     if (hot && (e.key === 'Enter' || e.key === ' ') && !typing) { e.preventDefault(); hot.i = (hot.i + 1) % HOT.length; hotShow(e.shiftKey); hotPrompt(); }
     else if (e.key === 'Escape') { if (hot) cancelHot(); else if (on && tool !== 'select') pick('select'); }
