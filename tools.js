@@ -7,7 +7,7 @@
   var html = document.documentElement;
   var wrap = document.querySelector('main.wrap');
   var board = !!wrap && !html.classList.contains('is-layout');
-  var sheets = board ? Array.prototype.slice.call(wrap.querySelectorAll(':scope > .sheet')) : [];
+  var sheets = board ? Array.prototype.slice.call(wrap.querySelectorAll(':scope > .cover, :scope > .sheet')) : [];
   if (!sheets.length) board = false;
   var KEY = 'ebru-board-v1', TIP = 'ebru-board-tip';
   function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
@@ -33,23 +33,33 @@
     ['mirror', 'Mirror', 'MI', 'MIRROR  Click a sheet to mirror it. Click again to flip it back.']
   ];
   function svg(k) { return '<svg viewBox="0 0 20 20" aria-hidden="true">' + ICON[k] + '</svg>'; }
-  function btn(k, label, key, extra) {
-    return '<button type="button" class="rb-btn' + (extra || '') + '" data-k="' + k + '" title="' + label + (key ? ' (' + key + ')' : '') + '">' + svg(k) + '<span>' + label + '</span></button>';
+  function btn(k, label, key, extra, big) {
+    return '<button type="button" class="rb-btn' + (big ? ' rb-big' : '') + (extra || '') + '" data-k="' + k + '" title="' + label + (key ? ' (' + key + ')' : '') + '">' + svg(k) + '<span>' + label + '</span></button>';
   }
+  ICON.help = '<circle cx="10" cy="10" r="7.5"/><path d="M7.6 7.6a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.6"/><circle cx="10" cy="14.6" r=".4"/>';
+  ICON.bulb = '<path d="M7 13.5a5 5 0 1 1 6 0V15H7z"/><path d="M7.5 17h5"/>';
+  function panel(label, body, cls) { return '<section class="rb-panel' + (cls ? ' ' + cls : '') + '"><div class="rb-body">' + body + '</div><h6>' + label + '</h6></section>'; }
+  var HELP = '<span class="rb-menu rb-help" hidden>' +
+      (board ? '<p><b>Grips</b> Hover a sheet: blue squares sit on its corners. Drag one to stretch. Click one so it turns red, then <kbd>Enter</kbd> cycles Stretch, Move, Rotate, Mirror. Click to place, <kbd>Esc</kbd> to cancel.</p>' +
+      '<p><b>Modify</b> Move <kbd>M</kbd>, Stretch <kbd>S</kbd>, Rotate <kbd>RO</kbd>, Mirror <kbd>MI</kbd>. Restore puts every sheet back. Your layout is saved in this browser.</p>' : '') +
+      '<p><b>Layers</b> Each sheet is drawn on the steps of my method. Pick one to isolate it; Layuniso shows all again.</p>' +
+      '<p><b>View</b> Zoom enlarges the drawing nearest the centre. Grid turns the blueprint grid on and off.</p>' +
+      '<p><b>Command line</b> Type at the bottom: EMAIL, CV, CASE, THESIS, APP, BUS, LINKEDIN, GITHUB.</p></span>';
 
   // ---------- Ribbon ----------
   var rb = document.createElement('div');
   rb.className = 'ribbon'; rb.setAttribute('role', 'toolbar'); rb.setAttribute('aria-label', 'Drawing tools');
   rb.innerHTML =
-    (board ? '<div class="rb-group"><span class="rb-label">Modify</span>' +
-      MOD.map(function (t) { return btn(t[0], t[1], t[2]); }).join('') +
-      btn('restore', 'Restore', '', ' rb-restore') + '</div>' : '') +
-    '<div class="rb-group"><span class="rb-label">View</span>' + btn('zoom', 'Zoom', 'Z') +
-    '<span class="rb-drop">' + btn('layiso', 'Layiso ▾', '') + '<span class="rb-menu" hidden></span></span>' +
-    btn('layuniso', 'Layuniso', '') + btn('grid', 'Grid', '', ' on') + '</div>' +
-    '<p class="rb-prompt" aria-live="polite"></p>';
+    (board ? panel('Modify', btn('move', 'Move', 'M') + btn('rotate', 'Rotate', 'RO') + btn('mirror', 'Mirror', 'MI') +
+      btn('stretch', 'Stretch', 'S') + btn('select', 'Select', 'Esc') + btn('restore', 'Restore', '', ' rb-restore'), 'rb-mod') : '') +
+    panel('Layers', '<span class="rb-drop"><button type="button" class="rb-layer" data-k="layiso" title="Isolate one layer">' + svg('bulb') +
+      '<i class="rb-sw"></i><span class="rb-lname">All layers</span><em>▾</em></button><span class="rb-menu rb-lmenu" hidden></span></span>' +
+      '<span class="rb-row">' + btn('layiso', 'Layiso', '') + btn('layuniso', 'Layuniso', '') + '</span>', 'rb-lay') +
+    panel('View', btn('zoom', 'Zoom', 'Z', '', true) + btn('grid', 'Grid', '', ' on', true)) +
+    panel('Help', '<span class="rb-drop">' + btn('help', 'Help', 'F1', '', true) + HELP + '</span>') +
+    panel('Command', '<p class="rb-prompt" aria-live="polite"></p>', 'rb-cmdp');
   document.body.appendChild(rb);
-  var prompt = rb.querySelector('.rb-prompt'), menu = rb.querySelector('.rb-menu');
+  var prompt = rb.querySelector('.rb-prompt'), menu = rb.querySelector('.rb-lmenu'), help = rb.querySelector('.rb-help'), lname = rb.querySelector('.rb-lname');
   function say(t, hot) { prompt.textContent = t; prompt.classList.toggle('hot', !!hot); }
   function run(c) { if (window.BP) window.BP.run(c); }
 
@@ -59,17 +69,19 @@
   }
   rb.addEventListener('click', function (e) {
     var l = e.target.closest('[data-l]');
-    if (l) { run('LAYISO ' + l.dataset.l); menu.hidden = true; return; }
-    var b = e.target.closest('.rb-btn'); if (!b) return;
+    if (l) { run('LAYISO ' + l.dataset.l); lname.textContent = l.dataset.l.charAt(0) + l.dataset.l.slice(1).toLowerCase(); rb.querySelector('.rb-layer').classList.add('iso'); menu.hidden = true; return; }
+    var b = e.target.closest('.rb-btn, .rb-layer'); if (!b) return;
     var k = b.dataset.k;
     if (k === 'zoom') run('ZOOM');
-    else if (k === 'layiso') { fill(); menu.hidden = !menu.hidden; }
-    else if (k === 'layuniso') run('LAYUNISO');
+    else if (k === 'layiso') { fill(); help.hidden = true; menu.hidden = !menu.hidden; }
+    else if (k === 'help') { menu.hidden = true; help.hidden = !help.hidden; }
+    else if (k === 'layuniso') { run('LAYUNISO'); lname.textContent = 'All layers'; rb.querySelector('.rb-layer').classList.remove('iso'); }
     else if (k === 'grid') { var g = window.BP && window.BP.grid(); b.classList.toggle('on', !!g); }
     else if (k === 'restore') restore();
     else pick(k);
   });
-  document.addEventListener('click', function (e) { if (!e.target.closest('.rb-drop')) menu.hidden = true; });
+  document.addEventListener('click', function (e) { if (!e.target.closest('.rb-drop')) { menu.hidden = true; help.hidden = true; } });
+  document.addEventListener('keydown', function (e) { if (e.key === 'F1' && wide.matches) { e.preventDefault(); help.hidden = !help.hidden; } });
 
   function sync() {
     rb.hidden = !wide.matches;
@@ -78,13 +90,19 @@
   }
   if (wide.addEventListener) wide.addEventListener('change', sync);
   sync();
-  say(board ? 'Pick a Modify tool to rearrange the sheets, or type M, S, RO, MI.' : 'Zoom into a drawing, or isolate one layer of the method.');
+  say(board ? 'Hover a sheet and drag a corner grip, or pick a Modify tool.' : 'Zoom into a drawing, or isolate one layer of the method.');
 
   if (!board) { window.BPTools = { cmd: function () { return 'Modify works on the home board.'; } }; return; }
 
   // ---------- Board editing ----------
   var on = false, tool = 'select', order = sheets.slice(), st = new Map(), holders = [], used = 0;
 
+  sheets.forEach(function (s) {
+    var skin = document.createElement('div'); skin.className = 'bp-skin';
+    skin.innerHTML = '<i class="bp-g" data-c="nw"></i><i class="bp-g" data-c="ne"></i><i class="bp-g" data-c="sw"></i><i class="bp-g" data-c="se"></i><b class="bp-ang"></b>';
+    s.appendChild(skin);
+    skin.addEventListener('pointerdown', down);
+  });
   function apply(s) {
     var o = st.get(s);
     s.style.left = o.x + 'px'; s.style.top = o.y + 'px'; s.style.width = o.w + 'px';
@@ -116,10 +134,6 @@
       o.home = { x: o.x, y: o.y, w: o.w };
       if (saved && saved.s[i]) { var v = saved.s[i]; o.x = v[0]; o.y = v[1]; o.w = v[2]; o.r = v[3]; o.f = !!v[4]; }
       st.set(s, o);
-      var skin = document.createElement('div'); skin.className = 'bp-skin';
-      skin.innerHTML = '<i class="bp-g" data-c="nw"></i><i class="bp-g" data-c="ne"></i><i class="bp-g" data-c="sw"></i><i class="bp-g" data-c="se"></i><b class="bp-ang"></b>';
-      s.appendChild(skin);
-      skin.addEventListener('pointerdown', down);
       apply(s);
     });
     if (saved && saved.z && saved.z.length === sheets.length) order = saved.z.map(function (i) { return sheets[i]; });
@@ -129,7 +143,6 @@
     if (!on) return;
     on = false; hot && cancelHot();
     sheets.forEach(function (s) {
-      var k = s.querySelector('.bp-skin'); if (k) k.remove();
       ['left', 'top', 'width', 'transform', 'zIndex'].forEach(function (p) { s.style[p] = ''; });
       s.classList.remove('bp-narrow', 'bp-tiny', 'bp-anim');
     });
@@ -153,7 +166,7 @@
     tool = t;
     if (t !== 'select') enter();
     html.setAttribute('data-bp-tool', t);
-    rb.querySelectorAll('.rb-group:first-child [data-k]').forEach(function (b) {
+    rb.querySelectorAll('.rb-mod [data-k]').forEach(function (b) {
       if (b.dataset.k !== 'restore') b.setAttribute('aria-pressed', b.dataset.k === t ? 'true' : 'false');
     });
     if (!quiet) say(MOD.filter(function (x) { return x[0] === t; })[0][3]);
@@ -162,11 +175,13 @@
   // ---------- Dragging ----------
   var drag = null;
   function down(e) {
-    if (e.button !== 0 || tool === 'select' || hot) return;
-    var skin = e.currentTarget, s = skin.parentNode, o = st.get(s);
-    e.preventDefault();
-    front(s);
+    if (e.button !== 0 || hot) return;
     var c = e.target.dataset && e.target.dataset.c;
+    if (tool === 'select' && !c) return;
+    e.preventDefault();
+    enter();   // grips work from Select too: the board switches to free layout on first touch
+    var skin = e.currentTarget, s = skin.parentNode, o = st.get(s);
+    front(s);
     if (!c && tool === 'mirror') { s.classList.add('bp-anim'); o.f = !o.f; apply(s); setTimeout(function () { s.classList.remove('bp-anim'); }, 420); save(); return; }
     if (!c && tool === 'stretch') { say('STRETCH  Grab one of the blue corner grips.'); return; }
     var r = s.getBoundingClientRect();

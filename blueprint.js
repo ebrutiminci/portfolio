@@ -103,7 +103,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     CMDS.MIRROR = ['Mirror a sheet', 'tool:mirror']; CMDS.MI = CMDS.MIRROR;
     CMDS.RESTORE = ['Put every sheet back', 'tool:restore'];
   }
-  var MENU = (space === 'model' ? ['MODIFY'] : []).concat(['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'BUS', 'LAYISO', 'LAYUNISO', 'ZOOM', 'HELP', 'MODEL', 'LINKEDIN', 'GITHUB', 'X']);
+  var MENU = ['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'BUS', 'MODEL', 'LINKEDIN', 'GITHUB', 'X'];
 
   var bar = document.createElement('nav');
   bar.className = 'statusbar'; bar.setAttribute('aria-label', 'Pages');
@@ -123,7 +123,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
   cmd.innerHTML =
     '<span class="sb-x" aria-hidden="true">×</span><span class="sb-prompt" aria-hidden="true">&gt;_</span>' +
     '<label class="sb-vh" for="sbcmd">Type a command</label>' +
-    '<input id="sbcmd" type="text" spellcheck="false" placeholder="Type a command (try EMAIL, LAYISO, HELP)">' +
+    '<input id="sbcmd" type="text" spellcheck="false" placeholder="Type a command (try EMAIL, CV, CASE)">' +
     '<ul class="sb-list" role="listbox"></ul><span class="sb-out" aria-live="polite"></span>';
   document.body.appendChild(bar); document.body.appendChild(cmd);
   document.body.classList.add('has-statusbar');
