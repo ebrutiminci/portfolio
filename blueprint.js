@@ -239,7 +239,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     } else if (act === 'layer') { input.value = 'LAYISO '; render('LAYISO '); cmd.classList.add('open'); input.focus();
     } else if (act === 'zoom') { zoom(nearestImage());
     } else if (act === 'help') { input.value = ''; render(''); cmd.classList.add('open'); input.focus();
-    } else if (/^https?:/.test(act)) { var w = window.open(act, '_blank', 'noopener'); say(w ? 'Opened ' + CMDS[name][0] + ' in a new tab' : 'Pop-up blocked. Link: ' + act, 4000);
+    } else if (/^https?:|\.pdf$/.test(act)) { var w = window.open(act, '_blank'); if (w) { try { w.opener = null; } catch (e) {} say('Opened ' + CMDS[name][0] + ' in a new tab'); } else { location.href = act; }
     } else { location.href = act; }
   }
   function render(q) {
