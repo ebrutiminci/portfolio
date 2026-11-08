@@ -577,3 +577,19 @@ html.rb-closed.has-ribbon body { padding-top: 0; }
 .cover .northarrow.mark { width: 62px; height: auto; }
 @media (max-width: 780px) { .northarrow.mark, .cover .northarrow.mark { width: 40px; height: auto; } }
 .cover > .bp-skin, .sheet > .bp-skin { max-width: none !important; width: auto; inset: 0; }
+
+/* Phone: ⌘ button in the bottom bar opens the command line as a sheet */
+.sb-cmdbtn, .sb-chips { display: none; }
+@media (max-width: 759px) {
+  .sb-cmdbtn { display: block; width: 46px; flex: 0 0 auto; position: sticky; right: 46px; border: 0; border-left: 1px solid #3a4250; background: #1f2530; color: #fff; font: 400 1.3rem var(--body); cursor: pointer; }
+  html.sb-sheet .sb-cmdbtn { background: #2f6fcf; }
+  html.sb-sheet .sb-cmd { display: flex; flex-wrap: wrap; position: fixed; z-index: 61; left: 0; right: 0; bottom: calc(54px + env(safe-area-inset-bottom, 0px)); transform: none; width: auto; height: auto; padding: 14px 16px 16px; gap: 10px; background: #1f2530; border: 0; border-top: 1px solid #3a4250; box-shadow: 0 -10px 30px rgba(0,0,0,.35); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  html.sb-sheet .sb-cmd .sb-x { display: none; }
+  html.sb-sheet .sb-cmd input { flex: 1 1 0; height: 40px; padding: 0 10px; border: 1px solid #3a4250; background: #151a22; font-size: 16px; }
+  html.sb-sheet .sb-chips { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; width: 100%; order: -1; }
+  .sb-chips button { height: 42px; border: 1px solid #56627a; background: #2b313c; color: #fff; font: 500 0.85rem var(--mono); letter-spacing: .04em; border-radius: 2px; cursor: pointer; }
+  .sb-chips button:active { background: #2f6fcf; border-color: #2f6fcf; }
+  html.sb-sheet .sb-cmd.open .sb-list { display: none; }
+  html.sb-sheet .sb-out { display: none; }
+}
+@media (max-width: 759px) { .sb-grid { width: 44px; } .sb-cmdbtn { width: 44px; right: 44px; } .sb-tab { padding: 0 7px; font-size: 0.95rem; } }

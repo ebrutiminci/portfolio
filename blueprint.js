@@ -119,6 +119,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     tab('layout2', 'Thesis', 'thesis.html') +
     '<span class="sb-iso" hidden></span>' +
     '<span class="sb-mode">' + (space === 'model' ? 'MODEL' : 'PAPER') + '</span>' +
+    '<button type="button" class="sb-cmdbtn" aria-expanded="false" aria-controls="sbcmd" title="Commands">⌘</button>' +
     '<button type="button" class="sb-grid on" aria-pressed="true" title="Grid display">#</button>';
   var cmd = document.createElement('form');
   cmd.className = 'sb-cmd'; cmd.setAttribute('role', 'search'); cmd.setAttribute('autocomplete', 'off');
@@ -126,7 +127,8 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     '<span class="sb-x" aria-hidden="true">×</span><span class="sb-prompt" aria-hidden="true">&gt;_</span>' +
     '<label class="sb-vh" for="sbcmd">Type a command</label>' +
     '<input id="sbcmd" type="text" spellcheck="false" placeholder="Type a command (try EMAIL, CV, CASE)">' +
-    '<ul class="sb-list" role="listbox"></ul><span class="sb-out" aria-live="polite"></span>';
+    '<ul class="sb-list" role="listbox"></ul><span class="sb-out" aria-live="polite"></span>' +
+    '<div class="sb-chips">' + MENU.map(function (n) { return '<button type="button" data-n="' + n + '">' + n + '</button>'; }).join('') + '</div>';
   document.body.appendChild(bar); document.body.appendChild(cmd);
   document.body.classList.add('has-statusbar');
 
@@ -284,6 +286,18 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     if (!v) { if (history.length) v = history[history.length - 1]; else return; } // Enter on empty repeats, like AutoCAD
     history.push(v); hi = history.length; cmd.classList.remove('open'); execute(v);
   });
+  // Phone: the command line opens as a bottom sheet from the ⌘ button
+  var cbtn = bar.querySelector('.sb-cmdbtn'), root = document.documentElement;
+  if (window.matchMedia('(max-width: 759px)').matches) input.placeholder = 'Type a command';
+  function sheet(open) { root.classList.toggle('sb-sheet', open); cbtn.setAttribute('aria-expanded', String(open)); if (!open) input.blur(); }
+  cbtn.addEventListener('click', function (e) { e.stopPropagation(); sheet(!root.classList.contains('sb-sheet')); });
+  cmd.querySelector('.sb-chips').addEventListener('click', function (e) {
+    var b = e.target.closest('button'); if (!b) return;
+    var v = b.getAttribute('data-n'); history.push(v); hi = history.length; sheet(false); execute(v);
+  });
+  document.addEventListener('click', function (e) { if (root.classList.contains('sb-sheet') && !cmd.contains(e.target) && !cbtn.contains(e.target)) sheet(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && root.classList.contains('sb-sheet')) sheet(false); });
+  cmd.addEventListener('submit', function () { sheet(false); });
   var g = bar.querySelector('.sb-grid');
   g.addEventListener('click', function () { var off = document.documentElement.classList.toggle('no-grid'); g.classList.toggle('on', !off); g.setAttribute('aria-pressed', String(!off)); });
   window.BP = { run: execute, say: say, layers: LAYERS, grid: function () { g.click(); return !document.documentElement.classList.contains('no-grid'); } };
