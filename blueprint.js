@@ -86,7 +86,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     THESIS: ['Thesis research', 'thesis.html'],
     APP: ['UX Research App', 'app.html'],
     BUS: ['Bus widget', home + '#s3'],
-    CV: ['Open CV', 'Ebru-Timinci-CV.pdf'],
+    CV: ['Open CV', 'Ebru-Timinci-CV.pdf?v=20261108'],
     LINKEDIN: ['LinkedIn', 'https://www.linkedin.com/in/ebru-timinci/'],
     GITHUB: ['GitHub', 'https://github.com/ebrutiminci'],
     X: ['X', 'https://x.com/ebrutiminci'],
