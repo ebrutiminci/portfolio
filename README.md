@@ -1,13 +1,13 @@
 # Ebru Timinci · Portfolio
 
-Product design portfolio, drawn as an architectural drawing set: [ebrutiminci.com](https://ebrutiminci.com)
+My product design portfolio, laid out like an architectural drawing set.
 
-## How this was built
+**Live:** [ebrutiminci.com](https://ebrutiminci.com)
 
-Designed, researched and directed by me, Ebru Timinci: the concept, layout, case studies, research and logo, and every decision about what ships.
+## What's inside
 
-The code was written with [Claude Code](https://claude.com/claude-code), Anthropic's AI coding tool. I describe what I want, review each change in the browser and on my phone, and ask for changes until it matches the design. Commits carry a `Co-Authored-By: Claude` line, so you can see where AI helped.
+- **Concept:** a blueprint / CAD-style site with a command line and drawing tools
+- **Case studies:** Revolut outage concept, UX Research App, Bus Widget and my master's thesis
+- **CV:** one-page PDF
 
-## Stack
-
-Plain HTML, CSS and JavaScript, no framework. Hosted on Vercel.
+Code written with Claude Code.
