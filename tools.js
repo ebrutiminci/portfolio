@@ -365,7 +365,7 @@
   var t0 = Date.now();
   var tipTimer = setInterval(function () {
     if (load(TIP)) { clearInterval(tipTimer); return; }
-    if (Date.now() - t0 < 120000 || !used || !wide.matches) return;
+    if (Date.now() - t0 < 120000 || !wide.matches) return;
     clearInterval(tipTimer); store(TIP, '1');
     var tip = document.createElement('div'); tip.className = 'rb-tip'; tip.setAttribute('role', 'status');
     tip.innerHTML = '<b>Tip, straight from AutoCAD</b><span>Click a corner grip once so it turns red. Press <kbd>Enter</kbd> to switch between Stretch, Move, Rotate and Mirror, click to place it, <kbd>Esc</kbd> to cancel.</span><button type="button" aria-label="Close tip">×</button>';
