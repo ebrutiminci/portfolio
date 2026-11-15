@@ -29,7 +29,7 @@
     ['select', 'Select', 'Esc', 'SELECT  Sheets work as normal: open links, read, scroll.'],
     ['move', 'Move', 'M', 'MOVE  Drag a sheet. Sheets can overlap; the one you pick comes to the front.'],
     ['stretch', 'Stretch', 'S', 'STRETCH  Drag a corner grip. The sheet reflows like a phone or a tablet screen.'],
-    ['rotate', 'Rotate', 'RO', 'ROTATE  Drag around a sheet. Snaps every 15°, hold Shift for free.'],
+    ['rotate', 'Rotate', 'RO', 'ROTATE  Drag a corner grip to turn the sheet around that corner, or drag the sheet to turn it around its centre. 15° snaps, Shift for free.'],
     ['mirror', 'Mirror', 'MI', 'MIRROR  Select a sheet, then pick two points for the mirror line. Enter flips it in place.']
   ];
   function svg(k) { return '<svg viewBox="0 0 20 20" aria-hidden="true">' + ICON[k] + '</svg>'; }
@@ -203,9 +203,10 @@
     if (!c && tool === 'mirror') { startMir(s); return; }
     if (!c && tool === 'stretch') { say('STRETCH  Grab one of the blue corner grips.'); return; }
     var r = s.getBoundingClientRect();
-    drag = { s: s, o: o, c: c, mode: c ? 'stretch' : tool, x0: e.clientX, y0: e.clientY, ox: o.x, oy: o.y, ow: o.w, or: o.r,
+    drag = { s: s, o: o, c: c, mode: c ? (tool === 'rotate' ? 'rotate' : 'stretch') : tool, x0: e.clientX, y0: e.clientY, ox: o.x, oy: o.y, ow: o.w, or: o.r,
       cx: r.left + r.width / 2, cy: r.top + r.height / 2, moved: false };
     drag.a0 = Math.atan2(e.clientY - drag.cy, e.clientX - drag.cx);
+    if (c) pivotAt(drag, e.target);   // a corner grip is the base point, as in AutoCAD
     skin.setPointerCapture(e.pointerId);
     skin.addEventListener('pointermove', move);
     skin.addEventListener('pointerup', up);
@@ -223,6 +224,21 @@
       o.w = w; o.x = west ? d.ox + (d.ow - w) : d.ox; o.y = d.oy; o.r = d.or;
       d.s.querySelector('.bp-ang').textContent = Math.round(w) + ' px';
     }
+    else if (mode === 'rotate' && d.px0 !== undefined) {
+      // AutoCAD ROTATE: the base point is the grip, the rubber band runs from it to the cursor,
+      // and the angle of that line (0° = east) is added to the sheet's rotation.
+      var len = Math.hypot(x - d.px0, y - d.py0);
+      if (len < 10) { o.r = d.or; o.x = d.ox; o.y = d.oy; o.w = d.ow; axis(null); apply(d.s); return; }
+      var ang = Math.atan2(y - d.py0, x - d.px0) * 180 / Math.PI;
+      if (!shift) ang = Math.round(ang / 15) * 15;
+      var rd = ang * Math.PI / 180, wr = wrap.getBoundingClientRect(), h = d.s.offsetHeight;
+      var bx = d.px0 - wr.left, by = d.py0 - wr.top, vx = d.ox + d.ow / 2 - bx, vy = d.oy + h / 2 - by;
+      var nx = bx + vx * Math.cos(rd) - vy * Math.sin(rd), ny = by + vx * Math.sin(rd) + vy * Math.cos(rd);
+      o.w = d.ow; o.x = nx - d.ow / 2; o.y = ny - h / 2;
+      o.r = ((((d.or + ang) % 360) + 540) % 360) - 180;
+      axis(d.px0, d.py0, d.px0 + Math.cos(rd) * len, d.py0 + Math.sin(rd) * len, true);
+      d.s.querySelector('.bp-ang').textContent = Math.round(ang) + '°';
+    }
     else if (mode === 'rotate') {
       var a = Math.atan2(y - d.cy, x - d.cx), deg = d.or + (a - d.a0) * 180 / Math.PI;
       if (!shift) deg = Math.round(deg / 15) * 15;
@@ -238,8 +254,13 @@
     drag.moved = true;
     shape(drag, drag.mode, e.clientX, e.clientY, e.shiftKey);
   }
+  function pivotAt(d, g) {
+    var gr = g.getBoundingClientRect();
+    d.px0 = gr.left + gr.width / 2; d.py0 = gr.top + gr.height / 2;
+  }
   function up(e) {
     if (!drag) return;
+    axis(null);
     var k = e.currentTarget, d = drag;
     k.removeEventListener('pointermove', move); k.removeEventListener('pointerup', up); k.removeEventListener('pointercancel', up);
     d.s.classList.remove('bp-active');
@@ -254,12 +275,13 @@
     var g = d.s.querySelector('.bp-g[data-c="' + d.c + '"]'), gr = g.getBoundingClientRect();
     hot = d; hot.i = 0; hot.g = g; hot.x0 = gr.left + gr.width / 2; hot.y0 = gr.top + gr.height / 2;
     hot.a0 = Math.atan2(hot.y0 - d.cy, hot.x0 - d.cx); hot.f0 = d.o.f; hot.px = e.clientX; hot.py = e.clientY;
+    hot.px0 = hot.x0; hot.py0 = hot.y0;   // ROTATE turns the sheet around the red grip
     g.classList.add('hot'); d.s.classList.add('bp-active');
     hotPrompt();
     document.addEventListener('pointermove', hotMove);
     document.addEventListener('pointerdown', hotDown, true);
   }
-  function hotPrompt() { say('** ' + HOT[hot.i].toUpperCase() + ' **  ' + (HOT[hot.i] === 'mirror' ? 'The mirror line runs from the red grip to your mouse. Click to place.' : 'Move the mouse, click to place.') + ' Enter: next mode. Esc: cancel.', true); }
+  function hotPrompt() { say('** ' + HOT[hot.i].toUpperCase() + ' **  ' + (HOT[hot.i] === 'mirror' ? 'The mirror line runs from the red grip to your mouse. Click to place.' : HOT[hot.i] === 'rotate' ? 'Base point is the red grip. Specify rotation angle (15° snaps, Shift for free).' : 'Move the mouse, click to place.') + ' Enter: next mode. Esc: cancel.', true); }
   function hotShow(shift) {
     var m = HOT[hot.i], o = hot.o;
     if (m === 'mirror') {
@@ -268,6 +290,7 @@
       else { axis(hot.x0, hot.y0, p2[0], p2[1]); mirrorAcross(hot.s, o0, hot.x0, hot.y0, p2[0], p2[1]); }
     }
     else { axis(null); o.f = hot.f0; shape(hot, m, hot.px, hot.py, shift); }
+    if (m !== 'rotate' && m !== 'mirror') axis(null);
   }
   function hotMove(e) { hot.px = e.clientX; hot.py = e.clientY; hotShow(e.shiftKey); }
   function hotDown(e) {
@@ -290,8 +313,9 @@
   ax.setAttribute('class', 'bp-axis');
   ax.innerHTML = '<line class="ext"/><line class="seg"/><circle r="4"/>';
   document.body.appendChild(ax);
-  function axis(x1, y1, x2, y2) {
+  function axis(x1, y1, x2, y2, band) {
     if (x1 === null) { ax.classList.remove('on'); return; }
+    ax.classList.toggle('band', !!band);
     var a = Math.atan2(y2 - y1, x2 - x1), L = 4000, c = Math.cos(a), sn = Math.sin(a), ls = ax.querySelectorAll('line');
     ls[0].setAttribute('x1', x1 - c * L); ls[0].setAttribute('y1', y1 - sn * L); ls[0].setAttribute('x2', x1 + c * L); ls[0].setAttribute('y2', y1 + sn * L);
     ls[1].setAttribute('x1', x1); ls[1].setAttribute('y1', y1); ls[1].setAttribute('x2', x2); ls[1].setAttribute('y2', y2);
