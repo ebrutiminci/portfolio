@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Drawing rules a machine can follow: SketchUp and AutoCAD tools Ebru Timinci designed and built for an architecture studio.">
+<link rel="icon" href="favicon.ico?v=22" sizes="48x48">
+<link rel="icon" href="favicon.svg?v=22" type="image/svg+xml">
+<link rel="icon" href="favicon-32.png?v=22" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<title>Studio drawing tools</title>
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Ebru Timinci">
+<meta property="og:title" content="Studio drawing tools">
+<meta property="og:description" content="Drawing rules a machine can follow: SketchUp and AutoCAD tools Ebru Timinci designed and built for an architecture studio.">
+<meta property="og:url" content="https://ebrutiminci.com/tools.html">
+<meta property="og:image" content="https://ebrutiminci.com/img/og-home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://ebrutiminci.com/tools.html">
+<meta name="space" content="tools">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
+<link rel="stylesheet" href="blueprint.css?v=23">
+<style>html,body{margin:0}*{box-sizing:border-box}img{max-width:100%}</style>
+  <!-- Vercel Web Analytics: counts visits, no cookies -->
+  <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
+  <script defer src="/_vercel/insights/script.js"></script>
+</head>
+<body>
+<main class="wrap">
+  <nav class="crumb" aria-label="Back"><a href="index.html">← Drawing set</a><span class="ann">/ Sheet 05, detail</span></nav>
+
+  <header class="cover hero">
+    <img class="northarrow mark" src="img/mark-white.svg?v=22" alt="ET monogram" width="360" height="340">
+    <p class="ann">Sheet 05 · Internal tools · Architecture studio · 2026</p>
+    <div class="cover-main">
+      <h1>Drawing rules a machine can follow<small>SketchUp and AutoCAD tools for an architecture studio</small></h1>
+      <p class="lede">I was turning a prison cell into a hostel room, in six design variants. Drawing each one by hand took hours, so I wrote down the studio's drawing rules and built tools that follow them.</p>
+      <p class="motto"><b>3–4 hours → 25–30 minutes.</b> One variant's plan and sections, by hand and with the tools.</p>
+      <div class="legend"><span class="tag on">Plan</span><span class="tag on">Research</span><span class="tag">Synthesize</span><span class="tag on">Design</span><span class="tag on">Build</span></div>
+    </div>
+  </header>
+
+  <article class="sheet" aria-labelledby="t1">
+    <div class="sheet-body">
+      <p class="ann">Problem</p>
+      <h2 id="t1">Hours of the same clicks</h2>
+      <p>SketchUp's own 2D export meant setting up a section plane and a camera for every variant, then fixing layers and line weights by hand in AutoCAD. Six variants turned that into hours of repetition. The AI render plugins I found either needed SketchUp 2024 or later, or cost money with no sign they would keep the geometry.</p>
+      <p>The people I was designing for were the architects in the studio, me included. They don't want a new program to learn. They want their drawings done right, in their own files, on their own layers.</p>
+    </div>
+    <aside class="titleblock" aria-label="Sheet details">
+      <div class="no"><span class="bubble"><span class="t">05</span><span class="b">T1</span></span><span class="ann">Detail 1<br>Problem</span></div>
+      <div><span class="ann">Project</span><b>Prison cell to hostel room, 6 variants</b></div>
+      <div><span class="ann">Software</span><b>SketchUp 2022, AutoCAD</b></div>
+    </aside>
+  </article>
+
+  <article class="sheet" aria-labelledby="t2">
+    <div class="sheet-body">
+      <p class="ann">Key decision</p>
+      <h2 id="t2">Rules first, tools second</h2>
+      <p>Before building anything, I wrote the drawing standard as rules that a person and an AI can both check: every real piece is one polyline, no double lines, no line ends in mid-air, a steel profile is one closed outline (an IPE beam has exactly 12 vertices). Hatching only on metal, timber stays empty.</p>
+      <p>For modelling I did the same. A structured interview, one multiple-choice question at a time, fixed every decision: centimetres, one solid per part, groups for single parts and components for repeated ones, tags by element type, real panel thickness and real joints. That became a <b>/sketchup</b> command that models to my rules, checks its own result against a report and three saved views, and retries at most three times.</p>
+      <div class="check" aria-label="Excerpt from the drawing rules">
+        <p class="ann">autocad-polyline-rules · SKILL.md</p>
+        <p class="q">One real piece = one closed polyline.</p>
+        <p class="flag">Shared edges are drawn once</p>
+        <p class="q fix">IPE = 12 vertices · UPN = 8 · L = 6</p>
+      </div>
+    </div>
+    <aside class="titleblock" aria-label="Sheet details">
+      <div class="no"><span class="bubble"><span class="t">05</span><span class="b">T2</span></span><span class="ann">Detail 2<br>Rules</span></div>
+      <div><span class="ann">Output</span><b>A design system for drawings</b></div>
+      <div><span class="ann">Used by</span><b>People and AI alike</b></div>
+    </aside>
+  </article>
+
+  <article class="sheet featured" aria-labelledby="t3">
+    <div class="sheet-body">
+      <p class="ann">Build</p>
+      <h2 id="t3">One click from model to sheet</h2>
+      <p>Plan &amp; Section Export cuts a plan at any height, a long section and a cross section, adds level marks (±0.00, +0.19) and writes one DXF on the studio's layers: CUT 0.35, VIEW 0.09, ABOVE 0.09 dashed grey, LEVELS, TEXT. Every piece is one closed polyline, the same rule as above. I built it in about 45 minutes on 8 October 2026 and went through six versions while using it on the real project.</p>
+      <div class="plates">
+        <figure>
+          <div class="vp"><img src="img/tools-plansection.jpg" alt="The Plan and Section Export dialog in SketchUp: cut height, overhead lines, long and cross section, height marks and file type, with a single Write one DXF button" width="1400" height="854" loading="lazy"></div>
+          <figcaption><b>Viewport A.</b> Everything on one panel, in plain words: what to draw, where to cut, one button.</figcaption>
+        </figure>
+        <figure>
+          <div class="vp"><img src="img/tools-sheets.jpg" alt="AutoCAD with six sheets of the cell: existing and proposed plans and sections at 1:20" width="1400" height="669" loading="lazy"></div>
+          <figcaption><b>Viewport B.</b> Existing and proposed plans and sections of the cell, plotted with no errors.</figcaption>
+        </figure>
+      </div>
+    </div>
+    <aside class="titleblock" aria-label="Sheet details">
+      <div class="no"><span class="bubble"><span class="t">05</span><span class="b">T3</span></span><span class="ann">Detail 3<br>Export</span></div>
+      <div><span class="ann">Time</span><b>3–4 h by hand, 25–30 min with the tool</b></div>
+      <div><span class="ann">Versions</span><b>0.1 to 0.6</b></div>
+      <div><span class="ann">Format</span><b>DXF, AutoCAD 2000</b></div>
+    </aside>
+  </article>
+
+  <article class="sheet" aria-labelledby="t4">
+    <div class="sheet-body">
+      <p class="ann">Design for trust</p>
+      <h2 id="t4">AI renders that show what they cost</h2>
+      <p>Wiro Render sends the current SketchUp view to an AI image model and saves the result next to the model. The first batch version had a timer bug that started the same batch many times in parallel, and I lost $3–4 in one afternoon without getting a single usable render. So cost became part of the design: one job at a time, a confirmation with the price before any batch, and a log of every render that says whether the price came from the provider or from a list.</p>
+      <p>The AI also copied objects from my reference photos. Now the reference never reaches the render model: a vision model first describes only its materials, colours and light, and the renderer gets that text.</p>
+      <div class="plates">
+        <figure>
+          <div class="vp"><img src="img/tools-wiro.jpg" alt="The Wiro Render dialog: scene, prompt, materials, reference images used for materials and atmosphere only, model and resolution" width="1400" height="854" loading="lazy"></div>
+          <figcaption><b>Viewport C.</b> "Reference never reaches the renderer" is a setting you can see, not a hidden rule.</figcaption>
+        </figure>
+        <div class="check" aria-label="Extract from the real spend log">
+          <p class="ann">spend_log.csv · 3 Nov 2026</p>
+          <p class="q">12:43 · table close-up · $0.24</p>
+          <p class="q">12:46 · table close-up · $0.24</p>
+          <p class="q">12:51 · table close-up · $0.24</p>
+          <p class="q">12:53 · view 2 · $0.24</p>
+          <p class="flag">All four: reported by Wiro</p>
+          <p class="q fix">4 renders at 4K · $0.96</p>
+        </div>
+      </div>
+    </div>
+    <aside class="titleblock" aria-label="Sheet details">
+      <div class="no"><span class="bubble"><span class="t">05</span><span class="b">T4</span></span><span class="ann">Detail 4<br>Render</span></div>
+      <div><span class="ann">Price shown</span><b>Before every batch</b></div>
+      <div><span class="ann">Log</span><b>Every render, with its source</b></div>
+      <div><span class="ann">Versions</span><b>0.1 to 0.10</b></div>
+    </aside>
+  </article>
+
+  <article class="sheet" aria-labelledby="t5">
+    <div class="sheet-body">
+      <p class="ann">Toolbox</p>
+      <h2 id="t5">Small tools for real annoyances</h2>
+      <p>Around the two main tools grew a toolbox of five SketchUp extensions and nine AutoCAD commands, each one for a problem I hit in a real drawing.</p>
+      <div class="plates">
+        <figure>
+          <div class="vp"><img src="img/tools-menu.jpg" alt="SketchUp Extensions menu listing Clean Lines, Corrugated Cardboard, Plan Section Export, Wiro Render and Wood Lattice" width="1400" height="923" loading="lazy"></div>
+          <figcaption><b>Viewport D.</b> Five extensions, side by side in the studio's SketchUp.</figcaption>
+        </figure>
+        <figure>
+          <div class="vp"><img src="img/tools-lattice.jpg" alt="A SketchUp model of the cell with a timber stair and lattice panels made with the Wood Lattice extension" width="1400" height="831" loading="lazy"></div>
+          <figcaption><b>Viewport E.</b> Wood Lattice in the cell project: scale the panel and the slats keep their size and spacing.</figcaption>
+        </figure>
+      </div>
+      <ul class="prop-list" aria-label="The toolbox">
+        <li><b>Clean Lines.</b> Removes stray edges, lines that split flat faces, and overlapping faces.</li>
+        <li><b>Wood Lattice.</b> A parametric slat panel; new slats appear when you scale it instead of stretching.</li>
+        <li><b>Corrugated Cardboard.</b> Draws exhibition boards that snap to real 1, 2 or 3-layer thickness. I removed a convert tool that broke the next clicks, and gave the P key back to normal Push/Pull so people's habits still work.</li>
+        <li><b>AutoCAD commands.</b> Flag open polylines in red, delete a vertex with a double-click, label slats, dimension rectangles, crop a sheet to a boundary, draw a standard hinge detail.</li>
+        <li><b>Door detail sheet.</b> For a former customs house, an exploded axonometric at 1:20 and a three-step assembly diagram, drawn from Python into AutoCAD in the style of the existing sheets.</li>
+      </ul>
+    </div>
+    <aside class="titleblock" aria-label="Sheet details">
+      <div class="no"><span class="bubble"><span class="t">05</span><span class="b">T5</span></span><span class="ann">Detail 5<br>Toolbox</span></div>
+      <div><span class="ann">SketchUp</span><b>5 extensions</b></div>
+      <div><span class="ann">AutoCAD</span><b>9 commands</b></div>
+    </aside>
+  </article>
+
+  <section class="about" aria-labelledby="learn">
+    <div style="display:grid;gap:14px">
+      <p class="ann">General notes</p>
+      <h2 id="learn">What I learned</h2>
+      <p><b>A tool that spends money needs a lock from day one.</b> Test paid APIs with the cheapest settings first, and never let a job start twice.</p>
+      <p><b>Remove features that work if people don't use them.</b> Hatching made the DXF harder to open, so it went. Batch rendering was fixed, but single renders were what I actually used.</p>
+      <p><b>Real use changes the structure.</b> The first real model showed that naming worked but parts also had to roll up into units people think in, like a bench or a table and chair set. I added assemblies the same day.</p>
+      <p><b>An AI that draws must re-read before it changes anything.</b> While I moved parts by hand, an automated step drew into the wrong area and deleted five surfaces. It was caught and restored, and now every step reads the sheet again first.</p>
+    </div>
+    <div style="display:grid;gap:18px;align-content:start">
+      <ul aria-label="Project facts">
+        <li><span class="ann">Built with</span><span>Ruby, AutoLISP, Python, HTML, Claude</span></li>
+        <li><span class="ann">Speed</span><span>Two extensions in one day, about 45 minutes each, 16 versions</span></li>
+        <li><span class="ann">Projects</span><span>Prison cell to hostel, door details for a former customs house, exhibition models</span></li>
+        <li><span class="ann">Year</span><span>2026</span></li>
+      </ul>
+      <div style="display:flex;flex-wrap:wrap;gap:12px">
+        <a class="cta ghost" href="index.html">← Back to all sheets</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="cmd" aria-label="Contact">
+  <div class="cmd-in">
+    <span class="prev">Command: OPEN Sheet_05_detail</span>
+    <div class="now"><span class="prompt">Command:</span>
+      <button type="button" class="cmdbtn" data-copy="ebru.timinci@gmail.com">COPY_EMAIL</button>
+      <a class="cmdbtn" href="Ebru-Timinci-CV.pdf?v=20261116" target="_blank" rel="noopener">OPEN_CV</a>
+      <a class="cmdbtn" href="https://www.linkedin.com/in/ebru-timinci/" target="_blank" rel="noopener">LINKEDIN</a>
+      <a class="cmdbtn" href="https://github.com/ebrutiminci" target="_blank" rel="noopener">GITHUB</a>
+      <a class="cmdbtn" href="https://x.com/ebrutiminci" target="_blank" rel="noopener">X</a><span class="caret" aria-hidden="true"></span>
+    </div>
+    <span class="out" aria-live="polite">ebru.timinci@gmail.com · Ljubljana, moving to İzmir, Turkey</span>
+  </div>
+</footer>
+<script src="blueprint.js?v=23"></script>
+<script src="tools.js?v=23"></script>
+</body>
+</html>
