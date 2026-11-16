@@ -23,7 +23,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
 <link rel="stylesheet" href="blueprint.css?v=23">
-<style>html,body{margin:0}*{box-sizing:border-box}img{max-width:100%}.plates{align-items:start}.about figure{max-width:340px}</style>
+<style>html,body{margin:0}*{box-sizing:border-box}img{max-width:100%}.plates{align-items:start}.sheet-body{min-width:0}.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(130px,100%),1fr));gap:12px;align-items:start;margin:0;padding:0}.steps figure{margin:0}.steps figcaption{font-size:.85em}</style>
   <!-- Vercel Web Analytics: counts visits, no cookies -->
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
   <script defer src="/_vercel/insights/script.js"></script>
@@ -58,12 +58,16 @@
           <figcaption><b>Viewport B.</b> Assembled, no glue. The empty frame lies behind it.</figcaption>
         </figure>
       </div>
-      <ul class="prop-list" aria-label="Design decisions">
-        <li><b>Hide the joints.</b> Every slot and pocket sits on the bed side under a 0.6 mm skin, so nothing shows from the front, and nothing needs supports.</li>
-        <li><b>Six versions, each from a real print.</b> v1 was "very cute", but the roof wouldn't stay and the walls weren't connected. v3 turned the card's spacer bars into real structure: tie beams and a ridge board. v4 nested the parts to fit A5. v5 widened the thin parts after "too weak" feedback.</li>
-        <li><b>The roof that sprang back.</b> The tabs stuck out square to the roof slope while the roof came straight down, so it caught. I made the tab sides vertical: the direction a part moves into place matters as much as the tolerance.</li>
-        <li><b>Breakpoints are a detail too.</b> Gates of 1.6 × 1.2 mm needed pliers; a 0.8 × 0.6 mm neck snaps by hand.</li>
+      <p class="ann">How I worked</p>
+      <ul class="prop-list" aria-label="Process">
+        <li><b>1 · Set the goals.</b> Fits in an envelope, holds together without glue, and doesn't look kitsch. I turned down a comic-style concept for realistic texture and symmetric icing.</li>
+        <li><b>2 · Measure before designing.</b> A tolerance test card came first. Per edge: closed slot 0.20 mm (0.05–0.15 was too tight), crossing joint 0.10, key pocket 0.05, blind pocket 0.20. Card v2 also fixed the gates: 1.6 × 1.2 mm needed pliers, a 0.8 × 0.6 mm neck snaps by hand, and never on a chamfered edge.</li>
+        <li><b>3 · Hide every joint.</b> Slots and pockets sit on the bed side under a 0.6 mm skin, so nothing shows from the front and nothing needs supports.</li>
+        <li><b>4 · Print, judge, change.</b> v1 was "very cute", but the roof wouldn't stay, the walls weren't connected and the tea light barely fit. v2's sliding roof and chimney added a visible slot, so I dropped them. v3 turned the card's spacer bars into real structure: tie beams and a ridge board. v4 nested the parts to fit A5. v5 widened the thin parts after "too weak": the fit was finally "pretty good".</li>
+        <li><b>5 · The roof that sprang back.</b> In v6 the gable tabs stuck out square to the slope while the roof came straight down, so it caught. I made the tab sides vertical and the pockets longer: the direction a part moves into place matters as much as the tolerance.</li>
+        <li><b>6 · Scale the system.</b> The same rules made a village of six cards: townhouse, bakery, tower, church and a street card. Same language, different icing on each.</li>
       </ul>
+      <p class="sub"><b>Result.</b> The cottage has been printed several times; a card takes about 2 hours because 2 mm parts print solid and wood PLA flows slowly. One print in matte white sat loose: the same tolerance doesn't fit every filament.</p>
     </div>
     <aside class="titleblock" aria-label="Project details">
       <div class="no"><span class="bubble"><span class="t">06</span><span class="b">M1</span></span><span class="ann">Detail 1<br>Gingerbread</span></div>
@@ -88,12 +92,22 @@
           <figcaption><b>Viewport D.</b> Raised frames printed separately, with white faces in the first two layers.</figcaption>
         </figure>
       </div>
-      <ul class="prop-list" aria-label="Design decisions">
-        <li><b>The hard problem:</b> hold the beadwork firmly but removably. The loose warp threads leave through the short sides and are clamped by blocks under the lid.</li>
-        <li><b>15 versions in three days.</b> I turned down an inlaid version because it lost the raised museum look.</li>
-        <li><b>Two failed prints taught the most.</b> Thin face-down frames touched the bed with strips only 0.2–0.7 mm wide and turned to spaghetti. The fixes became rules in my printing skill: at least 1.2 mm of continuous bed contact, every part a separate object so a failed one can be skipped, a cut-away brim on thin frames.</li>
-        <li><b>Trust known geometry over a photo.</b> The camera opening measured from a photo came out 3–6 mm short. The original case file fixed it.</li>
+      <p class="ann">Process: sketch to assembly</p>
+      <div class="steps">
+        <figure><div class="vp"><img src="img/mk-bahar-idea.jpg" alt="Hand sketch over a product photo of the phone: frames drawn around the camera, a large BEADS panel, a flower and a bahar label" width="511" height="669" loading="lazy"></div><figcaption><b>0 · Sketch.</b> Frames drawn over the phone's own back layout.</figcaption></figure>
+        <figure><div class="vp"><img src="img/mk-bahar-s2.jpg" alt="Exploded view of the case with six labelled frames dropping into their grooves" width="451" height="505" loading="lazy"></div><figcaption><b>1 · Frames.</b> Each frame keys into its own 0.6 mm groove.</figcaption></figure>
+        <figure><div class="vp"><img src="img/mk-bahar-s4.jpg" alt="The cherry blossom beadwork laid into the base frame, thread tails at the ends" width="500" height="540" loading="lazy"></div><figcaption><b>2 · Beads.</b> Thread tails lie flat in 6 mm zones at each end.</figcaption></figure>
+        <figure><div class="vp"><img src="img/mk-bahar-s5.jpg" alt="The cover frame pressing down over the beadwork" width="500" height="540" loading="lazy"></div><figcaption><b>3 · Cover.</b> Pressed on, it clamps beads and threads. No glue on the beads.</figcaption></figure>
+      </div>
+      <p class="ann">How I worked</p>
+      <ul class="prop-list" aria-label="Process">
+        <li><b>1 · Name the hard problem.</b> Hold the beadwork firmly but removably, with nothing behind it. The loose warp threads leave through the short sides and are clamped by blocks under the lid.</li>
+        <li><b>2 · Explore, then sketch.</b> v1–v3 tried a horizontal panel, a "museum" lid and a classic frame language. Then I drew the layout myself over a photo of the phone (step 0 above). From v4 every box in my sketch became a frame, and v11 followed my alignment lines.</li>
+        <li><b>3 · Two prints turned to spaghetti.</b> Thin face-down frames touched the bed with strips of only 0.2–0.7 mm and were dragged off. The plate was one object, so I couldn't skip the failed part. v13 still lifted; v14 inlaid the frames flat, which lost the raised museum look, so I turned it down. v15 added a cut-away brim on every thin frame.</li>
+        <li><b>4 · Trust known geometry over a photo.</b> I had measured the camera opening from a photo, and it came out 3 mm short on the right and 6 mm at the top. The original case file plus 0.5 mm fixed it.</li>
+        <li><b>5 · Write the procedure.</b> A six-step assembly guide: cut off the brims, dry-fit, glue the frames into their grooves, lay in the beads, press on the cover, let it cure.</li>
       </ul>
+      <p class="sub"><b>Result.</b> 15 versions from 28 to 31 October, printed and assembled. The rules went into my printing skill: at least 1.2 mm of continuous bed contact, every part a separate object, big single-colour parts on their own plate.</p>
     </div>
     <aside class="titleblock" aria-label="Project details">
       <div class="no"><span class="bubble"><span class="t">06</span><span class="b">M2</span></span><span class="ann">Detail 2<br>Bahar</span></div>
@@ -118,10 +132,18 @@
           <figcaption><b>Viewport F.</b> 10 versions across 5 sizes.</figcaption>
         </figure>
       </div>
-      <ul class="prop-list" aria-label="Design decisions">
-        <li><b>Fit from the real object.</b> A 12 mm grip zone holds the shaft, then a cone follows the tip into a seat I measured. Grip comes from three thin ribs, not a tighter hole.</li>
-        <li><b>Labels aren't exact.</b> 3.5 mm fitted first time, 3 mm was loose, 2.5 mm too tight. The 5.5 mm cap was too short, so the ribs held the thin tip instead of the shaft; I lengthened the inner cone from 10 to 26 mm.</li>
+      <figure>
+        <div class="vp"><img src="img/mk-caps-section.jpg" alt="Section drawing of the 5.5 mm cap: 12 mm grip zone with ribs, 26 mm cone following the needle tip, 40 mm overall, size debossed on top" width="1200" height="1201" loading="lazy"></div>
+        <figcaption><b>Section.</b> The 5.5 mm cap, v3: the needle (red dashed) sits on ribs in the grip zone, the cone follows the tip.</figcaption>
+      </figure>
+      <p class="ann">How I worked</p>
+      <ul class="prop-list" aria-label="Process">
+        <li><b>1 · Measure the real object.</b> A 12 mm grip zone holds the shaft, then a cone follows the tip into a seat I measured. Grip comes from three thin ribs, not a tighter hole.</li>
+        <li><b>2 · Draw it like a detail.</b> Each size got a section drawing with the needle drawn in, so I could see where the ribs touch before printing.</li>
+        <li><b>3 · Test every size.</b> Labels aren't exact: 3.5 mm fitted first time, 3 mm was loose, 2.5 mm too tight.</li>
+        <li><b>4 · Read the failure.</b> The 5.5 mm cap was too short, so the ribs held the thin tip instead of the shaft. I lengthened the inner cone from 10 to 26 mm (v3, the section above).</li>
       </ul>
+      <p class="sub"><b>Result.</b> 10 versions across 5 sizes, used on my own needles and shared publicly.</p>
       <a class="cta ghost" href="https://makerworld.com/models/3491320" target="_blank" rel="noopener">See it on MakerWorld →</a>
     </div>
     <aside class="titleblock" aria-label="Project details">
@@ -133,28 +155,38 @@
 
   <article class="sheet" aria-labelledby="m4">
     <div class="sheet-body">
-      <p class="ann">Unfinished</p>
-      <h2 id="m4">A chore wheel that isn't solved yet</h2>
-      <p>An 80 mm wheel for the wall rotates three chores and a free week among four flatmates. Each chore has a flap: black means "to do" and locks the ring, white means done. Hinges printed in place worked in their own test. Keeping a flap in place on a wall did not: friction fits went from "stuck" to "falls off" within hundredths of a millimetre, and v23 with nine hidden magnets still didn't work. The project is paused.</p>
-      <figure>
-        <div class="vp"><img src="img/mk-chore.jpg" alt="Several printed chore wheel versions side by side, from plain white tests to a black wheel with Kitchen, Bathroom, Floors and a green Free segment" width="1400" height="798" loading="lazy"></div>
-        <figcaption><b>Viewport G.</b> From white test rings to the black and green v22.</figcaption>
-      </figure>
-      <p class="sub">What it taught me: on a wall, friction is not a holding force, and a state toggle needs something that holds it, like a magnet or a spring detent. Next step: find exactly why v23 failed before changing anything.</p>
+      <p class="ann">23 versions</p>
+      <h2 id="m4">A chore wheel I failed 23 times</h2>
+      <p>An 80 mm wheel for the wall that rotates three chores and a free week among four flatmates. It has failed 23 times in nine days. Each failure ruled one thing out, and each version got closer than the last.</p>
+      <div class="steps">
+        <figure><div class="vp"><img src="img/mk-chore-idea.jpg" alt="Hand sketch of a wheel: inner ring with four initials, outer ring with Floors, Bathroom, Kitchen and a hatched Free segment" width="900" height="927" loading="lazy"></div><figcaption><b>29 Oct · Sketch.</b> Names inside, chores outside, one hatched free week.</figcaption></figure>
+        <figure><div class="vp"><img src="img/mk-chore-v1.jpg" alt="Rendered parts of version 1: black base with hub, black and green task ring with sliders, tray and frame" width="1200" height="559" loading="lazy"></div><figcaption><b>31 Oct · v1.</b> Three sliders with a smiley; any slider pushed in locks the ring.</figcaption></figure>
+        <figure><div class="vp"><img src="img/mk-chore.jpg" alt="Several printed chore wheel versions side by side, from plain white tests to a black wheel with Kitchen, Bathroom, Floors and a green Free segment" width="1400" height="798" loading="lazy"></div><figcaption><b>Up to 7 Nov.</b> Printed tests, from white test rings to the black and green v22.</figcaption></figure>
+      </div>
+      <p class="ann">How I worked: what each failure ruled out</p>
+      <ul class="prop-list" aria-label="What each failure taught">
+        <li><b>Sliders slid.</b> Dovetail sliders at 0.10–0.15 mm moved under their own weight on the wall; 0.08 mm was the best and still slightly loose, and the same slider fitted differently in each slot. They went.</li>
+        <li><b>Friction fits fell off.</b> The ring wobbled on its hub at 0.30 mm; with a 0.20 mm square peg the tray fell off the hub and the frame fell off the wall. Between "stuck" and "falls off" there are only hundredths of a millimetre.</li>
+        <li><b>Simpler to read.</b> Smileys and wavy edges became plain black and white, with paper name cards behind a frame held by two magnets.</li>
+        <li><b>Flaps instead of sliders.</b> First on filament pins, whose holes were too tight. Then hinges printed in place on small cones: no pins, no glue, and the hinge test worked first time.</li>
+        <li><b>7 Nov, reviewing v22.</b> Nothing held a flap in place: on a wall it could tip over on its own. I printed a spring-catch test card, then moved to magnets.</li>
+        <li><b>v23.</b> Nine hidden 3 × 1 mm magnets, one in each flap and two in the ring for "to do" and "done", dropped in during a print pause at 4.40 mm. It still didn't work, but it's the first version where the open question is one clear thing.</li>
+      </ul>
+      <p class="sub">What it taught me: a state toggle needs something that actively holds it, like a magnet or a spring detent. Next: find exactly why v23 slips before changing anything else.</p>
     </div>
     <aside class="titleblock" aria-label="Project details">
       <div class="no"><span class="bubble"><span class="t">06</span><span class="b">M4</span></span><span class="ann">Detail 4<br>Chore wheel</span></div>
       <div><span class="ann">Versions</span><b>23</b></div>
-      <div><span class="ann">Status</span><b>Paused</b></div>
+      <div><span class="ann">Time</span><b>29 Oct – 7 Nov 2026</b></div>
+      <div><span class="ann">Status</span><b>Still iterating</b></div>
     </aside>
   </article>
 
   <section class="about" aria-labelledby="also">
-    <div style="display:grid;gap:14px">
+    <div style="display:grid;gap:14px;align-content:start">
       <p class="ann">General notes</p>
-      <h2 id="also">Also printed</h2>
-      <p>A honeycomb phone case whose open cells fade into closed ones toward the bottom, so the phone's colour shows through at the top.</p>
-      <figure><div class="vp"><img src="img/mk-hex.jpg" alt="A black honeycomb phone case on a phone, with open hexagons fading into closed ones" width="800" height="1182" loading="lazy"></div></figure>
+      <h2 id="also">Workshop</h2>
+      <p>Every project starts as a sketch and a measurement, then goes through as many printed tests as it takes.</p>
     </div>
     <div style="display:grid;gap:18px;align-content:start">
       <ul aria-label="Workshop">
