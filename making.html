@@ -157,22 +157,21 @@
     <div class="sheet-body">
       <p class="ann">23 versions</p>
       <h2 id="m4">A chore wheel I failed 23 times</h2>
-      <p>An 80 mm wheel for the wall that rotates three chores and a free week among four flatmates. It has failed 23 times in nine days. Each failure ruled one thing out, and each version got closer than the last.</p>
+      <p>An 80 mm wheel for the wall that rotates three chores and a free week among four flatmates. I failed 23 times in nine days and still don't have a working wheel. I didn't get the product. I got the techniques I now use on every print.</p>
       <div class="steps">
         <figure><div class="vp"><img src="img/mk-chore-idea.jpg" alt="Hand sketch of a wheel: inner ring with four initials, outer ring with Floors, Bathroom, Kitchen and a hatched Free segment" width="900" height="927" loading="lazy"></div><figcaption><b>29 Oct · Sketch.</b> Names inside, chores outside, one hatched free week.</figcaption></figure>
         <figure><div class="vp"><img src="img/mk-chore-v1.jpg" alt="Rendered parts of version 1: black base with hub, black and green task ring with sliders, tray and frame" width="1200" height="559" loading="lazy"></div><figcaption><b>31 Oct · v1.</b> Three sliders with a smiley; any slider pushed in locks the ring.</figcaption></figure>
         <figure><div class="vp"><img src="img/mk-chore.jpg" alt="Several printed chore wheel versions side by side, from plain white tests to a black wheel with Kitchen, Bathroom, Floors and a green Free segment" width="1400" height="798" loading="lazy"></div><figcaption><b>Up to 7 Nov.</b> Printed tests, from white test rings to the black and green v22.</figcaption></figure>
       </div>
-      <p class="ann">How I worked: what each failure ruled out</p>
-      <ul class="prop-list" aria-label="What each failure taught">
-        <li><b>Sliders slid.</b> Dovetail sliders at 0.10–0.15 mm moved under their own weight on the wall; 0.08 mm was the best and still slightly loose, and the same slider fitted differently in each slot. They went.</li>
-        <li><b>Friction fits fell off.</b> The ring wobbled on its hub at 0.30 mm; with a 0.20 mm square peg the tray fell off the hub and the frame fell off the wall. Between "stuck" and "falls off" there are only hundredths of a millimetre.</li>
-        <li><b>Simpler to read.</b> Smileys and wavy edges became plain black and white, with paper name cards behind a frame held by two magnets.</li>
-        <li><b>Flaps instead of sliders.</b> First on filament pins, whose holes were too tight. Then hinges printed in place on small cones: no pins, no glue, and the hinge test worked first time.</li>
-        <li><b>7 Nov, reviewing v22.</b> Nothing held a flap in place: on a wall it could tip over on its own. I printed a spring-catch test card, then moved to magnets.</li>
-        <li><b>v23.</b> Nine hidden 3 × 1 mm magnets, one in each flap and two in the ring for "to do" and "done", dropped in during a print pause at 4.40 mm. It still didn't work, but it's the first version where the open question is one clear thing.</li>
+      <p class="ann">What the 23 failures taught me</p>
+      <ul class="prop-list" aria-label="What I learned">
+        <li><b>A tolerance test card for every filament.</b> One small print answers every fit at once. For PLA Basic, per edge: square peg 0.10 mm, a round peg that turns 0.05 mm or less, a sliding dovetail 0.02 mm or less. Wood PLA needed far more. Before the card, sliders slid down the wall under their own weight, and the tray and frame fell off.</li>
+        <li><b>Stopping the printer mid-print.</b> I added a pause to the print job at the 4.40 mm layer, dropped nine 3 × 1 mm magnets into hidden pockets, and resumed, so the magnets end up sealed inside the part. I learned that the pause comes before the chosen layer starts, and that you must not take the plate off or move the axes while it waits.</li>
+        <li><b>Hinges that print already moving.</b> Flaps print inside the ring on small cones, with 0.35 mm at the sides and 0.40 mm around the cones so they don't fuse. No pins, no glue. The hinge test worked first time.</li>
+        <li><b>Editing a model without remodelling it.</b> Magnet pockets went in as negative parts in the slicer, and a 3 × 1 mm magnet press-fits well in a 3.2 mm pocket.</li>
+        <li><b>Friction is not a holding force.</b> On a wall, "stuck" and "falls off" are hundredths of a millimetre apart. A flap needs something that actively holds it, like a magnet or a spring catch.</li>
       </ul>
-      <p class="sub">What it taught me: a state toggle needs something that actively holds it, like a magnet or a spring detent. Next: find exactly why v23 slips before changing anything else.</p>
+      <p class="sub"><b>Where it stands.</b> v23 with magnets still doesn't work, and the wheel is paused. Next time, the first step is to find exactly why v23 fails before changing anything.</p>
     </div>
     <aside class="titleblock" aria-label="Project details">
       <div class="no"><span class="bubble"><span class="t">06</span><span class="b">M4</span></span><span class="ann">Detail 4<br>Chore wheel</span></div>
