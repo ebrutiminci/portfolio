@@ -86,6 +86,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     THESIS: ['Thesis research', 'thesis.html'],
     APP: ['UX Research App', 'app.html'],
     TOOLS: ['Studio drawing tools', 'tools.html'],
+    MAKING: ['3D printed objects', 'making.html'],
     BUS: ['Bus widget', home + '#s3'],
     CV: ['Open CV', 'Ebru-Timinci-CV.pdf?v=20261116'],
     LINKEDIN: ['LinkedIn', 'https://www.linkedin.com/in/ebru-timinci/'],
@@ -106,7 +107,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     CMDS.MIRROR = ['Mirror a sheet', 'tool:mirror']; CMDS.MI = CMDS.MIRROR;
     CMDS.RESTORE = ['Put every sheet back', 'tool:restore'];
   }
-  var MENU = ['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'TOOLS', 'BUS', 'MODEL', 'LINKEDIN', 'GITHUB', 'X'];
+  var MENU = ['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'TOOLS', 'MAKING', 'BUS', 'MODEL', 'LINKEDIN', 'GITHUB', 'X'];
 
   var bar = document.createElement('nav');
   bar.className = 'statusbar'; bar.setAttribute('aria-label', 'Pages');
