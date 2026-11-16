@@ -48,6 +48,13 @@
       <p class="ann">Problem</p>
       <h2 id="t1">Hours of the same clicks</h2>
       <p>SketchUp's own 2D export meant setting up a section plane and a camera for every variant, then fixing layers and line weights by hand in AutoCAD. Six variants turned that into hours of repetition. The AI render plugins I found either needed SketchUp 2024 or later, or cost money with no sign they would keep the geometry.</p>
+      <p class="ann">The manual process, per variant</p>
+      <ul class="prop-list" aria-label="Manual process">
+        <li><b>1 · Set up.</b> Place a section plane and a camera in SketchUp for the plan, then again for each section.</li>
+        <li><b>2 · Export.</b> Export each view as a separate 2D DWG.</li>
+        <li><b>3 · Clean up.</b> Open in AutoCAD, move every line to the right layer, fix line weights, redraw what came out as broken segments.</li>
+        <li><b>4 · Repeat.</b> Three drawings × six variants. About 3–4 hours for one variant.</li>
+      </ul>
       <p>The people I was designing for were the architects in the studio, me included. They don't want a new program to learn. They want their drawings done right, in their own files, on their own layers.</p>
     </div>
     <aside class="titleblock" aria-label="Sheet details">
@@ -62,7 +69,14 @@
       <p class="ann">Key decision</p>
       <h2 id="t2">Rules first, tools second</h2>
       <p>Before building anything, I wrote the drawing standard as rules that a person and an AI can both check: every real piece is one polyline, no double lines, no line ends in mid-air, a steel profile is one closed outline (an IPE beam has exactly 12 vertices). Hatching only on metal, timber stays empty.</p>
-      <p>For modelling I did the same. A structured interview, one multiple-choice question at a time, fixed every decision: centimetres, one solid per part, groups for single parts and components for repeated ones, tags by element type, real panel thickness and real joints. That became a <b>/sketchup</b> command that models to my rules, checks its own result against a report and three saved views, and retries at most three times.</p>
+      <p class="ann">How I worked</p>
+      <ul class="prop-list" aria-label="Process">
+        <li><b>1 · Interview first.</b> Claude asked me one multiple-choice question at a time until every rule was decided. No code before that.</li>
+        <li><b>2 · Build the loop.</b> Claude writes a Ruby script, runs it in SketchUp on my computer, then reads a check report and saved iso, top and front views. If something is wrong it undoes and retries, at most three times.</li>
+        <li><b>3 · Shared helpers.</b> Panels, walls, openings, joints, components and the check report live in one library, so every script stays short and follows the same rules.</li>
+        <li><b>4 · Test on a real model, fix the same day.</b> Naming worked, but parts also had to roll up into units people think in: "A - Bench unit", "B - Table + chairs", "C - Room". I added assemblies (and sub-assemblies, C › C1 › C1.1), and the report now flags parts outside any assembly. Library v1.1 updates the old copy on its own.</li>
+      </ul>
+      <p>For modelling I did the same. A structured interview, one multiple-choice question at a time, fixed every decision: centimetres, one solid per part, groups for single parts and components for repeated ones, tags by element type, real panel thickness and real joints. That became a <b>/sketchup</b> command that models to my rules, checks its own result against a report and three saved views, and retries at most three times. It took one day, two short sessions, on 3 November.</p>
       <div class="check" aria-label="Excerpt from the drawing rules">
         <p class="ann">autocad-polyline-rules · SKILL.md</p>
         <p class="q">One real piece = one closed polyline.</p>
@@ -82,6 +96,15 @@
       <p class="ann">Build</p>
       <h2 id="t3">One click from model to sheet</h2>
       <p>Plan &amp; Section Export cuts a plan at any height, a long section and a cross section, adds level marks (±0.00, +0.19) and writes one DXF on the studio's layers: CUT 0.35, VIEW 0.09, ABOVE 0.09 dashed grey, LEVELS, TEXT. Every piece is one closed polyline, the same rule as above. I built it in about 45 minutes on 8 October 2026 and went through six versions while using it on the real project.</p>
+      <p class="ann">How I worked: build, use, fix</p>
+      <ul class="prop-list" aria-label="Process">
+        <li><b>0.1 · The core.</b> Select a group; the tool computes the cut faces and finds visible edges with ray tests, so lines behind other things are never drawn.</li>
+        <li><b>The files wouldn't open.</b> On Windows every line ending was doubled. The DXF is now written byte by byte.</li>
+        <li><b>Three files was two too many.</b> All drawings now go into one DXF, side by side with titles.</li>
+        <li><b>Plans had no levels.</b> The mark sat at the centre of a surface, under the stair. It now goes on a point of the surface you can see.</li>
+        <li><b>AutoCAD 2000 with line weights wouldn't open.</b> I based the file skeleton on a template from a DXF library, and it passed that library's audit.</li>
+        <li><b>Hatching: added, then removed.</b> It made the file harder to open, and nobody needed it.</li>
+      </ul>
       <div class="plates">
         <figure>
           <div class="vp"><img src="img/tools-plansection.jpg" alt="The Plan and Section Export dialog in SketchUp: cut height, overhead lines, long and cross section, height marks and file type, with a single Write one DXF button" width="1400" height="854" loading="lazy"></div>
@@ -92,6 +115,7 @@
           <figcaption><b>Viewport B.</b> Existing and proposed plans and sections of the cell, plotted with no errors.</figcaption>
         </figure>
       </div>
+      <p class="sub"><b>Result.</b> One variant's plan and two sections in 25–30 minutes instead of 3–4 hours, on the studio's own layers.</p>
     </div>
     <aside class="titleblock" aria-label="Sheet details">
       <div class="no"><span class="bubble"><span class="t">05</span><span class="b">T3</span></span><span class="ann">Detail 3<br>Export</span></div>
@@ -105,8 +129,14 @@
     <div class="sheet-body">
       <p class="ann">Design for trust</p>
       <h2 id="t4">AI renders that show what they cost</h2>
-      <p>Wiro Render sends the current SketchUp view to an AI image model and saves the result next to the model. The first batch version had a timer bug that started the same batch many times in parallel, and I lost $3–4 in one afternoon without getting a single usable render. So cost became part of the design: one job at a time, a confirmation with the price before any batch, and a log of every render that says whether the price came from the provider or from a list.</p>
-      <p>The AI also copied objects from my reference photos. Now the reference never reaches the render model: a vision model first describes only its materials, colours and light, and the renderer gets that text.</p>
+      <p>Wiro Render sends the current SketchUp view to an AI image model and saves the result next to the model. I built it in about 45 minutes, ten versions from 0.1 to 0.10, each one fixing something that happened while I used it.</p>
+      <p class="ann">How I worked: each problem, then the fix</p>
+      <ul class="prop-list" aria-label="Process">
+        <li><b>The AI copied objects from my reference photos.</b> The reference now never reaches the render model. A vision model first describes only its materials, colours and light, and the renderer gets that text.</li>
+        <li><b>The reference wasn't read at all.</b> The model I picked didn't accept images. The plugin now finds the image models on Wiro and tries them in turn.</li>
+        <li><b>The spend counter stayed empty.</b> When Wiro doesn't report a cost, it counts the list price and says so.</li>
+        <li><b>The batch bug.</b> A SketchUp timer started the same batch about 20 times in parallel. I lost $3–4 in one afternoon without one usable render. Timers now stop themselves, only one job runs at a time, every scene is checked before it is sent, and the price is shown before any batch.</li>
+      </ul>
       <div class="plates">
         <figure>
           <div class="vp"><img src="img/tools-wiro.jpg" alt="The Wiro Render dialog: scene, prompt, materials, reference images used for materials and atmosphere only, model and resolution" width="1400" height="854" loading="lazy"></div>
@@ -122,6 +152,7 @@
           <p class="q fix">4 renders at 4K · $0.96</p>
         </div>
       </div>
+      <p class="sub"><b>Result.</b> Single renders work and are what I use every day. Batch rendering was fixed, but it stalled too often in use, so I stopped using it.</p>
     </div>
     <aside class="titleblock" aria-label="Sheet details">
       <div class="no"><span class="bubble"><span class="t">05</span><span class="b">T4</span></span><span class="ann">Detail 4<br>Render</span></div>
@@ -152,10 +183,18 @@
         <li><b>Corrugated Cardboard.</b> Draws exhibition boards that snap to real 1, 2 or 3-layer thickness. I removed a convert tool that broke the next clicks, and gave the P key back to normal Push/Pull so people's habits still work.</li>
         <li><b>AutoCAD commands.</b> Flag open polylines in red, delete a vertex with a double-click, label slats, dimension rectangles, crop a sheet to a boundary, draw a standard hinge detail.</li>
       </ul>
+      <p class="ann">How I worked: the door detail</p>
+      <ul class="prop-list" aria-label="Door detail process">
+        <li><b>1 · Start from what exists.</b> Only an elevation and a half-finished axonometric. I modelled the frame, slats and hinges in Python from the elevation's dimensions.</li>
+        <li><b>2 · Draw it, don't trace it.</b> A small isometric script removes hidden faces; an AutoLISP routine draws the result straight into AutoCAD, the leaf pulled 120 cm forward.</li>
+        <li><b>3 · Match the set.</b> I read the sheet next to it and copied its language: one hatch per part at 80, 70 and 50% transparency, dashed assembly lines, labels 1, 2, 3, N1, hinge spacing 25 / 97.6 / 97.6 / 25.</li>
+        <li><b>4 · Feedback rounds.</b> 1:10 didn't fit the sheet, so 1:20. The hinge was redrawn twice, ending on the office's own cylindrical hinge. When I moved parts by hand, one step drew into the wrong area and deleted five surfaces; it was caught and restored.</li>
+      </ul>
       <figure>
         <div class="vp"><img src="img/tools-door.jpg" alt="Construction sheet for a timber slat door panel: an exploded axonometric at 1:25 with three hinges, and three assembly steps at 1:10 showing the outer frame, the panel in the facade plane and the hinges" width="1400" height="1212" loading="lazy"></div>
         <figcaption><b>Viewport F.</b> Door detail for a former customs house turned visitor centre. The parts were modelled in Python from the elevation and drawn into AutoCAD as an exploded axonometric and a three-step assembly, in the style and hatching of the project's other sheets. Notes in Slovenian, as built.</figcaption>
       </figure>
+      <p class="sub"><b>Result.</b> An almost finished sheet in about two days (7–8 Oct 2026). Still open: the hinges need updating to the correct hinge drawing.</p>
     </div>
     <aside class="titleblock" aria-label="Sheet details">
       <div class="no"><span class="bubble"><span class="t">05</span><span class="b">T5</span></span><span class="ann">Detail 5<br>Toolbox</span></div>
