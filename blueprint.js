@@ -85,6 +85,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     CASE: ['Revolut case study', 'casestudy.html'], REVOLUT: ['Revolut case study', 'casestudy.html'],
     THESIS: ['Thesis research', 'thesis.html'],
     APP: ['UX Research App', 'app.html'],
+    TOOLS: ['Studio drawing tools', 'tools.html'],
     BUS: ['Bus widget', home + '#s3'],
     CV: ['Open CV', 'Ebru-Timinci-CV.pdf?v=20261116'],
     LINKEDIN: ['LinkedIn', 'https://www.linkedin.com/in/ebru-timinci/'],
@@ -105,7 +106,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     CMDS.MIRROR = ['Mirror a sheet', 'tool:mirror']; CMDS.MI = CMDS.MIRROR;
     CMDS.RESTORE = ['Put every sheet back', 'tool:restore'];
   }
-  var MENU = ['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'BUS', 'MODEL', 'LINKEDIN', 'GITHUB', 'X'];
+  var MENU = ['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'TOOLS', 'BUS', 'MODEL', 'LINKEDIN', 'GITHUB', 'X'];
 
   var bar = document.createElement('nav');
   bar.className = 'statusbar'; bar.setAttribute('aria-label', 'Pages');
@@ -116,7 +117,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     '<span class="sb-menu" aria-hidden="true"><i></i><i></i><i></i></span>' +
     tab('model', 'Model', 'index.html') + tab('layout1', 'Revolut', 'casestudy.html') +
     tab('app', 'Research<span class="sb-long">&nbsp;App</span>', 'app.html') + tab('bus', 'Bus<span class="sb-long">&nbsp;Widget</span>', home + '#s3') +
-    tab('layout2', 'Thesis', 'thesis.html') +
+    tab('layout2', 'Thesis', 'thesis.html') + tab('tools', 'Tools', 'tools.html') +
     '<span class="sb-iso" hidden></span>' +
     '<span class="sb-mode">' + (space === 'model' ? 'MODEL' : 'PAPER') + '</span>' +
     '<button type="button" class="sb-cmdbtn" aria-expanded="false" aria-controls="sbcmd" title="Commands">⌘</button>' +

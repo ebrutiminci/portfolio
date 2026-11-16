@@ -595,3 +595,4 @@ html.rb-closed.has-ribbon body { padding-top: 0; }
   html.sb-sheet .sb-out { display: none; }
 }
 @media (max-width: 759px) { .sb-grid { width: 44px; } .sb-cmdbtn { width: 44px; right: 44px; } .sb-tab { padding: 0 7px; font-size: 0.95rem; } }
+@media (max-width: 480px) { .sb-tab[href$="#s3"] { display: none; } }
