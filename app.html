@@ -22,7 +22,7 @@
 <meta name="space" content="app">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap">
-<link rel="stylesheet" href="blueprint.css?v=24">
+<link rel="stylesheet" href="blueprint.css?v=25">
 <style>html,body{margin:0}*{box-sizing:border-box}img{max-width:100%}</style>
   <!-- Vercel Web Analytics: counts visits, no cookies -->
   <script>window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };</script>
@@ -131,16 +131,26 @@
     <div class="sheet-body">
       <p class="ann">Method · how the app thinks</p>
       <h2 id="r1">From an idea to actionable outcomes</h2>
-      <p>Behind the screens, the app runs one loop. The founder's answers become bets, and the riskiest bet becomes H1. Every question, every result and every action points back to a hypothesis, so nothing in the final report floats free of what was tested.</p>
-      <figure>
-        <div class="vp"><img src="img/method-loop.jpg" alt="The research loop in three parts. In: the founder's answers, a mirror of the idea from the customer's side, and the bets: problem, hypotheses H1 to H5, and value. Test: pass/fail rules written before asking, and a survey in six groups from ask or not to contact, with interviews as a side branch. Out: patterns and a pass, fail or unclear verdict, actions ranked P0 to P2, and new ideas that loop back." width="1800" height="797" loading="lazy"></div>
-        <figcaption><b>Viewport F.</b> In, test, out. H# marks every step that points back to a hypothesis.</figcaption>
-      </figure>
-      <ol class="pipeline" aria-label="The rules the loop follows">
-        <li><span class="k">01 · In</span><b>Bet</b><span>Write the problem, then up to five hypotheses. H1 is the one that kills the idea if it's wrong</span></li>
-        <li><span class="k">02 · Before</span><b>Commit</b><span>One pass/fail rule per hypothesis, with a number, written before anyone answers</span></li>
-        <li><span class="k">03 · Test</span><b>Ask</b><span>The survey asks about the past and never names the idea. Interviews take what a survey can't answer</span></li>
-        <li><span class="k">04 · Out</span><b>Decide</b><span>Counts become a verdict per hypothesis, then Keep, Change or Test next, ranked P0 to P2</span></li>
+      <p>Behind the screens, the app runs one loop. The founder's answers become bets, and the riskiest bet becomes H1. Every step marked <span class="lp-hn" title="Points back to a hypothesis">H#</span> points back to a hypothesis, so nothing in the final report floats free of what was tested.</p>
+      <ol class="loop" aria-label="The research loop">
+        <li class="lp-row">
+          <span class="lp-h">01 · In</span>
+          <div class="lp-box"><b>Answers</b><span>Who has the problem, what they do today, what's hard, the idea</span></div>
+          <div class="lp-box"><b>Mirror</b><span>"Picture… Right now they… Your bet is…"</span></div>
+          <div class="lp-box lp-key"><b>Bets</b><span>The problem, H1 to H5, the value. H1 is the riskiest</span></div>
+        </li>
+        <li class="lp-row">
+          <span class="lp-h">02 · Test</span>
+          <div class="lp-box"><span class="lp-hn" title="Points back to a hypothesis">H#</span><b>Pass/fail rules</b><span>One per hypothesis, with a number, written before anyone answers</span></div>
+          <div class="lp-box"><span class="lp-hn" title="Points back to a hypothesis">H#</span><b>Survey</b><span>Asks about the past and never names the idea. Six groups: ask or not, who, what they use, pains, how they see it, contact</span></div>
+          <div class="lp-box lp-opt"><b>Interview</b><span>Side branch, 5 to 8 people: only what the survey can't answer</span></div>
+        </li>
+        <li class="lp-row">
+          <span class="lp-h">03 · Out</span>
+          <div class="lp-box"><span class="lp-hn" title="Points back to a hypothesis">H#</span><b>Verdict</b><span>"n of N" for every rule: pass, fail or unclear</span></div>
+          <div class="lp-box"><span class="lp-hn" title="Points back to a hypothesis">H#</span><b>Actions</b><span>Keep, change or test next, ranked P0 to P2, each with a next step</span></div>
+          <div class="lp-box lp-opt"><b>New ideas</b><span>New bets go back in, and the loop runs again</span></div>
+        </li>
       </ol>
     </div>
     <aside class="titleblock" aria-label="Sheet details">
@@ -153,48 +163,36 @@
 
   <article class="sheet" id="example" aria-labelledby="r2">
     <div class="sheet-body">
-      <p class="ann">Example · a dummy survey</p>
-      <h2 id="r2">One idea, run through the loop</h2>
-      <p>To show the shape of the output, here is the water-reminder idea from the bias check above, run end to end. <b>The answers are made up.</b> Only the structure is real.</p>
-      <div class="check" aria-label="The dummy idea">
-        <p class="ann">Mirror · the idea from the customer's side</p>
-        <p class="q fix">Picture an office worker on a busy day. Right now they notice they're thirsty only when they get a headache. Your bet is: a reminder at the right moment helps them drink before that.</p>
-        <p class="flag">H1 · People forget to drink water on busy workdays</p>
-      </div>
+      <p class="ann">Example · a real study</p>
+      <h2 id="r2">A dating app idea, run through the loop</h2>
+      <p>The idea: a dating app with AI built in, to help people past the first messages. H1 was <b>people give up at the first messages.</b> The survey never mentioned AI. 14 people answered between 29 October and 10 November 2026, and 11 of them use dating apps.</p>
       <div class="sched-wrap"><table class="sched">
-        <thead><tr><th scope="col">Group</th><th scope="col">Example question</th></tr></thead>
+        <thead><tr><th scope="col">Rule, written before</th><th scope="col">What came back</th><th scope="col">Verdict</th></tr></thead>
         <tbody>
-          <tr><td class="k">Ask or not</td><td>Do you work at a desk most days?</td></tr>
-          <tr><td class="k">Who</td><td>How many hours a day are you in meetings?</td></tr>
-          <tr><td class="k">What they use</td><td>What do you do today to remember to drink water?</td></tr>
-          <tr><td class="k">Pains &amp; gains</td><td>Tell me about the last workday you felt you hadn't had enough water.</td></tr>
-          <tr><td class="k">How they see it</td><td>When in the day do you most often forget?</td></tr>
-          <tr><td class="k">Contact</td><td>Can we call you for 15 minutes? Leave an email if yes.</td></tr>
+          <tr><td>"During the first messages" is in the top 2 places people give up</td><td>It is #1: 5 of 11</td><td class="k">Pass</td></tr>
+          <tr><td>At least 1 in 4 pick "Conversations die quickly"</td><td>4 of 11</td><td class="k">Pass</td></tr>
+          <tr><td>The open answers talk about small talk, not something else</td><td>Nobody named small talk. They named silence and paywalls.</td><td class="k">Fail</td></tr>
         </tbody>
       </table></div>
       <div class="sched-wrap"><table class="sched">
-        <thead><tr><th scope="col">Rule, written before</th><th scope="col">Dummy result</th><th scope="col">Verdict</th></tr></thead>
+        <thead><tr><th scope="col">Do</th><th scope="col">What</th><th scope="col">Because</th></tr></thead>
         <tbody>
-          <tr><td>"During meetings" is in the top 2 times people forget</td><td>#1: 9 of 20</td><td class="k">Pass</td></tr>
-          <tr><td>At least 1 in 4 already tried a reminder and dropped it</td><td>3 of 20</td><td class="k">Fail</td></tr>
-          <tr><td>The open answers talk about forgetting, not about the water</td><td>Half talk about not liking tap water</td><td class="k">Unclear</td></tr>
+          <tr><td class="k">Keep</td><td>AI at the first message</td><td>5 of 11 give up there</td></tr>
+          <tr><td class="k">Change</td><td>Keep the AI free, sell "get past hello", and help the receiver reply too</td><td>5 of 6 casual users hit the paywall; 5 of 6 men get no replies</td></tr>
+          <tr><td class="k">Test next</td><td>Does AI help get replies? What do women need?</td><td>Only 1 asked for AI; no woman left an email</td></tr>
         </tbody>
       </table></div>
-      <div class="sched-wrap"><table class="sched">
-        <thead><tr><th scope="col">Do</th><th scope="col">Rank</th><th scope="col">What</th></tr></thead>
-        <tbody>
-          <tr><td class="k">Keep</td><td class="k">P0</td><td>Remind around meetings, where people forget most</td></tr>
-          <tr><td class="k">Change</td><td class="k">P1</td><td>Don't pitch it as "another reminder app": few have even tried one</td></tr>
-          <tr><td class="k">Test next</td><td class="k">P1</td><td>Interview 5 people: is the real problem forgetting, or the water itself?</td></tr>
-        </tbody>
-      </table></div>
-      <p class="note">Dummy data, for illustration only. In the app, the founder edits every line the app drafts.</p>
+      <figure>
+        <div class="vp"><img src="img/dating-onepage.jpg" alt="The whole survey on one page: a radial chart with one spoke per person and one ring per answer, a network of shared frustrations in the centre, and a flow from what people want, to their main pain, to where they give up, to what they would change." width="1800" height="1174" loading="lazy"></div>
+        <figcaption><b>Viewport F.</b> Every answer on one page, from the findings deck the app's results step will make. Each spoke is one person.</figcaption>
+      </figure>
+      <p class="note">14 people is a signal, not proof. People appear only as P1 to P14, with no emails.</p>
     </div>
     <aside class="titleblock" aria-label="Sheet details">
       <div class="no"><span class="bubble"><span class="t">02</span><span class="b">A6</span></span><span class="ann">Detail 6<br>Example</span></div>
-      <div><span class="ann">Idea</span><b>Water reminder for office workers</b></div>
-      <div><span class="ann">Answers</span><b>20, made up</b></div>
-      <div><span class="ann">Verdict</span><b>1 pass, 1 fail, 1 unclear</b></div>
+      <div><span class="ann">Answers</span><b>14, of them 11 app users</b></div>
+      <div><span class="ann">Rules</span><b>2 of 3 passed</b></div>
+      <div><span class="ann">Verdict</span><b>Build, with 3 changes</b></div>
     </aside>
   </article>
 
@@ -202,7 +200,7 @@
     <div class="sheet-body">
       <p class="ann">Next · Build</p>
       <h2 id="r7">From one study to a step in the app</h2>
-      <p>I ran the whole loop by hand on a real survey first, then wrote each step down as a rule. Those rules are the spec for the app's results step: when the survey closes, the founder adds the answers and gets a finished folder back.</p>
+      <p>I ran the whole loop by hand on the dating study first, then wrote each step down as a rule. Those rules are the spec for the app's results step: when the survey closes, the founder adds the answers and gets a finished folder back.</p>
       <ol class="pipeline" aria-label="How the results step works">
         <li><span class="k">01 · In</span><b>Connect</b><span>The form's answer sheet, the screener question, the "what are you looking for" question, and the pass/fail rules already saved for each hypothesis</span></li>
         <li><span class="k">02 · Count</span><b>Clean and compare</b><span>People become P1, P2…, emails become "left an email: yes or no". Every group is compared on every key answer, and a gap of 3+ people is flagged</span></li>
