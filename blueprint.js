@@ -314,3 +314,26 @@ document.querySelectorAll('table.sched').forEach(function (t) {
     Array.prototype.forEach.call(tr.children, function (td, i) { if (heads[i]) td.setAttribute('data-label', heads[i]); });
   });
 });
+
+// Findings deck: tabs, arrows and swipe stay in step
+document.querySelectorAll('[data-deck]').forEach(function (deck) {
+  var track = deck.querySelector('.dk-track'), slides = deck.querySelectorAll('.dk-slide');
+  var tabs = deck.querySelectorAll('.dk-tab'), count = deck.querySelector('.dk-count');
+  var prev = deck.querySelector('.dk-prev'), next = deck.querySelector('.dk-next'), cur = 0, n = slides.length;
+  function pad(x) { return (x < 10 ? '0' : '') + x; }
+  function mark(i) {
+    cur = i;
+    tabs.forEach(function (t, k) { t.classList.toggle('on', k === i); if (k === i) t.setAttribute('aria-current', 'true'); else t.removeAttribute('aria-current'); });
+    count.textContent = pad(i + 1) + ' / ' + pad(n);
+    prev.disabled = i === 0; next.disabled = i === n - 1;
+    var t = tabs[i]; if (t && t.scrollIntoView) { var bar = t.parentNode.parentNode; bar.scrollLeft = t.offsetLeft - bar.clientWidth / 2 + t.clientWidth / 2; }
+  }
+  function go(i) { i = Math.max(0, Math.min(n - 1, i)); track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: 'smooth' }); mark(i); }
+  tabs.forEach(function (t, k) { t.addEventListener('click', function () { go(k); }); });
+  prev.addEventListener('click', function () { go(cur - 1); });
+  next.addEventListener('click', function () { go(cur + 1); });
+  track.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); } });
+  var tm; track.addEventListener('scroll', function () { clearTimeout(tm); tm = setTimeout(function () { var i = Math.round(track.scrollLeft / track.clientWidth); if (i !== cur) mark(i); }, 80); }, { passive: true });
+  window.addEventListener('resize', function () { track.style.scrollBehavior = 'auto'; track.scrollLeft = slides[cur].offsetLeft - track.offsetLeft; track.style.scrollBehavior = ''; });
+  mark(0);
+});
