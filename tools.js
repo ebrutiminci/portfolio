@@ -9,7 +9,7 @@
   var board = !!wrap && !html.classList.contains('is-layout');
   var sheets = board ? Array.prototype.slice.call(wrap.querySelectorAll(':scope > .cover, :scope > .sheet')) : [];
   if (!sheets.length) board = false;
-  var KEY = 'ebru-board-v2', TIP = 'ebru-board-tip';
+  var KEY = 'ebru-board-v3', TIP = 'ebru-board-tip';
   function store(k, v) { try { if (v === null) localStorage.removeItem(k); else localStorage.setItem(k, v); } catch (e) {} }
   function load(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
 
@@ -413,7 +413,7 @@
   // Bring back last visit's arrangement
   var saved = null;
   try { saved = JSON.parse(load(KEY) || 'null'); } catch (e) { saved = null; }
-  try { localStorage.removeItem('ebru-board-v1'); } catch (e) {}
+  try { localStorage.removeItem('ebru-board-v1'); localStorage.removeItem('ebru-board-v2'); } catch (e) {}
   if (saved && saved.s && saved.s.length !== sheets.length) { saved = null; store(KEY, null); }
   if (saved && saved.s && wide.matches) {
     var go = function () { enter(saved); pick('select', true); say('Welcome back: your sheets are where you left them. RESTORE puts everything back.', true); };

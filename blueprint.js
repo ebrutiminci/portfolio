@@ -107,7 +107,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     CMDS.MIRROR = ['Mirror a sheet', 'tool:mirror']; CMDS.MI = CMDS.MIRROR;
     CMDS.RESTORE = ['Put every sheet back', 'tool:restore'];
   }
-  var MENU = ['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'TOOLS', 'MAKING', 'BUS', 'MODEL', 'LINKEDIN', 'GITHUB', 'X'];
+  var MENU = ['EMAIL', 'CV', 'APP', 'CASE', 'THESIS', 'TOOLS', 'MAKING', 'BUS', 'MODEL', 'LINKEDIN', 'GITHUB', 'X'];
 
   var bar = document.createElement('nav');
   bar.className = 'statusbar'; bar.setAttribute('aria-label', 'Pages');
@@ -116,8 +116,8 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
   }
   bar.innerHTML =
     '<span class="sb-menu" aria-hidden="true"><i></i><i></i><i></i></span>' +
-    tab('model', 'Model', 'index.html') + tab('layout1', 'Revolut', 'casestudy.html') +
-    tab('app', 'Research<span class="sb-long">&nbsp;App</span>', 'app.html') + tab('bus', 'Bus<span class="sb-long">&nbsp;Widget</span>', home + '#s3') +
+    tab('model', 'Model', 'index.html') + tab('app', 'Research<span class="sb-long">&nbsp;App</span>', 'app.html') +
+    tab('layout1', 'Revolut', 'casestudy.html') + tab('bus', 'Bus<span class="sb-long">&nbsp;Widget</span>', home + '#s3') +
     tab('layout2', 'Thesis', 'thesis.html') + tab('tools', 'Tools', 'tools.html') + tab('making', 'Making', 'making.html') +
     '<span class="sb-iso" hidden></span>' +
     '<span class="sb-mode">' + (space === 'model' ? 'MODEL' : 'PAPER') + '</span>' +
