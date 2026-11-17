@@ -603,14 +603,15 @@ html.rb-closed.has-ribbon body { padding-top: 0; }
 .loop-wrap { overflow-x: auto; border: 1.5px solid var(--line); padding: 14px 10px; outline: none; }
 .loop-wrap:focus-visible { border-color: var(--mark); }
 .loop-svg { display: block; width: 100%; height: auto; }
-@media (max-width: 640px) { .loop-svg { min-width: 600px; } }
-.loop-svg text { fill: #fff; font: 400 13px var(--body); }
-.loop-svg .tt { font: 600 16px var(--display); letter-spacing: .04em; }
+.loop-hint { display: none; }
+@media (max-width: 640px) { .loop-svg { min-width: 600px; } .loop-hint { display: inline; color: var(--mark); } }
+.loop-svg text { fill: #fff; font: 400 14px var(--body); }
+.loop-svg .tt { font: 600 17px var(--display); letter-spacing: .04em; }
 .loop-svg .sm { fill: var(--text-soft); font-size: 11.5px; font-style: italic; }
-.loop-svg .ch { font-size: 12px; }
+.loop-svg .ch { font-size: 13px; }
 .loop-svg .stg, .loop-svg .al, .loop-svg .hnt, .loop-svg .pt { font-family: var(--mono); }
-.loop-svg .stg { fill: var(--mark); font-size: 11px; letter-spacing: .12em; text-anchor: middle; }
-.loop-svg .al { fill: var(--text-soft); font-size: 10px; }
+.loop-svg .stg { fill: var(--mark); font-size: 12px; letter-spacing: .12em; text-anchor: middle; }
+.loop-svg .al { fill: var(--text-soft); font-size: 11px; }
 .loop-svg .mid { text-anchor: middle; }
 .loop-svg .bx { fill: rgba(255,255,255,0.04); stroke: #fff; stroke-width: 1.5; }
 .loop-svg .bx.dash { stroke: var(--text-soft); stroke-dasharray: 5 4; fill: none; }
