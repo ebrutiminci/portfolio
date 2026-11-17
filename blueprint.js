@@ -85,7 +85,6 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     CASE: ['Revolut case study', 'casestudy.html'], REVOLUT: ['Revolut case study', 'casestudy.html'],
     THESIS: ['Thesis research', 'thesis.html'],
     APP: ['UX Research App', 'app.html'],
-    DATING: ['Dating app study, the app\'s result', 'app.html#result'], SURVEY: ['Dating app study, the app\'s result', 'app.html#result'],
     TOOLS: ['Studio drawing tools', 'tools.html'],
     MAKING: ['3D printed objects', 'making.html'],
     BUS: ['Bus widget', home + '#s3'],
@@ -108,7 +107,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     CMDS.MIRROR = ['Mirror a sheet', 'tool:mirror']; CMDS.MI = CMDS.MIRROR;
     CMDS.RESTORE = ['Put every sheet back', 'tool:restore'];
   }
-  var MENU = ['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'DATING', 'TOOLS', 'MAKING', 'BUS', 'MODEL', 'LINKEDIN', 'GITHUB', 'X'];
+  var MENU = ['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'TOOLS', 'MAKING', 'BUS', 'MODEL', 'LINKEDIN', 'GITHUB', 'X'];
 
   var bar = document.createElement('nav');
   bar.className = 'statusbar'; bar.setAttribute('aria-label', 'Pages');
@@ -313,27 +312,4 @@ document.querySelectorAll('table.sched').forEach(function (t) {
   t.querySelectorAll('tbody tr').forEach(function (tr) {
     Array.prototype.forEach.call(tr.children, function (td, i) { if (heads[i]) td.setAttribute('data-label', heads[i]); });
   });
-});
-
-// Findings deck: arrows, dots and swipe stay in step
-document.querySelectorAll('[data-deck]').forEach(function (deck) {
-  var track = deck.querySelector('.dk-track'), slides = deck.querySelectorAll('.dk-slide');
-  var dotsBox = deck.querySelector('.dk-dots'), prev = deck.querySelector('.dk-prev'), next = deck.querySelector('.dk-next');
-  var cur = 0, n = slides.length, dots = [];
-  for (var k = 0; k < n; k++) (function (k) {
-    var d = document.createElement('button'); d.type = 'button'; d.setAttribute('aria-label', 'Slide ' + (k + 1) + ' of ' + n);
-    d.addEventListener('click', function () { go(k); }); dotsBox.appendChild(d); dots.push(d);
-  })(k);
-  function mark(i) {
-    cur = i;
-    dots.forEach(function (d, k) { d.classList.toggle('on', k === i); if (k === i) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
-    prev.disabled = i === 0; next.disabled = i === n - 1;
-  }
-  function go(i) { i = Math.max(0, Math.min(n - 1, i)); track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: 'smooth' }); mark(i); }
-  prev.addEventListener('click', function () { go(cur - 1); });
-  next.addEventListener('click', function () { go(cur + 1); });
-  track.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); } });
-  var tm; track.addEventListener('scroll', function () { clearTimeout(tm); tm = setTimeout(function () { var i = Math.round(track.scrollLeft / track.clientWidth); if (i !== cur) mark(i); }, 80); }, { passive: true });
-  window.addEventListener('resize', function () { track.style.scrollBehavior = 'auto'; track.scrollLeft = slides[cur].offsetLeft - track.offsetLeft; track.style.scrollBehavior = ''; });
-  mark(0);
 });
