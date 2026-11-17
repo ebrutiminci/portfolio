@@ -599,24 +599,20 @@ html.rb-closed.has-ribbon body { padding-top: 0; }
 @media (max-width: 480px) { .sb-tab { padding: 0 4px; font-size: 0.84rem; } }
 @media (max-width: 370px) { .sb-tab { padding: 0 3px; font-size: 0.76rem; } }
 
-/* Findings deck: one box, CAD layout tabs, swipe or arrows */
-.deck { border: 1.5px solid var(--line); background: var(--ground-deep); display: grid; min-width: 0; }
-.dk-bar { display: flex; align-items: stretch; border-bottom: 1px solid var(--line-soft); overflow-x: auto; scrollbar-width: none; }
-.dk-bar::-webkit-scrollbar { display: none; }
-.dk-label { font: 500 0.7rem var(--mono); letter-spacing: .1em; color: var(--text-soft); padding: 10px 12px; border-right: 1px solid var(--line-faint); display: flex; align-items: center; }
-.dk-tabs { display: flex; }
-.dk-tab { background: transparent; border: 0; border-right: 1px dashed var(--line-faint); color: var(--text-soft); font: 500 0.74rem var(--mono); padding: 10px 12px; white-space: nowrap; cursor: pointer; }
-.dk-tab:hover { color: #fff; background: rgba(255,255,255,0.06); }
-.dk-tab.on { color: var(--mark-ink); background: var(--mark); }
+/* Findings deck: a plain carousel */
+.deck { position: relative; display: grid; gap: 10px; min-width: 0; }
 .dk-track { display: grid; grid-auto-flow: column; grid-auto-columns: 100%; overflow-x: auto; scroll-snap-type: x mandatory; scroll-behavior: smooth; scrollbar-width: none; outline: none; }
 .dk-track::-webkit-scrollbar { display: none; }
-.dk-track:focus-visible { box-shadow: inset 0 0 0 2px var(--mark); }
-.dk-slide { scroll-snap-align: start; padding: 14px; min-width: 0; align-content: start; }
-.dk-nav { display: flex; align-items: center; justify-content: space-between; gap: 10px; border-top: 1px solid var(--line-faint); padding: 8px 10px; }
-.dk-btn { background: transparent; border: 1.5px solid var(--line); color: var(--text); font: 500 0.78rem var(--mono); padding: 8px 12px; cursor: pointer; }
-.dk-btn:hover, .dk-btn:focus-visible { background: var(--mark); border-color: var(--mark); color: var(--mark-ink); outline: none; }
-.dk-btn[disabled] { opacity: .35; pointer-events: none; }
-.dk-count { font: 500 0.8rem var(--mono); color: var(--text-soft); }
-@media (max-width: 780px) { .dk-tl { display: none; } .dk-slide { padding: 8px; } }
-@media (prefers-reduced-motion: reduce) { .dk-track { scroll-behavior: auto; } }
+.dk-track:focus-visible { box-shadow: 0 0 0 2px var(--mark); }
+.dk-slide { scroll-snap-align: start; min-width: 0; align-content: start; }
 .dk-slide .vp img { aspect-ratio: 5 / 3; object-fit: contain; background: #16121c; }
+.dk-btn { position: absolute; top: calc((100% - 70px) / 2); transform: translateY(-50%); width: 40px; height: 40px; border-radius: 50%; border: 1.5px solid #fff; background: rgba(11,47,98,.8); color: #fff; font: 400 26px/1 var(--body); display: grid; place-items: center; cursor: pointer; padding: 0 0 3px; }
+.dk-prev { left: 14px; } .dk-next { right: 14px; }
+.dk-btn:hover, .dk-btn:focus-visible { background: var(--mark); border-color: var(--mark); color: var(--mark-ink); outline: none; }
+.dk-btn[disabled] { opacity: 0; pointer-events: none; }
+.dk-dots { display: flex; justify-content: center; gap: 4px; }
+.dk-dots button { width: 24px; height: 24px; border: 0; background: transparent; cursor: pointer; display: grid; place-items: center; padding: 0; }
+.dk-dots button::before { content: ""; width: 8px; height: 8px; border-radius: 50%; border: 1.5px solid #fff; }
+.dk-dots button.on::before { background: var(--mark); border-color: var(--mark); }
+@media (max-width: 780px) { .dk-btn { width: 34px; height: 34px; font-size: 22px; } .dk-prev { left: 8px; } .dk-next { right: 8px; } }
+@media (prefers-reduced-motion: reduce) { .dk-track { scroll-behavior: auto; } }

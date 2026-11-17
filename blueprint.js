@@ -315,21 +315,21 @@ document.querySelectorAll('table.sched').forEach(function (t) {
   });
 });
 
-// Findings deck: tabs, arrows and swipe stay in step
+// Findings deck: arrows, dots and swipe stay in step
 document.querySelectorAll('[data-deck]').forEach(function (deck) {
   var track = deck.querySelector('.dk-track'), slides = deck.querySelectorAll('.dk-slide');
-  var tabs = deck.querySelectorAll('.dk-tab'), count = deck.querySelector('.dk-count');
-  var prev = deck.querySelector('.dk-prev'), next = deck.querySelector('.dk-next'), cur = 0, n = slides.length;
-  function pad(x) { return (x < 10 ? '0' : '') + x; }
+  var dotsBox = deck.querySelector('.dk-dots'), prev = deck.querySelector('.dk-prev'), next = deck.querySelector('.dk-next');
+  var cur = 0, n = slides.length, dots = [];
+  for (var k = 0; k < n; k++) (function (k) {
+    var d = document.createElement('button'); d.type = 'button'; d.setAttribute('aria-label', 'Slide ' + (k + 1) + ' of ' + n);
+    d.addEventListener('click', function () { go(k); }); dotsBox.appendChild(d); dots.push(d);
+  })(k);
   function mark(i) {
     cur = i;
-    tabs.forEach(function (t, k) { t.classList.toggle('on', k === i); if (k === i) t.setAttribute('aria-current', 'true'); else t.removeAttribute('aria-current'); });
-    count.textContent = pad(i + 1) + ' / ' + pad(n);
+    dots.forEach(function (d, k) { d.classList.toggle('on', k === i); if (k === i) d.setAttribute('aria-current', 'true'); else d.removeAttribute('aria-current'); });
     prev.disabled = i === 0; next.disabled = i === n - 1;
-    var t = tabs[i]; if (t && t.scrollIntoView) { var bar = t.parentNode.parentNode; bar.scrollLeft = t.offsetLeft - bar.clientWidth / 2 + t.clientWidth / 2; }
   }
   function go(i) { i = Math.max(0, Math.min(n - 1, i)); track.scrollTo({ left: slides[i].offsetLeft - track.offsetLeft, behavior: 'smooth' }); mark(i); }
-  tabs.forEach(function (t, k) { t.addEventListener('click', function () { go(k); }); });
   prev.addEventListener('click', function () { go(cur - 1); });
   next.addEventListener('click', function () { go(cur + 1); });
   track.addEventListener('keydown', function (e) { if (e.key === 'ArrowRight') { e.preventDefault(); go(cur + 1); } if (e.key === 'ArrowLeft') { e.preventDefault(); go(cur - 1); } });
