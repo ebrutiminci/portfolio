@@ -85,7 +85,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     CASE: ['Revolut case study', 'casestudy.html'], REVOLUT: ['Revolut case study', 'casestudy.html'],
     THESIS: ['Thesis research', 'thesis.html'],
     APP: ['UX Research App', 'app.html'],
-    DATING: ['Dating app research', 'dating.html'], SURVEY: ['Dating app research', 'dating.html'],
+    DATING: ['Dating app study, the app\'s result', 'app.html#result'], SURVEY: ['Dating app study, the app\'s result', 'app.html#result'],
     TOOLS: ['Studio drawing tools', 'tools.html'],
     MAKING: ['3D printed objects', 'making.html'],
     BUS: ['Bus widget', home + '#s3'],
@@ -112,11 +112,8 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
 
   var bar = document.createElement('nav');
   bar.className = 'statusbar'; bar.setAttribute('aria-label', 'Pages');
-  // The dating study was run with the research app, so it lives under that tab
-  var tabSpace = space === 'dating' ? 'app' : space;
   function tab(id, label, href) {
-    var on = tabSpace === id;
-    return '<a class="sb-tab' + (on ? ' on' : '') + '" href="' + href + '"' + (space === id ? ' aria-current="page"' : '') + '>' + label + '</a>';
+    return '<a class="sb-tab' + (space === id ? ' on' : '') + '" href="' + href + '"' + (space === id ? ' aria-current="page"' : '') + '>' + label + '</a>';
   }
   bar.innerHTML =
     '<span class="sb-menu" aria-hidden="true"><i></i><i></i><i></i></span>' +
