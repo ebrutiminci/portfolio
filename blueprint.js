@@ -118,7 +118,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     '<span class="sb-menu" aria-hidden="true"><i></i><i></i><i></i></span>' +
     tab('model', 'Model', 'index.html') + tab('layout1', 'Revolut', 'casestudy.html') +
     tab('app', 'Research<span class="sb-long">&nbsp;App</span>', 'app.html') + tab('bus', 'Bus<span class="sb-long">&nbsp;Widget</span>', home + '#s3') +
-    tab('layout2', 'Thesis', 'thesis.html') + tab('tools', 'Tools', 'tools.html') +
+    tab('layout2', 'Thesis', 'thesis.html') + tab('tools', 'Tools', 'tools.html') + tab('making', 'Making', 'making.html') +
     '<span class="sb-iso" hidden></span>' +
     '<span class="sb-mode">' + (space === 'model' ? 'MODEL' : 'PAPER') + '</span>' +
     '<button type="button" class="sb-cmdbtn" aria-expanded="false" aria-controls="sbcmd" title="Commands">⌘</button>' +
