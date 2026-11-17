@@ -598,3 +598,32 @@ html.rb-closed.has-ribbon body { padding-top: 0; }
 @media (max-width: 480px) { .sb-tab[href$="#s3"] { display: none; } }
 @media (max-width: 480px) { .sb-tab { padding: 0 4px; font-size: 0.84rem; } }
 @media (max-width: 370px) { .sb-tab { padding: 0 3px; font-size: 0.76rem; } }
+
+/* Research loop, drawn in the page */
+.loop-wrap { overflow-x: auto; border: 1.5px solid var(--line); padding: 14px 10px; outline: none; }
+.loop-wrap:focus-visible { border-color: var(--mark); }
+.loop-svg { display: block; width: 100%; height: auto; }
+.loop-hint { display: none; }
+@media (max-width: 640px) { .loop-svg { min-width: 600px; } .loop-hint { display: inline; color: var(--mark); } }
+.loop-svg text { fill: #fff; font: 400 14px var(--body); }
+.loop-svg .tt { font: 600 17px var(--display); letter-spacing: .04em; }
+.loop-svg .sm { fill: var(--text-soft); font-size: 11.5px; font-style: italic; }
+.loop-svg .ch { font-size: 13px; }
+.loop-svg .stg, .loop-svg .al, .loop-svg .hnt, .loop-svg .pt { font-family: var(--mono); }
+.loop-svg .stg { fill: var(--mark); font-size: 12px; letter-spacing: .12em; text-anchor: middle; }
+.loop-svg .al { fill: var(--text-soft); font-size: 11px; }
+.loop-svg .mid { text-anchor: middle; }
+.loop-svg .bx { fill: rgba(255,255,255,0.04); stroke: #fff; stroke-width: 1.5; }
+.loop-svg .bx.dash { stroke: var(--text-soft); stroke-dasharray: 5 4; fill: none; }
+.loop-svg .chip { fill: rgba(255,255,255,0.07); stroke: rgba(255,255,255,0.35); }
+.loop-svg .chip.key { stroke: var(--mark); stroke-width: 1.5; }
+.loop-svg .hn { fill: var(--ground); stroke: var(--mark); stroke-width: 1.2; }
+.loop-svg .hnt { fill: var(--mark); font-size: 9px; text-anchor: middle; }
+.loop-svg .pb { fill: none; stroke: #fff; }
+.loop-svg .pb.p0 { fill: var(--mark); stroke: var(--mark); }
+.loop-svg .pb.dash { stroke-dasharray: 3 3; stroke: var(--text-soft); }
+.loop-svg .pt { font-size: 10.5px; font-weight: 500; }
+.loop-svg .pt.ink { fill: var(--mark-ink); }
+.loop-svg .ar { fill: none; stroke: #fff; stroke-width: 1.3; }
+.loop-svg .ar.dash { stroke: var(--text-soft); stroke-dasharray: 5 4; }
+.loop-svg .br { fill: none; stroke: var(--mark); }
