@@ -85,6 +85,7 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     CASE: ['Revolut case study', 'casestudy.html'], REVOLUT: ['Revolut case study', 'casestudy.html'],
     THESIS: ['Thesis research', 'thesis.html'],
     APP: ['UX Research App', 'app.html'],
+    DATING: ['Dating app research', 'dating.html'], SURVEY: ['Dating app research', 'dating.html'],
     TOOLS: ['Studio drawing tools', 'tools.html'],
     MAKING: ['3D printed objects', 'making.html'],
     BUS: ['Bus widget', home + '#s3'],
@@ -107,12 +108,15 @@ if (!location.hash) { window.scrollTo(0, 0); window.addEventListener('load', fun
     CMDS.MIRROR = ['Mirror a sheet', 'tool:mirror']; CMDS.MI = CMDS.MIRROR;
     CMDS.RESTORE = ['Put every sheet back', 'tool:restore'];
   }
-  var MENU = ['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'TOOLS', 'MAKING', 'BUS', 'MODEL', 'LINKEDIN', 'GITHUB', 'X'];
+  var MENU = ['EMAIL', 'CV', 'CASE', 'THESIS', 'APP', 'DATING', 'TOOLS', 'MAKING', 'BUS', 'MODEL', 'LINKEDIN', 'GITHUB', 'X'];
 
   var bar = document.createElement('nav');
   bar.className = 'statusbar'; bar.setAttribute('aria-label', 'Pages');
+  // The dating study was run with the research app, so it lives under that tab
+  var tabSpace = space === 'dating' ? 'app' : space;
   function tab(id, label, href) {
-    return '<a class="sb-tab' + (space === id ? ' on' : '') + '" href="' + href + '"' + (space === id ? ' aria-current="page"' : '') + '>' + label + '</a>';
+    var on = tabSpace === id;
+    return '<a class="sb-tab' + (on ? ' on' : '') + '" href="' + href + '"' + (space === id ? ' aria-current="page"' : '') + '>' + label + '</a>';
   }
   bar.innerHTML =
     '<span class="sb-menu" aria-hidden="true"><i></i><i></i><i></i></span>' +
